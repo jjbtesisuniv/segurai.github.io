@@ -1,280 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SegurAI — Presentación de Negocio con IA</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --dark-blue: #010A20;
-  --sidebar-blue: #031535;
-  --accent-blue: #00bfff;
-  --highlight-blue: #00d5ff;
-  --text-color: #e6eef6;
-  --card-bg: #03183d;
-  --radius: 12px;
-  font-family: 'Inter', sans-serif;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SegurAI — Presentación de Negocio con IA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-blue: #010A20;
+      --sidebar-blue: #031535;
+      --accent-blue: #00bfff;
+      --highlight-blue: #00d5ff;
+      --text-color: #e6eef6;
+      --card-bg: #03183d;
+      --radius: 12px;
+      font-family: 'Inter', sans-serif;
+    }
 
-body { margin:0; background-color: var(--dark-blue); color: var(--text-color); display:flex; height:100vh; overflow:hidden; }
-* { box-sizing:border-box; }
+    body {
+      margin: 0;
+      background-color: var(--dark-blue);
+      color: var(--text-color);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    * { box-sizing: border-box; }
 
-/* Sidebar */
-.sidebar {
-  width:260px;
-  background-color: var(--sidebar-blue);
-  padding:25px 0;
-  position:fixed;
-  left:0; top:0; bottom:0;
-  display:flex;
-  flex-direction:column;
-  box-shadow:4px 0 15px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease;
-}
-.sidebar h2 {
-  color: var(--highlight-blue);
-  font-size:1.6em;
-  margin:0 0 25px 30px;
-  border-bottom:2px solid rgba(0,191,255,0.2);
-  padding-bottom:10px;
-  font-weight:800;
-}
-.sidebar a {
-  color: var(--text-color);
-  text-decoration:none;
-  padding:12px 30px;
-  font-size:1em;
-  transition: background-color 0.3s, color 0.3s;
-  display:flex;
-  align-items:center;
-  gap:15px;
-  border-left:5px solid transparent;
-}
-.sidebar a i { font-size:1.1em; color: var(--accent-blue); }
-.sidebar a:hover { background-color: rgba(0,191,255,0.1); color: var(--highlight-blue); }
-.sidebar a.active { background-color: rgba(0,191,255,0.15); border-left-color: var(--highlight-blue); color: var(--highlight-blue); font-weight:600; }
+    .sidebar {
+      width: 260px;
+      background-color: var(--sidebar-blue);
+      padding: 25px 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
 
-/* Main content */
-.main-content {
-  margin-left:260px;
-  padding:40px;
-  width:calc(100% - 260px);
-  overflow-y:auto;
-  scroll-behavior: smooth;
-}
-section { min-height:calc(100vh - 80px); display:none; opacity:0; transform:translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; padding-bottom:50px; }
-section.active { display:block; opacity:1; transform:translateY(0); }
+    .sidebar h2 {
+      color: var(--highlight-blue);
+      font-size: 1.6em;
+      margin: 0 0 25px 30px;
+      border-bottom: 2px solid rgba(0, 191, 255, 0.2);
+      padding-bottom: 10px;
+      font-weight: 800;
+    }
 
-/* Hero */
-.hero {
-  width:100vw;
-  height:100vh;
-  background: linear-gradient(135deg, #010714 0%, #031535 100%);
-  position: fixed;
-  z-index:1000;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  transition: opacity 0.5s ease;
-  padding:20px;
-}
-.hero img { margin-bottom:20px; width:150px; }
-.hero h1 { font-size:3.2em; color: var(--highlight-blue); margin-bottom:15px; font-weight:900; text-shadow: 0 0 15px rgba(0,191,255,0.4); }
-.hero p { font-size:1.2em; color: rgba(255,255,255,0.85); margin-bottom:20px; }
-.hero .mission-vision {
-  display:flex; flex-wrap:wrap; justify-content:center; gap:40px; margin-top:20px;
-}
-.hero .mv-card { background-color: var(--card-bg); padding:20px; border-radius:var(--radius); width:250px; text-align:center; box-shadow:0 0 15px rgba(0,191,255,0.3); transition: transform 0.3s; }
-.hero .mv-card:hover { transform:translateY(-5px) scale(1.02); }
-.hero .mv-card img { width:80px; margin-bottom:10px; }
-.hero .mv-card h3 { color: var(--highlight-blue); font-size:1.2em; margin-bottom:8px; text-transform: capitalize; }
-.hero .mv-card p { font-size:0.95em; color: rgba(255,255,255,0.8); line-height:1.3em; }
+    .sidebar a {
+      color: var(--text-color);
+      text-decoration: none;
+      padding: 12px 30px;
+      font-size: 1em;
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-left: 5px solid transparent;
+    }
 
-.hero .hero-buttons { display:flex; gap:20px; flex-wrap: wrap; justify-content:center; margin-top:30px; }
-.hero button {
-  border:none; padding:18px 35px; border-radius: var(--radius);
-  font-size:1.2em; font-weight:700; cursor:pointer;
-  transition: all 0.3s ease; box-shadow:0 6px 15px rgba(0,191,255,0.3);
-}
-.hero button.explorar { background: linear-gradient(45deg,#00bfff,#00ffbf); color:#010A20; }
-.hero button.boceto { background: linear-gradient(45deg,#ff5f6d,#ffc371); color:#010A20; }
-.hero button.story { background: linear-gradient(45deg,#ff9a00,#ff0055); color:#fff; }
-.hero button:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 8px 25px rgba(0,191,255,0.6); }
+    .sidebar a i { font-size: 1.1em; color: var(--accent-blue); }
 
-/* Secciones */
-h2 { color: var(--highlight-blue); margin-bottom:10px; font-weight:800; border-bottom:1px solid rgba(0,191,255,0.1); padding-bottom:8px; }
-h3 { color: var(--highlight-blue); margin-top:20px;}
+    .sidebar a:hover {
+      background-color: rgba(0, 191, 255, 0.1);
+      color: var(--highlight-blue);
+    }
 
-/* Modal / Story / Boceto */
-.modal-section {
-  display:none;
-  background-color: rgba(0,0,0,0.95);
-  position:fixed;
-  top:0; left:0; right:0; bottom:0;
-  z-index:2000;
-  overflow:auto;
-  padding:50px 20px;
-  text-align:center;
-}
-.modal-section img, .modal-section .story-content { max-width:90%; margin:0 auto; border-radius:12px; }
-.modal-section button.close-btn {
-  margin-top:20px;
-  background-color: var(--highlight-blue);
-  color: var(--dark-blue);
-  border:none;
-  padding:12px 25px;
-  border-radius:var(--radius);
-  cursor:pointer;
-  font-weight:700;
-  font-size:1em;
-}
+    .sidebar a.active {
+      background-color: rgba(0, 191, 255, 0.15);
+      border-left-color: var(--highlight-blue);
+      color: var(--highlight-blue);
+      font-weight: 600;
+    }
 
-/* Timeline Story */
-.timeline { position: relative; margin: 40px auto; padding: 20px 0; max-width:600px; }
-.timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:4px; background: var(--highlight-blue); transform:translateX(-50%); }
-.timeline-step { position: relative; width:50%; padding:15px 30px; background:rgba(0,191,255,0.1); border-radius:12px; margin-bottom:30px; opacity:0; transform:translateX(-50px) scale(0.8); transition: all 0.6s ease; }
-.timeline-step.right { left:50%; transform:translateX(50px) scale(0.8); }
-.timeline-step.left { left:0; }
-.timeline-step.active { opacity:1; transform:translateX(0) scale(1); box-shadow:0 0 20px var(--highlight-blue); border:1px solid var(--highlight-blue); }
-.timeline-step i { font-size:1.5em; color:var(--highlight-blue); margin-bottom:10px; display:block; }
-.timeline-controls { margin-top:20px; display:flex; justify-content:center; gap:20px; }
-.timeline-controls button { padding:10px 25px; font-weight:700; border:none; border-radius:var(--radius); cursor:pointer; background: var(--highlight-blue); color:var(--dark-blue); transition: all 0.3s; }
-.timeline-controls button:hover { background: var(--accent-blue); color:#fff; }
+    .main-content {
+      margin-left: 260px;
+      padding: 40px;
+      width: calc(100% - 260px);
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
 
-@media (max-width:768px) {
-  .sidebar { width:100%; height:auto; position:relative; box-shadow:none; padding:15px 0; display:none; }
-  .main-content { margin-left:0; padding:20px; width:100%; }
-  .hero h1 { font-size:2.2em; }
-  .timeline-step { width:90% !important; left:5% !important; }
-  .hero .mission-vision { flex-direction:column; gap:20px; }
-}
-</style>
+    section {
+      min-height: calc(100vh - 80px);
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      padding-bottom: 50px;
+    }
+
+    section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #010714 0%, #031535 100%);
+      position: fixed;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: opacity 0.5s ease;
+      padding: 20px;
+    }
+
+    .hero img {
+      max-width: 180px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      color: var(--highlight-blue);
+      margin-bottom: 20px;
+      font-weight: 900;
+      text-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 30px;
+      max-width: 800px;
+    }
+
+    .hero button {
+      border: none;
+      color: var(--dark-blue);
+      padding: 18px 35px;
+      margin: 5px;
+      border-radius: var(--radius);
+      font-size: 1.2em;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 6px 15px rgba(0, 191, 255, 0.3);
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+
+    .btn-primary { background-color: var(--accent-blue); }
+    .btn-primary:hover { background-color: var(--highlight-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 191, 255, 0.5);}
+    .btn-secondary { background-color: #ff9900; }
+    .btn-secondary:hover { background-color: #ffb84d; transform: translateY(-2px);}
+    .btn-tertiary { background-color: #00ff99; }
+    .btn-tertiary:hover { background-color: #33ffbb; transform: translateY(-2px); }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #ff004c;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(255, 0, 76, 0.4);
+      margin-bottom: 20px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .btn-back:hover { background-color: #ff3366; transform: translateY(-2px); }
+
+    h2 { color: var(--highlight-blue); margin-bottom: 10px; font-weight: 800; border-bottom: 1px solid rgba(0, 191, 255, 0.1); padding-bottom: 8px;}
+    h3 { color: var(--highlight-blue); margin-top: 20px;}
+
+    .card-info, .info-item {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      border-left: 5px solid var(--accent-blue);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+
+    .info-item strong { color: var(--highlight-blue); font-weight: 700; display: block; margin-bottom: 5px;}
+    .info-item ul { list-style: none; padding: 0; margin: 5px 0 0;}
+    .info-item li { margin-bottom: 8px; font-size: 0.95em; color: rgba(255, 255, 255, 0.8);}
+
+    .video-container { width: 100%; max-width: 800px; margin: 20px auto; background-color: #000; border-radius: var(--radius); box-shadow: 0 0 20px rgba(0,191,255,0.4); overflow: hidden;}
+    video { width: 100%; display: block; }
+
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; height: auto; position: relative; box-shadow: none; padding: 15px 0; display: none;}
+      .main-content { margin-left: 0; padding: 20px; width: 100%;}
+      .hero h1 { font-size: 2em; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Hero -->
-<div class="hero" id="inicio">
-  <img src="logo.png" alt="Logo SegurAI">
-  <h1>SegurAI — Seguridad Preventiva con IA</h1>
-  <p>Innovación tecnológica y protección en entornos urbanos y empresariales.</p>
-
-  <!-- Misión y Visión -->
-  <div class="mission-vision">
-    <div class="mv-card">
-      <img src="mision.png" alt="Misión">
-      <h3>Misión</h3>
-      <p>Proporcionar soluciones de seguridad preventiva mediante inteligencia artificial avanzada, anticipándonos a riesgos y optimizando la protección de personas y activos.</p>
+  <!-- HERO -->
+  <div class="hero" id="inicio">
+    <img src="img/logo.png" alt="Logo SegurAI">
+    <h1>SegurAI — Seguridad Preventiva con IA</h1>
+    <p>Innovación tecnológica y protección en entornos urbanos y empresariales.<br>
+    Integrando Inteligencia Artificial, reconocimiento facial y alertas en tiempo real para mayor seguridad.</p>
+    <div>
+      <button class="btn-primary" onclick="explorar()">Explorar Presentación</button>
+      <button class="btn-secondary" onclick="alert('Mostrando boceto...')">Ver Boceto</button>
+      <button class="btn-tertiary" onclick="alert('Mostrando storytheme interactivo...')">StoryTheme</button>
     </div>
-    <div class="mv-card">
-      <img src="vision.png" alt="Visión">
-      <h3>Visión</h3>
-      <p>Ser líderes en innovación tecnológica de seguridad urbana, integrando IA y análisis predictivo para entornos más seguros y confiables.</p>
-    </div>
+    <img src="img/reconocimiento_facial.png" alt="Reconocimiento Facial" style="margin-top:30px; max-width:400px; border-radius:12px; box-shadow:0 0 20px rgba(0,191,255,0.4);">
   </div>
 
-  <div class="hero-buttons">
-    <button class="explorar" onclick="explorar()">Explorar Presentación</button>
-    <button class="boceto" onclick="mostrarBoceto()">Ver Boceto</button>
-    <button class="story" onclick="mostrarStory()">StoryTheme</button>
-  </div>
-</div>
-
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar" style="display:none;">
-  <h2>SegurAI</h2>
-  <a href="#" onclick="mostrarSeccion('mision', this)" class="active"><i class="fas fa-handshake"></i> Misión y Visión</a>
-  <a href="#" onclick="mostrarSeccion('modelo', this)"><i class="fas fa-chart-line"></i> Modelo de Negocio</a>
-  <a href="#" onclick="mostrarSeccion('pestel', this)"><i class="fas fa-globe-americas"></i> Análisis PESTEL</a>
-  <a href="#" onclick="mostrarSeccion('porter', this)"><i class="fas fa-sitemap"></i> 5 Fuerzas de Porter</a>
-  <a href="#" onclick="mostrarSeccion('foda', this)"><i class="fas fa-balance-scale"></i> Análisis FODA</a>
-  <a href="#" onclick="mostrarSeccion('competencia', this)"><i class="fas fa-shield-alt"></i> Competencia</a>
-  <a href="#" onclick="mostrarSeccion('demo', this)"><i class="fas fa-video"></i> Demo Funcional</a>
-  <a href="#" onclick="mostrarSeccion('equipo', this)"><i class="fas fa-users"></i> Equipo</a>
-</div>
-
-<!-- Main Content -->
-<div class="main-content" id="contenido" style="display:none;">
-  <!-- Aquí puedes insertar tus secciones: misión, modelo, pestel, porter, foda, competencia, demo, equipo -->
-
-  <!-- Modal Boceto -->
-  <div id="boceto-modal" class="modal-section">
-    <h2>Boceto SegurAI</h2>
-    <img src="boceto.png" alt="Boceto SegurAI">
-    <br>
-    <button class="close-btn" onclick="cerrarModal('boceto-modal')">Cerrar</button>
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar" style="display:none;">
+    <h2>SegurAI</h2>
+    <a href="#" onclick="mostrarSeccion('mision', this)" class="active"><i class="fas fa-handshake"></i> Misión y Visión</a>
+    <a href="#" onclick="mostrarSeccion('modelo', this)"><i class="fas fa-chart-line"></i> Modelo de Negocio</a>
+    <a href="#" onclick="mostrarSeccion('equipo', this)"><i class="fas fa-users"></i> Equipo</a>
   </div>
 
-  <!-- Modal StoryTheme Timeline -->
-  <div id="story-modal" class="modal-section">
-    <h2>StoryTheme Interactivo</h2>
-    <div class="timeline">
-      <div class="timeline-step left active"><i class="fas fa-video"></i>SegurAI analiza video en tiempo real de zonas críticas.</div>
-      <div class="timeline-step right"><i class="fas fa-search"></i>Detecta patrones de riesgo y comportamiento sospechoso.</div>
-      <div class="timeline-step left"><i class="fas fa-bell"></i>Envía alertas preventivas automáticas a la central de monitoreo.</div>
-      <div class="timeline-step right"><i class="fas fa-user-shield"></i>Permite intervención rápida y reducción de incidentes.</div>
-      <div class="timeline-step left"><i class="fas fa-chart-line"></i>Genera reportes analíticos para decisiones estratégicas de seguridad.</div>
-    </div>
-    <div class="timeline-controls">
-      <button onclick="prevStep()">Anterior</button>
-      <button onclick="nextStep()">Siguiente</button>
-    </div>
-    <button class="close-btn" onclick="cerrarModal('story-modal')">Cerrar</button>
+  <!-- CONTENIDO -->
+  <div class="main-content" id="contenido" style="display:none;">
+
+    <!-- Misión -->
+    <section id="mision" class="active">
+      <button class="btn-back" onclick="volver()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>MISIÓN Y VISIÓN</h2>
+      <div class="card-info">
+        <h3>MISIÓN</h3>
+        <p>Brindar soluciones de seguridad basadas en Inteligencia Artificial que protejan entornos urbanos y empresariales, combinando tecnología de punta con respeto a la privacidad.</p>
+        <h3>VISIÓN</h3>
+        <p>Ser referentes en seguridad inteligente en Latinoamérica, integrando innovación, ética y confianza para transformar la seguridad reactiva en preventiva.</p>
+      </div>
+    </section>
+
+    <!-- Modelo -->
+    <section id="modelo">
+      <button class="btn-back" onclick="volver()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>MODELO DE NEGOCIO (CANVAS)</h2>
+      <div class="card-info">
+        <p>SegurAI combina hardware, software y asesoría técnica para ofrecer vigilancia inteligente con IA.</p>
+      </div>
+    </section>
+
+    <!-- Equipo -->
+    <section id="equipo">
+      <button class="btn-back" onclick="volver()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>RESPONSABLES PRINCIPALES</h2>
+      <div class="card-info">
+        <ul>
+          <li><strong>CEO (Carlos Manuel):</strong> Coordinación general.</li>
+          <li><strong>KYM (Jesús Rodríguez):</strong> Alianzas estratégicas.</li>
+          <li><strong>CTO (José Moreno):</strong> Desarrollo técnico y validación del algoritmo.</li>
+          <li><strong>Jefa de Operaciones (Anaceli Samamé):</strong> Logística y soporte en campo.</li>
+          <li><strong>Marketing (Luis Salazar):</strong> Difusión y gestión de usuarios piloto.</li>
+        </ul>
+      </div>
+    </section>
+
   </div>
-</div>
 
-<script>
-function explorar() {
-  document.querySelector('.hero').style.display='none';
-  document.getElementById('sidebar').style.display='flex';
-  document.getElementById('contenido').style.display='block';
-  mostrarSeccion('mision');
-}
-function mostrarSeccion(id, link){
-  document.querySelectorAll('.main-content section').forEach(sec => sec.classList.remove('active'));
-  if(document.getElementById(id)) document.getElementById(id).classList.add('active');
-  if(link){
-    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-    link.classList.add('active');
-  }
-}
-// Modal Boceto
-function mostrarBoceto(){ document.getElementById('boceto-modal').style.display='block'; }
-// Modal StoryTimeline
-function mostrarStory(){ 
-  document.getElementById('story-modal').style.display='block'; 
-  currentStep = 0;
-  const steps = document.querySelectorAll('#story-modal .timeline-step');
-  steps.forEach(s=>s.classList.remove('active'));
-  steps[0].classList.add('active');
-}
-function cerrarModal(id){ document.getElementById(id).style.display='none'; }
+  <script>
+    function explorar() {
+      const hero = document.getElementById('inicio');
+      const sidebar = document.getElementById('sidebar');
+      const contenido = document.getElementById('contenido');
+      hero.style.opacity = '0';
+      setTimeout(() => {
+        hero.style.display = 'none';
+        sidebar.style.display = 'flex';
+        contenido.style.display = 'block';
+      }, 500);
+    }
 
-// Timeline controls
-let currentStep = 0;
-function nextStep(){
-  const steps = document.querySelectorAll('#story-modal .timeline-step');
-  if(currentStep<steps.length-1){
-    steps[currentStep].classList.remove('active');
-    currentStep++;
-    steps[currentStep].classList.add('active');
-  }
-}
-function prevStep(){
-  const steps = document.querySelectorAll('#story-modal .timeline-step');
-  if(currentStep>0){
-    steps[currentStep].classList.remove('active');
-    currentStep--;
-    steps[currentStep].classList.add('active');
-  }
-}
-</script>
+    function mostrarSeccion(id, clickedElement) {
+      const secciones = document.querySelectorAll('.main-content section');
+      const links = document.querySelectorAll('.sidebar a');
+      secciones.forEach(s => s.classList.remove('active'));
+      links.forEach(l => l.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (clickedElement) clickedElement.classList.add('active');
+      document.getElementById('contenido').scrollTop = 0;
+    }
+
+    function volver() {
+      document.getElementById('sidebar').style.display = 'none';
+      document.getElementById('contenido').style.display = 'none';
+      const hero = document.getElementById('inicio');
+      hero.style.display = 'flex';
+      setTimeout(() => hero.style.opacity = '1', 100);
+    }
+  </script>
 
 </body>
 </html>
+
 
 
 
