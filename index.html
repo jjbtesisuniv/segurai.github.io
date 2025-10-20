@@ -1,543 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SegurAI — Seguridad Inteligente</title>
-  <meta name="description" content="SegurAI - Plataforma de seguridad con reconocimiento facial, alertas en tiempo real y panel de monitoreo." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SegurAI – Seguridad Inteligente con IA</title>
+  <link rel="icon" href="images/reconocimiento_facial.png" />
   <style>
-    :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --muted:#9aa4b2;
-      --accent:#0ea5a4;
-      --accent-2:#2563eb;
-      --alert-color: #f87171; /* red */
-      --glass: rgba(255,255,255,0.04);
-      --max-width:1100px;
-      --radius:12px;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:
-        radial-gradient(ellipse at 10% 10%, rgba(14,165,164,0.06), transparent 20%),
-        radial-gradient(ellipse at 90% 90%, rgba(37,99,235,0.06), transparent 20%),
-        linear-gradient(180deg,#001428 0%, #071633 45%, #071a2b 100%);
-      color:#e6eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
-      background-attachment: fixed;
-    }
-    .container{max-width:var(--max-width);margin:0 auto;padding:28px;}
-    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0; border-bottom: 1px solid rgba(255,255,255,0.03);}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{
-      width:40px;height:40px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      display:flex;align-items:center;justify-content:center;font-weight:900;color:#012; font-size:16px;
-      box-shadow:0 4px 12px rgba(14,165,164,0.2), inset 0 0 8px rgba(255,255,255,0.1);
-    }
-    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600; transition:color 0.2s}
-    nav a:hover {color: #fff;}
-    nav a.cta{
-        background:linear-gradient(90deg,#0ea5a4, #0ea5e8);
-        padding:10px 18px;
-        border-radius:10px;
-        color:#031;
-        margin-left:24px;
-        font-weight:700;
-        box-shadow: 0 4px 10px rgba(14,165,164,0.3);
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    nav a.cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(14,165,164,0.5);
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, #0e1a40, #f4f7fb);
+      color: #222;
     }
 
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center;padding:60px 0;}
-    .hero-left h1{font-size:48px;margin:0 0 16px;color:#fff; line-height:1.1;}
-    .hero-left h1 strong {color: var(--accent); font-weight: 900;}
-    .tag{display:inline-block;padding:8px 12px;background:rgba(255,255,255,0.04);border-radius:999px;color:var(--accent);font-weight:600;margin-bottom:24px; font-size:14px; border: 1px solid var(--accent); opacity:0.8}
-    .lead{color:var(--muted);margin-bottom:24px; font-size:18px;}
-    .features-grid{display:flex;gap:20px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:12px 24px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021; font-weight:700;text-decoration:none; box-shadow: 0 4px 10px rgba(14,165,164,0.3)}
-    .secondary{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;padding:12px 24px;border-radius:12px;text-decoration:none; font-weight:600; transition:background 0.2s}
-    .secondary:hover {background: rgba(255,255,255,0.08);}
+    header {
+      background: linear-gradient(90deg, #002855, #0056b3);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.6em;
+      letter-spacing: 1px;
+    }
+    header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
 
-    /* Cámara con imagen real */
-    .cam-thumb {
-      width: 100%;
-      height: 230px;
-      border-radius: 10px;
+    nav {
+      position: sticky;
+      top: 0;
+      background: #ffffffee;
+      backdrop-filter: blur(6px);
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       justify-content: center;
-      overflow: hidden;
-      border: 2px solid var(--accent);
-      box-shadow: 0 4px 18px rgba(14,165,164,0.25), inset 0 0 8px rgba(255,255,255,0.05);
-      position: relative;
-      transition: border-color 0.3s ease;
+      padding: 10px;
+      border-bottom: 2px solid #0056b3;
+      z-index: 1000;
     }
-    .cam-thumb img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
+    nav a {
+      color: #0056b3;
+      text-decoration: none;
+      margin: 6px 15px;
+      font-weight: 600;
+      transition: 0.3s;
     }
-    .cam-thumb:hover img {
-      transform: scale(1.05);
-    }
-    /* Efecto de cámara activa: borde pulsante (normal azul-teal) */
-    .cam-thumb::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 10px;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 16px rgba(14,165,164,0.35);
-      animation: pulse-blue 2s infinite ease-in-out;
-      pointer-events: none;
-    }
-    @keyframes pulse-blue {
-      0% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
-      100% { opacity: 0.4; transform: scale(1); }
-    }
-    /* Estado de alerta: cambia el borde y la animación a rojo */
-    .cam-thumb.alert::after {
-      border-color: var(--alert-color);
-      box-shadow: 0 0 18px rgba(248,113,113,0.6);
-      animation: pulse-red 1.2s infinite ease-in-out;
-    }
-    @keyframes pulse-red {
-      0% { opacity: 0.5; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.03); }
-      100% { opacity: 0.5; transform: scale(1); }
+    nav a:hover {
+      color: #002855;
+      text-decoration: underline;
     }
 
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); padding:24px;border-radius:18px;box-shadow:0 12px 40px rgba(2,6,23,0.7); border: 1px solid rgba(255,255,255,0.06)}
-    .mini-title{color:var(--accent);font-size:14px;margin-bottom:10px; font-weight: 700;}
-    .quick-stats{display:flex;gap:12px;margin-top:16px}
-    .stat{flex:1;background:var(--glass);padding:12px;border-radius:12px;text-align:center; border: 1px solid rgba(255,255,255,0.05)}
-    .stat strong{display:block;font-size:22px;color:#fff; font-weight: 800;}
+    section {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 40px;
+      animation: fadeIn 0.7s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
-    .feature{background:rgba(255,255,255,0.03);padding:20px;border-radius:16px; border-left: 3px solid var(--accent); transition:background 0.3s}
-    .feature:hover {background:rgba(255,255,255,0.05);}
-    .feature h3{margin:0 0 8px; color: #fff; font-weight:700;}
-    .muted{color:var(--muted)}
-    h2 {font-size: 38px;color: #fff;margin-bottom: 20px;text-shadow: 0 0 10px rgba(14,165,164,0.2);font-weight: 800;}
-    .workflow-grid {display: grid;grid-template-columns: repeat(5, 1fr);gap: 12px;margin-top: 18px;}
-    .step{background:rgba(255,255,255,0.03);padding:12px;border-radius:10px;text-align:center;font-size:14px;position: relative;}
-    .step::after {content: '→';position: absolute;right: -10px;top: 50%;transform: translateY(-50%);color: var(--accent);font-weight: 700;}
-    .step:last-child::after {content: '';}
+    h2 {
+      color: #0056b3;
+      border-left: 6px solid #0056b3;
+      padding-left: 10px;
+      font-size: 1.6em;
+    }
+    h3 { color: #222; }
 
-    footer{border-top:1px solid rgba(255,255,255,0.08);padding:32px 0;margin-top:60px;color:var(--muted)}
-    /* responsive */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr;gap:36px}
-      .features{grid-template-columns:1fr 1fr; gap: 16px;}
-      .workflow-grid {grid-template-columns: repeat(2, 1fr);}
-    }
-    @media (max-width:600px){
-      .features{grid-template-columns:1fr}
-      nav a{display:none}
-      header{padding:10px 0;}
-      .hero-left h1 {font-size: 36px;}
-      .workflow-grid {grid-template-columns: 1fr;}
-    }
-    .muted-2{color:#9fb7c0}
-    .small{font-size:13px;color:var(--muted)}
-    .center{display:flex;align-items:center;justify-content:center}
-    .badge{display:inline-block;padding:8px 14px;background:linear-gradient(90deg, #102030, #0a1727);border-radius:999px;color:var(--accent);font-weight:700; border: 1px solid rgba(14,165,164,0.3);}
-    .map-sim{height:160px;border-radius:12px;background:linear-gradient(135deg,#0e2938,#0c1d29);display:flex;align-items:center;justify-content:center;color:#9fb7c0; border: 1px solid rgba(255,255,255,0.08)}
-    .status-alert {color: var(--alert-color); font-weight: 700;}
-    .status-ok {color: #4ade80; font-weight: 700;}
-    .image-placeholder {width: 100%;height: 180px;background: #0d1a2c;border-radius: 12px;margin-top: 15px;margin-bottom: 5px;display: flex;align-items: center;justify-content: center;color: var(--accent);font-size: 14px;font-weight: 600;border: 1px dashed rgba(14,165,164,0.5);}
+    ul { margin-left: 20px; }
 
-    /* Modal styles */
-    #modal-nosotros {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(2,6,23,0.75);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    #modal-nosotros .modal-inner {
-      width: 100%;
-      max-width: 920px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      padding: 22px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
-      box-shadow: 0 20px 50px rgba(2,6,23,0.7);
-      color: #e6eef6;
-    }
-    #modal-nosotros .modal-inner h2 {margin-top:0; color: var(--accent); font-size:28px;}
-    #modal-nosotros .modal-inner .close-btn {
-      float: right;
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 20px;
+    details summary {
       cursor: pointer;
+      font-weight: bold;
+      color: #0056b3;
+      margin-top: 12px;
     }
-    @media (max-width:720px){
-      .workflow-grid {grid-template-columns: 1fr;}
-      #modal-nosotros .modal-inner { padding: 16px; }
+    details summary:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      background: #002855;
+      color: white;
+      padding: 25px;
+      margin-top: 60px;
+      font-size: 0.9em;
+    }
+
+    .highlight {
+      background: #eaf3ff;
+      padding: 10px;
+      border-left: 4px solid #0056b3;
+      border-radius: 5px;
+      margin: 10px 0;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">SA</div>
-        <div>
-          <div style="font-weight:700; font-size: 18px;">SegurAI</div>
-          <div class="small muted">Seguridad inteligente • Prevención en tiempo real</div>
-        </div>
-      </div>
-      <nav aria-label="Main navigation">
-        <a href="#producto">Producto</a>
-        <a href="#prototipo">MVP</a>
-        <a href="#nosotros" id="abrir-nosotros">Conoce más de nosotros</a>
-        <a href="#plan">Plan</a>
-        <a href="#contacto" class="cta">Solicitar demo</a>
-      </nav>
-    </header>
 
-    <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="hero-left">
-        <span class="tag">Prevención • IA • Seguridad Locativa</span>
-        <h1>Seguridad preventiva con <strong>inteligencia artificial</strong></h1>
-        <p class="lead">SegurAI detecta y notifica eventos de riesgo en tiempo real mediante <strong>reconocimiento facial</strong> y un panel de monitoreo avanzado. Ideal para negocios, almacenes y comunidades residenciales.</p>
-        <div style="display:flex;gap:16px;align-items:center">
-          <a class="btn" href="#prototipo">Ver Prototipo (MVP)</a>
-          <a class="secondary" href="#plan">Ver Plan de Negocio</a>
-        </div>
+<header>
+  <h1>SegurAI – Seguridad Inteligente con IA</h1>
+  <p>Innovación peruana que combina tecnología, prevención y confianza ciudadana</p>
+</header>
 
-        <div class="features-grid" style="margin-top:30px">
-          <div style="min-width:180px">
-            <div class="small muted">Precisión de Alerta</div>
-            <div style="font-weight:800;font-size:24px; color: #fff;">≥ 90%</div>
-          </div>
-          <div style="min-width:180px">
-            <div class="small muted">Tiempo de Respuesta</div>
-            <div style="font-weight:800;font-size:24px; color: #fff;"><span id="alertTime">2.6s</span></div>
-          </div>
-          <div style="min-width:180px">
-            <div class="small muted">Costo Piloto (30 días)</div>
-            <div style="font-weight:800;font-size:24px; color: #fff;">S/ 1,200</div>
-          </div>
-        </div>
+<nav>
+  <a href="#canvas">Modelo de Negocio</a>
+  <a href="#pestel">PESTEL</a>
+  <a href="#porter">5 Fuerzas</a>
+  <a href="#smart">Objetivos SMART</a>
+  <a href="#foda">FODA</a>
+  <a href="#competencia">Competencia</a>
+  <a href="#prototipo">Prototipo</a>
+  <a href="#plan">Plan Operativo</a>
+</nav>
 
-      </div>
-
-      <aside class="card">
-        <div class="mini-title">Panel de monitoreo (Simulación en vivo)</div>
-        <!-- Imagen real incorporada -->
-        <div class="cam-thumb" id="camThumb">
-          <img src="images/reconocimiento_facial.png" alt="Sistema de reconocimiento facial activo de SegurAI">
-        </div>
-
-        <div class="quick-stats">
-          <div class="stat">
-            <div class="small muted">Alertas Hoy (24h)</div>
-            <strong><span class="status-alert" id="alertsToday">3</span></strong>
-          </div>
-          <div class="stat">
-            <div class="small muted">Cámaras Operativas</div>
-            <strong><span class="status-ok">12/12</span></strong>
-          </div>
-          <div class="stat">
-            <div class="small muted">Personal Monitoreando</div>
-            <strong>4</strong>
-          </div>
-        </div>
-
-        <div style="margin-top:20px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px;">
-          <div class="small muted">Alerta Crítica Reciente</div>
-          <div style="font-weight:700;margin-top:8px">Intruso No Autorizado (<span id="latestAlertLabel" class="status-alert">ALERTA ROJA</span>)</div>
-          <div class="small muted" style="margin-top:4px">Ubicación: Zona A • 14:35 hrs</div>
-          <div class="small muted" style="margin-top:8px">Acción: Notificación enviada a Seguridad y <strong>Policía Local</strong>.</div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- FEATURES -->
-    <section id="producto" style="margin-top:40px;">
-      <div style="display:flex;justify-content:space-between;align-items:end">
-        <h2 style="margin:0">La Potencia de la Prevención Activa</h2>
-        <div class="badge">IA 24/7 • Detección Proactiva</div>
-      </div>
-
-      <div class="features" aria-hidden="false">
-        <div class="feature">
-          <h3>1. Detección Inteligente</h3>
-          <div class="muted">Reconocimiento facial biométrico con listas blancas y negras. Alertas automáticas por acceso no autorizado.</div>
-        </div>
-        <div class="feature">
-          <h3>2. Centro de Comando Web</h3>
-          <div class="muted">Dashboard en tiempo real con geolocalización de cámaras, trazabilidad de eventos e integración de autoridades.</div>
-        </div>
-        <div class="feature">
-          <h3>3. Integración Universal</h3>
-          <div class="muted">Compatible con el 99% de cámaras IP (protocolos RTSP, ONVIF) y procesamiento en la nube o local (Edge AI).</div>
-        </div>
-        <div class="feature">
-          <h3>4. Reportes Legales y Compliance</h3>
-          <div class="muted">Generación de reportes detallados y auditables, incluyendo marcas de tiempo y evidencia para fines legales.</div>
-        </div>
-        <div class="feature">
-          <h3>5. Privacidad por Diseño</h3>
-          <div class="muted">Cumplimiento estricto de la ley de protección de datos (anonimización y gestión de consentimiento).</div>
-          <div class="image-placeholder"></div>
-        </div>
-        <div class="feature">
-          <h3>6. Modelo Asequible y Escalable</h3>
-          <div class="muted">Licencias flexibles por cámara/mes. Inicie con un piloto de bajo riesgo y escale según sus necesidades.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SOBRE NOSOTROS (MISIÓN Y VISIÓN) -->
-    <section id="nosotros" style="margin-top:60px;">
-        <h2>Sobre Nosotros: Misión y Visión</h2>
-        <p class="muted lead" style="font-size:16px;">La base ética y el futuro que perseguimos con SegurAI.</p>
-
-        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:16px">
-            <div style="flex:1;min-width:300px" class="card">
-                <h3 style="margin-top:0; color:var(--accent);">Misión</h3>
-                <p class="small muted">Ser la plataforma de seguridad preventiva #1 en Latinoamérica, utilizando la inteligencia artificial para proteger a personas y bienes de forma proactiva, transparente y ética, minimizando el tiempo de respuesta ante eventos críticos.</p>
-            </div>
-
-            <div style="flex:1;min-width:300px" class="card">
-                <h3 style="margin-top:0; color:var(--accent);">Visión</h3>
-                <p class="small muted">Crear comunidades más seguras y confiables a través de tecnología accesible, redefiniendo el estándar de seguridad de reactivo a predictivo en entornos urbanos y empresariales, con un enfoque en la paz social.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROTOTIPO (MVP) -->
-    <section id="prototipo" style="margin-top:60px">
-      <h2>Nuestro Producto Mínimo Viable (MVP)</h2>
-      <p class="muted lead" style="font-size:16px;">El MVP se centra en demostrar la detección de rostros con <strong>alta precisión</strong> y la generación de <strong>alertas inmediatas</strong> en un entorno controlado. </p>
-
-      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:12px">
-        <div style="flex:1;min-width:300px" class="card">
-          <h3 style="margin-top:0; color:var(--accent);">Estrategia Técnica (Core)</h3>
-          <p class="small muted">Usamos Python, OpenCV y modelos de IA pre-entrenados para la detección. La clave es la optimización para <strong>tiempo de respuesta sub-3 segundos</strong>.</p>
-          <pre style="background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;color:#cce7eb;font-size:13px; margin-top:12px;">Flujo PMV:
-1. Captura (Webcam/IP)
-2. Procesamiento (IA Local/Cloud)
-3. Comparación (DB Simulada)
-4. Emisión de Alerta (Panel Demo)</pre>
-          <div class="image-placeholder" style="height: 120px;"></div>
-        </div>
-
-        <div style="flex:1;min-width:300px" class="card">
-          <h3 style="margin-top:0; color:var(--accent);">Objetivos de Validación</h3>
-          <ul style="margin:6px 0 0 16px;color:#fff; list-style: square;">
-            <li class="muted" style="margin-bottom:8px;"><span style="color:#fff; font-weight: 600;">Precisión:</span> Lograr ≥ 90% de identificación correcta en condiciones de baja luz.</li>
-            <li class="muted" style="margin-bottom:8px;"><span style="color:#fff; font-weight: 600;">Usabilidad:</span> Alcanzar ≥ 85% de satisfacción en el uso del panel por parte del equipo piloto.</li>
-            <li class="muted"><span style="color:#fff; font-weight: 600;">Implementación:</span> Despliegue funcional en un sitio piloto en <strong>menos de 48 horas</strong>.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div style="margin-top:30px" class="card">
-        <h3 style="margin-top:0">Flujo de Alerta de Alto Riesgo</h3>
-        <div class="workflow-grid">
-          <div class="step">1. Detección (Rostro/Intrusión)</div>
-          <div class="step">2. IA Verifica (Lista Negra)</div>
-          <div class="step">3. Alerta Instantánea (Panel/Móvil)</div>
-          <div class="step">4. Despacho (Seguridad Local)</div>
-          <div class="step">5. Reporte Legal Automático</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PLAN (breve resumen) -->
-    <section id="plan" style="margin-top:60px">
-      <h2>Plan Estratégico y Financiero (Resumen)</h2>
-      <p class="muted lead" style="font-size:16px;">Nuestra hoja de ruta para 12 meses se enfoca en la validación rápida, crecimiento orgánico y sostenibilidad financiera.</p>
-
-      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:16px">
-        <div style="flex:1;min-width:280px" class="card">
-          <h3 style="margin-top:0">Estrategia de Mercado</h3>
-          <p class="small muted">Foco inicial en <strong>Pymes de Retail</strong> y <strong>Comunidades Cerradas</strong> en Lima Metropolitana. (Mercado de alto dolor/alto valor).</p>
-        </div>
-        <div style="flex:1;min-width:280px" class="card">
-          <h3 style="margin-top:0">Inversión Inicial Requerida</h3>
-          <div class="muted" style="margin-bottom:12px;">Capital Semilla Objetivo:</div>
-          <div style="font-weight:800;font-size:28px; color:var(--accent);">S/ 18,000</div>
-          <div class="small muted">(Equipos dev, licencias cloud, marketing piloto y gastos fijos 3 meses)</div>
-        </div>
-      </div>
-
-      <div style="margin-top:20px" class="card">
-        <h3 style="margin-top:0">Cronograma de Ejecución (Hitos Clave)</h3>
-        <div class="small muted" style="font-weight: 600;">
-            <span style="color:var(--accent-2)">Mes 1-2:</span> Diseño, Backend Core y Testing.
-            <span style="color:var(--accent-2); margin-left: 15px;">Mes 3:</span> Lanzamiento de MVP y Adquisición de 3 Clientes Piloto.
-            <span style="color:var(--accent-2); margin-left: 15px;">Mes 4-6:</span> Iteración y Desarrollo de Versión 1.0 (Mobile App).
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contacto" style="margin-top:60px">
-      <div style="display:flex;gap:20px;flex-wrap:wrap">
-        <div style="flex:1;min-width:300px">
-          <h2>Asegure su futuro. Solicite una demo.</h2>
-          <p class="lead" style="font-size:16px;">Descubra cómo SegurAI puede transformar su seguridad de reactiva a <strong>preventiva</strong>.</p>
-          <div style="display:flex;gap:12px;margin-top:16px">
-            <a class="btn" href="mailto:contacto@segurai.pe?subject=Solicitud%20demo%20avanzada">Agendar Reunión / Demo</a>
-          </div>
-        </div>
-
-        <div style="flex:1;min-width:280px" class="card">
-          <h4 style="margin-top:0; color:var(--accent);">Cobertura y Contacto</h4>
-          <div class="map-sim">Mapa - Cobertura inicial Lima</div>
-          <div style="margin-top:10px" class="small muted"><span style="font-weight:700; color: #fff;">Teléfono:</span> +51 9XX XXX XXX</div>
-          <div class="small muted"><span style="font-weight:700; color: #fff;">Email:</span> contacto@segurai.pe</div>
-          <div class="image-placeholder" style="height: 80px; margin-top: 15px;"></div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-        <div class="small muted">© SegurAI 2025 • Todos los derechos reservados</div>
-        <div class="small muted">Desarrollado en Lima, Perú.</div>
-      </div>
-    </footer>
+<section id="canvas">
+  <h2>Modelo de Negocio (Business Model Canvas)</h2>
+  <div class="highlight">
+    SegurAI ofrece seguridad inteligente como servicio, integrando hardware, software y asesoría legal. Su propuesta equilibra innovación tecnológica, cumplimiento normativo y confianza social.
   </div>
+  <details open><summary>1. Propuesta de Valor</summary>
+    <ul>
+      <li>Vigilancia inteligente con IA en tiempo real.</li>
+      <li>Alertas inmediatas vía app móvil y plataforma web.</li>
+      <li>Prevención activa de delitos.</li>
+      <li>Costos más bajos frente a seguridad tradicional.</li>
+      <li>Asesoría legal y capacitación sobre protección de datos.</li>
+    </ul>
+  </details>
+  <details><summary>2. Segmentos de Clientes</summary>
+    <ul>
+      <li>Municipalidades, empresas, PYMES y vecindarios organizados.</li>
+    </ul>
+  </details>
+  <details><summary>3. Canales</summary>
+    <ul><li>Web, app móvil, ventas directas y alianzas estratégicas.</li></ul>
+  </details>
+  <details><summary>4. Relación con Clientes</summary>
+    <ul><li>Soporte, mantenimiento, capacitación y atención personalizada.</li></ul>
+  </details>
+  <details><summary>5. Fuentes de Ingresos</summary>
+    <ul><li>Venta de equipos, suscripción SaaS y servicios legales adicionales.</li></ul>
+  </details>
+</section>
 
-  <!-- Modal (Sobre Nosotros) -->
-  <div id="modal-nosotros" aria-hidden="true">
-    <div class="modal-inner" role="dialog" aria-modal="true" aria-labelledby="modal-nosotros-title">
-      <button class="close-btn" id="closeModal" aria-label="Cerrar">✕</button>
-      <h2 id="modal-nosotros-title">Sobre SegurAI — Misión y Visión</h2>
+<section id="pestel">
+  <h2>Análisis PESTEL</h2>
+  <ul>
+    <li><b>Político:</b> Apoyo estatal a seguridad ciudadana; riesgo de inestabilidad.</li>
+    <li><b>Económico:</b> Alta demanda, pero inflación puede afectar hardware.</li>
+    <li><b>Social:</b> Ciudadanos buscan soluciones; riesgo de desconfianza biométrica.</li>
+    <li><b>Tecnológico:</b> IA accesible y precisa; riesgo de obsolescencia.</li>
+    <li><b>Ecológico:</b> Equipos de bajo consumo y retos de residuos electrónicos.</li>
+    <li><b>Legal:</b> Cumplimiento estricto de la Ley N° 29733 de datos personales.</li>
+  </ul>
+</section>
 
-      <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;">
-        <div style="flex:1;min-width:260px" class="card">
-          <h3 style="margin-top:0; color:var(--accent);">Misión</h3>
-          <p class="muted">Ser la plataforma de seguridad preventiva #1 en Latinoamérica, utilizando la inteligencia artificial para proteger a personas y bienes de forma proactiva, transparente y ética, minimizando el tiempo de respuesta ante eventos críticos.</p>
-        </div>
-        <div style="flex:1;min-width:260px" class="card">
-          <h3 style="margin-top:0; color:var(--accent);">Visión</h3>
-          <p class="muted">Crear comunidades más seguras y confiables a través de tecnología accesible, redefiniendo el estándar de seguridad de reactivo a predictivo en entornos urbanos y empresariales, con un enfoque en la paz social.</p>
-        </div>
-      </div>
+<section id="porter">
+  <h2>5 Fuerzas de Porter</h2>
+  <ul>
+    <li><b>Rivalidad:</b> Competencia alta entre proveedores IA y CCTV.</li>
+    <li><b>Nuevos Entrantes:</b> Barreras moderadas por inversión y confianza legal.</li>
+    <li><b>Proveedores:</b> Poder medio; depender de importaciones incrementa riesgos.</li>
+    <li><b>Clientes:</b> Municipios con alto poder negociador; PYMES diversifican ingreso.</li>
+    <li><b>Sustitutos:</b> Serenazgo, alarmas y sistemas tradicionales.</li>
+  </ul>
+</section>
 
-      <div style="margin-top:16px" class="card">
-        <h3 style="margin-top:0; color:var(--accent);">Equipo & Ética</h3>
-        <p class="muted">Nuestro equipo combina experiencia en IA, desarrollo de software y operaciones de campo. Priorizamos la privacidad, la transparencia y la colaboración con autoridades para garantizar cumplimiento legal y confianza ciudadana.</p>
-        <p class="muted" style="margin-top:8px">¿Quieres que el equipo presente SegurAI en tu organización? <a class="btn" href="mailto:contacto@segurai.pe?subject=Presentacion%20SegurAI" style="display:inline-block;margin-top:8px">Solicitar Presentación</a></p>
-      </div>
-    </div>
+<section id="smart">
+  <h2>Objetivos SMART</h2>
+  <ul>
+    <li><b>Específico:</b> Crear un sistema de reconocimiento facial en tiempo real.</li>
+    <li><b>Medible:</b> Precisión ≥ 90%, tres pruebas piloto y encuestas de percepción.</li>
+    <li><b>Alcanzable:</b> Con equipo técnico, IA moderna y servidores escalables.</li>
+    <li><b>Relevante:</b> Aporta a la reducción de la inseguridad urbana.</li>
+    <li><b>Temporal:</b> 6 meses desarrollo, 2 meses piloto, 6 meses evaluación.</li>
+  </ul>
+</section>
+
+<section id="foda">
+  <h2>Análisis FODA</h2>
+  <ul>
+    <li><b>Fortalezas:</b> IA innovadora, asesoría legal y enfoque social.</li>
+    <li><b>Debilidades:</b> Dependencia tecnológica y costos iniciales.</li>
+    <li><b>Oportunidades:</b> Demanda creciente, alianzas público-privadas.</li>
+    <li><b>Amenazas:</b> Regulaciones, competencia, resistencia social.</li>
+  </ul>
+</section>
+
+<section id="competencia">
+  <h2>Análisis de la Competencia</h2>
+  <div class="highlight">
+    SegurAI se diferencia por integrar IA, cumplimiento legal y educación comunitaria, apuntando a un mercado en crecimiento.
   </div>
+  <ul>
+    <li><b>Directos:</b> Startups y empresas de videovigilancia inteligente.</li>
+    <li><b>Indirectos:</b> Seguridad privada y CCTV tradicional.</li>
+    <li><b>Estrategia:</b> Valor agregado en asesoría y confianza social.</li>
+  </ul>
+</section>
 
-  <script>
-    // Simulación de alertas y comportamiento del borde (azul en reposo, rojo en alerta)
-    (function(){
-      const el = document.getElementById('alertTime');
-      const alertsEl = document.getElementById('alertsToday');
-      const camThumb = document.getElementById('camThumb');
-      const latestLabel = document.getElementById('latestAlertLabel');
+<section id="prototipo">
+  <h2>Prototipo o PMV</h2>
+  <p>El prototipo de SegurAI incluye mockups de interfaz móvil y panel web, simulando conexión entre cámaras, servidor y app.</p>
+  <ul>
+    <li><b>Objetivos:</b> Validar viabilidad técnica y percepción de usuarios.</li>
+    <li><b>Recomendación:</b> Incluir figuras del flujo del sistema y bocetos en <b>/images/</b>.</li>
+  </ul>
+</section>
 
-      let currentAlerts = 3;
+<section id="plan">
+  <h2>Plan Operativo y Financiero</h2>
+  <ul>
+    <li><b>Ubicación:</b> Lima Metropolitana (coworking o espacio compartido).</li>
+    <li><b>Inversión inicial:</b> S/ 7,000 – 8,000.</li>
+    <li><b>Etapas:</b> investigación, prototipo, validación, escalamiento.</li>
+    <li><b>Indicadores:</b> Precisión ≥ 85%, satisfacción ≥ 80%, retención ≥ 70%.</li>
+    <li><b>Rentabilidad esperada:</b> 25–30% en segundo año.</li>
+  </ul>
+  <div class="highlight">
+    Con un enfoque sostenible, SegurAI busca combinar impacto social con innovación tecnológica local.
+  </div>
+</section>
 
-      function updateAlertState(){
-        // Cambia el estado de alerta basado en el número de alertas (umbral configurable)
-        const ALERT_THRESHOLD = 6; // si alertas >= 6 => alerta roja
-        if(camThumb){
-          if(currentAlerts >= ALERT_THRESHOLD){
-            camThumb.classList.add('alert');
-            if(latestLabel) latestLabel.textContent = 'ALERTA ROJA';
-          } else {
-            camThumb.classList.remove('alert');
-            if(latestLabel) latestLabel.textContent = 'ALERTA ROJA'; // mantiene texto pero colores cambian
-          }
-        }
-        if(alertsEl) alertsEl.textContent = currentAlerts;
-      }
+<footer>
+  © 2025 SegurAI – Proyecto de Seguridad Inteligente con IA | Elaboración propia
+</footer>
 
-      // Aumenta aleatoriamente alertas para simular comportamiento
-      setInterval(() => {
-        // 30% probabilidad de llegar nueva alerta
-        if(Math.random() < 0.3) currentAlerts++;
-        // reset ocasional
-        if(currentAlerts > 12) currentAlerts = 2;
-        updateAlertState();
-      }, 5000);
-
-      // Simular tiempo de respuesta (si existe el elemento)
-      if(el){
-        let t = 2600;
-        setInterval(()=>{
-          t = Math.max(1500, Math.round((t + (Math.random()*200-100))));
-          if (t > 3500) t = 2600;
-          el.textContent = (t/1000).toFixed(1)+'s';
-        },2000);
-      }
-
-      // Inicializar estado
-      updateAlertState();
-
-      // Modal behavior
-      const abrir = document.getElementById('abrir-nosotros');
-      const modal = document.getElementById('modal-nosotros');
-      const close = document.getElementById('closeModal');
-
-      function openModal(e){
-        e && e.preventDefault();
-        if(modal){
-          modal.style.display = 'flex';
-          modal.setAttribute('aria-hidden','false');
-          document.body.style.overflow = 'hidden';
-          const focusable = modal.querySelector('button, a, input, textarea');
-          if(focusable) focusable.focus();
-        }
-      }
-      function closeModal(){
-        if(modal){
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden','true');
-          document.body.style.overflow = '';
-          abrir && abrir.focus();
-        }
-      }
-
-      if(abrir){
-        abrir.addEventListener('click', openModal);
-      }
-      if(close){
-        close.addEventListener('click', closeModal);
-      }
-      if(modal){
-        modal.addEventListener('click', function(evt){
-          if(evt.target === modal) closeModal();
-        });
-        document.addEventListener('keydown', function(evt){
-          if(evt.key === 'Escape') closeModal();
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
+
 
 
