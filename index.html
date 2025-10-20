@@ -1,332 +1,236 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SegurAI — Seguridad Inteligente con IA</title>
-<link rel="icon" href="images/logo.png">
-<style>
-/* === Estilo general === */
-* { box-sizing: border-box; scroll-behavior: smooth; transition: all 0.4s ease; }
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #001b44;
-  color: #fff;
-  display: flex;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SegurAI — Presentación de Negocio con IA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-blue: #010A20;
+      --sidebar-blue: #031535;
+      --accent-blue: #00bfff;
+      --highlight-blue: #00d5ff;
+      --text-color: #e6eef6;
+      --card-bg: #03183d;
+      --radius: 12px;
+      --danger-red: #ff3b3b;
+      font-family: 'Inter', sans-serif;
+    }
+    body { margin:0; background-color: var(--dark-blue); color: var(--text-color); display:flex; height:100vh; overflow:hidden; }
+    * { box-sizing:border-box; }
 
-/* === Menú lateral === */
-#sidebar {
-  width: 250px;
-  background: #021d47;
-  height: 100vh;
-  position: fixed;
-  top: 0; left: 0;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
-  border-right: 3px solid #00bfff;
-}
-#sidebar h2 {
-  color: #00bfff;
-  margin-bottom: 20px;
-}
-#sidebar a {
-  color: #fff;
-  text-decoration: none;
-  margin: 10px 0;
-  font-weight: 600;
-  width: 80%;
-  text-align: center;
-  padding: 10px;
-  border-radius: 8px;
-}
-#sidebar a:hover, #sidebar a.active {
-  background: #00bfff;
-  color: #001b44;
-}
+    /* Sidebar */
+    .sidebar { width:260px; background-color: var(--sidebar-blue); padding:25px 0; position:fixed; left:0; top:0; bottom:0; display:flex; flex-direction:column; box-shadow: 4px 0 15px rgba(0,0,0,0.4); transition: transform 0.3s ease; }
+    .sidebar h2 { color: var(--highlight-blue); font-size:1.6em; margin:0 0 25px 30px; border-bottom:2px solid rgba(0,191,255,0.2); padding-bottom:10px; font-weight:800; }
+    .sidebar a { color: var(--text-color); text-decoration:none; padding:12px 30px; font-size:1em; display:flex; align-items:center; gap:15px; border-left:5px solid transparent; transition: background-color 0.3s, color 0.3s; }
+    .sidebar a i { font-size:1.1em; color: var(--accent-blue); }
+    .sidebar a:hover { background-color: rgba(0,191,255,0.1); color: var(--highlight-blue); }
+    .sidebar a.active { background-color: rgba(0,191,255,0.15); border-left-color: var(--highlight-blue); color: var(--highlight-blue); font-weight:600; }
 
-/* === Contenedor principal === */
-#content {
-  margin-left: 250px;
-  flex: 1;
-  padding: 40px;
-  display: none;
-}
-section {
-  display: none;
-  opacity: 0;
-}
-section.active {
-  display: block;
-  opacity: 1;
-}
-h1, h2 {
-  color: #00bfff;
-}
-ul { line-height: 1.6; margin-left: 20px; }
-.highlight {
-  background: rgba(255,255,255,0.05);
-  border-left: 4px solid #00bfff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-video {
-  width: 100%;
-  max-width: 800px;
-  border-radius: 10px;
-  display: block;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-.button {
-  background: #00bfff;
-  color: #001b44;
-  padding: 12px 22px;
-  font-weight: 700;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 20px;
-}
-.button:hover {
-  background: #0099cc;
-  color: white;
-}
+    /* Main content */
+    .main-content { margin-left:260px; padding:40px; width: calc(100% - 260px); overflow-y:auto; scroll-behavior:smooth; }
+    section { min-height: calc(100vh - 80px); display:none; opacity:0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; padding-bottom:50px; }
+    section.active { display:block; opacity:1; transform:translateY(0); }
 
-/* === Portada inicial === */
-#intro {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  text-align: center;
-}
-#intro h1 {
-  font-size: 3em;
-  color: #00bfff;
-}
-#intro p {
-  font-size: 1.2em;
-  opacity: 0.9;
-}
+    /* Hero */
+    .hero { width:100vw; height:100vh; background: linear-gradient(135deg, #010714 0%, #031535 100%); position:fixed; z-index:1000; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; transition: opacity 0.5s ease; }
+    .hero h1 { font-size:3.2em; color: var(--highlight-blue); margin-bottom:20px; font-weight:900; text-shadow:0 0 15px rgba(0,191,255,0.4); }
+    .hero p { font-size:1.2em; color: rgba(255,255,255,0.8); margin-bottom:30px; }
+    .hero button { background-color: var(--accent-blue); border:none; color: var(--dark-blue); padding:15px 30px; border-radius:var(--radius); font-size:1.1em; cursor:pointer; font-weight:700; box-shadow:0 6px 15px rgba(0,191,255,0.3); transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; }
+    .hero button:hover { background-color: var(--highlight-blue); transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,191,255,0.5); }
 
-/* === Equipo === */
-.team {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-}
-.member {
-  background: #0a2e6f;
-  border-radius: 10px;
-  padding: 15px;
-  text-align: center;
-  width: 200px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-.member img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid #00bfff;
-  object-fit: cover;
-}
-.member h4 { color: #00bfff; margin: 10px 0 5px; }
-.member p { font-size: 0.9em; color: #ddd; }
+    h2 { color: var(--highlight-blue); margin-bottom:10px; font-weight:800; border-bottom:1px solid rgba(0,191,255,0.1); padding-bottom:8px; }
+    h3 { color: var(--highlight-blue); margin-top:20px; }
 
-/* === Footer === */
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9em;
-  color: #ccc;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  margin-top: 40px;
-}
+    /* Cards */
+    .card-info { background-color: var(--card-bg); padding:20px; border-radius:var(--radius); margin-top:20px; border-left:5px solid var(--accent-blue); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+    .card-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; }
+    .info-item { background-color:#031535; padding:15px; border-radius:var(--radius); border-top:3px solid var(--highlight-blue); }
+    .info-item strong { color: var(--highlight-blue); display:block; margin-bottom:5px; font-weight:700; }
+    .info-item ul { list-style:none; padding:0; margin:5px 0 0; }
+    .info-item li { margin-bottom:8px; font-size:0.95em; color: rgba(255,255,255,0.8); }
 
-/* === Responsive === */
-@media (max-width: 768px) {
-  #sidebar { width: 200px; }
-  #content { margin-left: 200px; padding: 20px; }
-}
-</style>
+    /* Team */
+    .team { display:grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:25px; margin-top:30px; }
+    .member { text-align:center; background-color: var(--card-bg); padding:20px; border-radius:var(--radius); border:1px solid rgba(0,191,255,0.2); box-shadow:0 4px 10px rgba(0,0,0,0.3); transition: transform 0.3s; }
+    .member:hover { transform: translateY(-5px); border-color: var(--highlight-blue); }
+    .member .image-placeholder { width:120px; height:120px; border-radius:50%; margin:0 auto 15px; background-color:#032a5a; border:3px solid var(--accent-blue); display:flex; align-items:center; justify-content:center; font-weight:700; color: var(--highlight-blue); font-size:0.9em; overflow:hidden; }
+
+    /* Video */
+    .video-container { width:100%; max-width:800px; margin:20px auto; background-color:#000; border-radius:var(--radius); box-shadow:0 0 20px rgba(0,191,255,0.4); overflow:hidden; }
+    video { width:100%; display:block; }
+
+    /* Alerts */
+    @keyframes pulse-border { 0% { border-left-color: var(--accent-blue);} 50% { border-left-color: var(--danger-red);} 100% { border-left-color: var(--accent-blue);} }
+    .alert { animation: pulse-border 1.5s infinite; }
+
+    @media(max-width:768px){
+      .sidebar { width:100%; height:auto; position:relative; display:none; padding:15px 0; box-shadow:none; }
+      .main-content { margin-left:0; padding:20px; width:100%; }
+      .hero h1 { font-size:2.2em; }
+      .card-grid { grid-template-columns:1fr; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- Portada inicial -->
-<div id="intro">
-  <h1>SegurAI — Seguridad Inteligente con IA</h1>
-  <p>Innovación peruana que combina tecnología, prevención y confianza ciudadana.</p>
-  <a href="#" id="startBtn" class="button">Explorar SegurAI</a>
-</div>
+  <!-- Hero -->
+  <div class="hero" id="inicio">
+    <h1>SegurAI — Seguridad Preventiva con IA</h1>
+    <p>Innovación tecnológica y protección en entornos urbanos y empresariales.</p>
+    <button onclick="explorar()">Explorar Presentación</button>
+  </div>
 
-<!-- Menú lateral -->
-<div id="sidebar">
-  <h2>Menú</h2>
-  <a href="#" class="nav-link active" data-target="mision">Misión y Visión</a>
-  <a href="#" class="nav-link" data-target="modelo">Modelo de Negocio</a>
-  <a href="#" class="nav-link" data-target="pestel">Análisis PESTEL</a>
-  <a href="#" class="nav-link" data-target="foda">Análisis FODA</a>
-  <a href="#" class="nav-link" data-target="competencia">Competencia</a>
-  <a href="#" class="nav-link" data-target="demo">Demo Funcional</a>
-  <a href="#" class="nav-link" data-target="equipo">Equipo</a>
-  <a href="#" class="nav-link" data-target="responsables">Responsables</a>
-  <a href="#" class="nav-link" data-target="plan">Plan Operativo</a>
-</div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar" style="display:none;">
+    <h2>SegurAI</h2>
+    <a href="#" onclick="mostrarSeccion('mision', this)" class="active"><i class="fas fa-handshake"></i> Misión y Visión</a>
+    <a href="#" onclick="mostrarSeccion('modelo', this)"><i class="fas fa-chart-line"></i> Modelo de Negocio</a>
+    <a href="#" onclick="mostrarSeccion('pestel', this)"><i class="fas fa-globe-americas"></i> Análisis PESTEL</a>
+    <a href="#" onclick="mostrarSeccion('porter', this)"><i class="fas fa-sitemap"></i> 5 Fuerzas de Porter</a>
+    <a href="#" onclick="mostrarSeccion('foda', this)"><i class="fas fa-balance-scale"></i> Análisis FODA</a>
+    <a href="#" onclick="mostrarSeccion('competencia', this)"><i class="fas fa-shield-alt"></i> Competencia</a>
+    <a href="#" onclick="mostrarSeccion('demo', this)"><i class="fas fa-video"></i> Demo Funcional</a>
+    <a href="#" onclick="mostrarSeccion('equipo', this)"><i class="fas fa-users"></i> Equipo</a>
+    <a href="#" onclick="mostrarSeccion('plan', this)"><i class="fas fa-tasks"></i> Plan Operativo</a>
+  </div>
 
-<!-- Contenido principal -->
-<div id="content">
-  <section id="mision" class="active">
-    <h2>Misión y Visión</h2>
-    <div class="highlight">
-      <p><b>Misión:</b> Proporcionar soluciones de seguridad inteligente que combinen inteligencia artificial, tecnología de reconocimiento facial y asesoría legal, para fortalecer la protección de personas e instituciones.</p>
-      <p><b>Visión:</b> Convertirse en la empresa peruana líder en innovación de seguridad tecnológica con impacto social positivo, promoviendo la confianza y la prevención en comunidades urbanas y organizaciones.</p>
-    </div>
-  </section>
+  <!-- Main Content -->
+  <div class="main-content" id="contenido" style="display:none;">
 
-  <section id="modelo">
-    <h2>Modelo de Negocio</h2>
-    <div class="highlight">SegurAI ofrece seguridad inteligente como servicio (hardware + software + asesoría legal), integrando innovación tecnológica y cumplimiento normativo.</div>
-    <ul>
-      <li>Vigilancia inteligente en tiempo real.</li>
-      <li>Alertas vía app móvil y plataforma web.</li>
-      <li>Prevención activa de delitos y reducción de costos.</li>
-      <li>Asesoría legal en protección de datos.</li>
-    </ul>
-  </section>
-
-  <section id="pestel">
-    <h2>Análisis PESTEL</h2>
-    <ul>
-      <li><b>Político:</b> Impulso estatal a seguridad ciudadana; riesgos por inestabilidad.</li>
-      <li><b>Económico:</b> Alta demanda, riesgo de inflación y costos de hardware.</li>
-      <li><b>Social:</b> Ciudadanos buscan soluciones; temor al uso de datos biométricos.</li>
-      <li><b>Tecnológico:</b> Avances en IA; necesidad de actualización constante.</li>
-      <li><b>Ecológico:</b> Equipos de bajo consumo; riesgo de residuos electrónicos.</li>
-      <li><b>Legal:</b> Cumplimiento de la Ley N.° 29733 de protección de datos.</li>
-    </ul>
-  </section>
-
-  <section id="foda">
-    <h2>Análisis FODA</h2>
-    <ul>
-      <li><b>Fortalezas:</b> IA innovadora, asesoría legal, impacto social positivo.</li>
-      <li><b>Debilidades:</b> Dependencia tecnológica, necesidad de actualización.</li>
-      <li><b>Oportunidades:</b> Alta demanda y políticas públicas de transformación digital.</li>
-      <li><b>Amenazas:</b> Regulaciones de privacidad, competencia creciente.</li>
-    </ul>
-  </section>
-
-  <section id="competencia">
-    <h2>Competencia</h2>
-    <div class="highlight">
-      SegurAI se diferencia al integrar IA + asesoría legal + enfoque social, frente a empresas tradicionales de seguridad física y startups IA parciales.
-    </div>
-  </section>
-
-  <section id="demo">
-    <h2>Demo Funcional</h2>
-    <p>El prototipo de SegurAI implementa reconocimiento facial, alertas automáticas y monitoreo en tiempo real.</p>
-    <video controls>
-      <source src="videos/demo.mp4" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
-    <p style="text-align:center;"><a href="videos/demo.mp4" class="button" target="_blank">Ver demostración completa</a></p>
-  </section>
-
-  <section id="equipo">
-    <h2>Equipo Fundador</h2>
-    <div class="team">
-      <div class="member">
-        <img src="images/equipo_ceo.jpg" alt="CEO">
-        <h4>Carlos Manuel</h4>
-        <p>CEO — Dirección general y alianzas institucionales.</p>
+    <!-- Misión y Visión -->
+    <section id="mision" class="active">
+      <h2>Misión y Visión</h2>
+      <div class="card-grid">
+        <div class="info-item">
+          <strong>Misión</strong>
+          <p>Brindar soluciones de seguridad basadas en Inteligencia Artificial que protejan entornos urbanos y empresariales.</p>
+        </div>
+        <div class="info-item">
+          <strong>Visión</strong>
+          <p>Convertirnos en el referente peruano de seguridad inteligente, integrando tecnología, legalidad y confianza social.</p>
+        </div>
       </div>
-      <div class="member">
-        <img src="images/equipo_kym.jpg" alt="KYM">
-        <h4>Jesús Rodríguez (KYM)</h4>
-        <p>Coordinador — Alianzas estratégicas.</p>
-      </div>
-      <div class="member">
-        <img src="images/equipo_cto.jpg" alt="CTO">
-        <h4>José Moreno</h4>
-        <p>CTO — Desarrollo técnico e innovación IA.</p>
-      </div>
-      <div class="member">
-        <img src="images/equipo_ops.jpg" alt="Operaciones">
-        <h4>Anaceli Samamé</h4>
-        <p>Operaciones — Logística y soporte en campo.</p>
-      </div>
-      <div class="member">
-        <img src="images/equipo_marketing.jpg" alt="Marketing">
-        <h4>Luis Salazar</h4>
-        <p>Marketing — Difusión y gestión de usuarios piloto.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="responsables">
-    <h2>Responsables Principales</h2>
-    <ul>
-      <li><b>CEO (Carlos Manuel):</b> Coordinación general.</li>
-      <li><b>KYM (Jesús Rodríguez):</b> Coordinación de alianzas estratégicas.</li>
-      <li><b>CTO (José Moreno):</b> Desarrollo técnico y validación del algoritmo.</li>
-      <li><b>Jefa de Operaciones (Anaceli Samamé):</b> Logística y soporte en campo.</li>
-      <li><b>Marketing (Luis Salazar):</b> Difusión, campañas y gestión de usuarios piloto.</li>
-    </ul>
-  </section>
+    <!-- Modelo de Negocio con Reconocimiento Facial -->
+    <section id="modelo">
+      <h2>Modelo de Negocio</h2>
+      <div class="card-grid">
+        <div class="info-item">
+          <strong>Propuesta de Valor</strong>
+          <p>Implementar soluciones de monitoreo inteligente con IA que anticipen riesgos y mejoren la toma de decisiones de seguridad.</p>
+        </div>
+        <div class="info-item alert" id="reconocimiento-facial-card">
+          <strong>Reconocimiento Facial Activo</strong>
+          <img src="reconocimiento_facial.png" alt="Reconocimiento Facial" style="width:100%; border-radius:12px; margin-top:10px;">
+          <p>Monitoreo en tiempo real mediante IA para detección y alerta inmediata de situaciones críticas.</p>
+        </div>
+      </div>
+    </section>
 
-  <section id="plan">
-    <h2>Plan Operativo y Financiero</h2>
-    <ul>
-      <li><b>Ubicación:</b> Lima Metropolitana (coworking / espacio compartido).</li>
-      <li><b>Inversión inicial:</b> S/ 7,000 – 8,000.</li>
-      <li><b>Etapas:</b> Investigación → prototipo → piloto → escalamiento.</li>
-      <li><b>Indicadores:</b> Precisión ≥ 85%, satisfacción ≥ 80%, retención ≥ 70%.</li>
-      <li><b>Rentabilidad esperada:</b> 25–30% al segundo año.</li>
-    </ul>
-    <footer>© 2025 SegurAI — Proyecto de Seguridad Inteligente con IA | Elaboración propia</footer>
-  </section>
-</div>
+    <!-- PESTEL -->
+    <section id="pestel">
+      <h2>Análisis PESTEL</h2>
+      <div class="card-grid">
+        <div class="info-item"><strong>Político</strong><p>Impulso de programas de seguridad ciudadana y posibles resistencias locales.</p></div>
+        <div class="info-item"><strong>Económico</strong><p>Creciente inversión en seguridad privada y pública. Limitaciones presupuestarias en municipalidades vulnerables.</p></div>
+        <div class="info-item"><strong>Social</strong><p>Alta percepción de inseguridad y desconfianza frente al uso de datos biométricos.</p></div>
+        <div class="info-item"><strong>Tecnológico</strong><p>Avances en IA para reconocimiento facial. Costos de hardware reducidos.</p></div>
+        <div class="info-item"><strong>Ecológico</strong><p>Equipos de bajo consumo y reducción de patrullajes constantes.</p></div>
+        <div class="info-item"><strong>Legal</strong><p>Cumplimiento de la Ley 29733 sobre protección de datos personales.</p></div>
+      </div>
+    </section>
 
-<script>
-// Mostrar contenido y menú al presionar "Explorar SegurAI"
-document.getElementById('startBtn').addEventListener('click', function(e){
-  e.preventDefault();
-  document.getElementById('intro').style.display = 'none';
-  document.getElementById('sidebar').style.display = 'flex';
-  document.getElementById('content').style.display = 'block';
-});
+    <!-- 5 Fuerzas de Porter -->
+    <section id="porter">
+      <h2>5 Fuerzas de Porter</h2>
+      <div class="card-grid">
+        <div class="info-item"><strong>Rivalidad</strong><p>Empresas existentes y startups IA. Diferenciación mediante IA + asesoría legal.</p></div>
+        <div class="info-item"><strong>Nuevos Entrantes</strong><p>Pequeños integradores con hardware básico. Barreras de entrada: certificaciones y modelos propios.</p></div>
+        <div class="info-item"><strong>Poder Proveedores</strong><p>Dependencia de cámaras, GPUs y servidores. Riesgo por crisis de chips.</p></div>
+        <div class="info-item"><strong>Poder Clientes</strong><p>Municipalidades presionan precios; PYMES menos poder.</p></div>
+        <div class="info-item"><strong>Amenaza Sustitutos</strong><p>Serenos, alarmas vecinales y guardias físicos. SegurAI complementa reduciendo costos.</p></div>
+      </div>
+    </section>
 
-// Navegación con efecto fade
-const links = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('section');
-links.forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    links.forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-    const target = link.dataset.target;
-    sections.forEach(s => {
-      if (s.id === target) {
-        s.classList.add('active');
-      } else {
-        s.classList.remove('active');
-      }
-    });
-  });
-});
-</script>
+    <!-- FODA -->
+    <section id="foda">
+      <h2>Análisis FODA</h2>
+      <div class="card-grid">
+        <div class="info-item"><strong>Fortalezas</strong><ul><li>Algoritmo optimizado</li><li>Modelo integral IA + Hardware + Legal</li></ul></div>
+        <div class="info-item"><strong>Oportunidades</strong><ul><li>Creciente demanda en Latam</li><li>Alianzas estratégicas con Municipalidades</li></ul></div>
+        <div class="info-item"><strong>Debilidades</strong><ul><li>Dependencia de internet local</li><li>Costos iniciales de hardware</li></ul></div>
+        <div class="info-item"><strong>Amenazas</strong><ul><li>Regulaciones estrictas de privacidad</li><li>Competencia global</li></ul></div>
+      </div>
+    </section>
+
+    <!-- Competencia -->
+    <section id="competencia">
+      <h2>Competencia</h2>
+      <p>Competidores tradicionales: serenos, alarmas, CCTV convencional. SegurAI ofrece automatización y análisis predictivo.</p>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo">
+      <h2>Demo Funcional</h2>
+      <div class="video-container">
+        <video controls poster="https://placehold.co/800x450/031535/00bfff?text=DEMO+FUNCIONAL+IA">
+          <source src="videos/demo.mp4" type="video/mp4">
+          Tu navegador no soporta videos HTML5.
+        </video>
+      </div>
+    </section>
+
+    <!-- Equipo -->
+    <section id="equipo">
+      <h2>Equipo</h2>
+      <div class="team">
+        <div class="member">
+          <div class="image-placeholder">JJB</div>
+          <strong>Juan J. Bravo</strong>
+          <p>CEO & Fundador</p>
+        </div>
+        <div class="member">
+          <div class="image-placeholder">ANA</div>
+          <strong>Ana Fernández</strong>
+          <p>CTO & IA Specialist</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Plan Operativo -->
+    <section id="plan">
+      <h2>Plan Operativo</h2>
+      <p>Desarrollo progresivo en 3 fases: piloto, expansión nacional y escalamiento internacional con soporte de IA y hardware integrado.</p>
+    </section>
+
+  </div>
+
+  <script>
+    function explorar() {
+      document.getElementById('inicio').style.display='none';
+      document.getElementById('contenido').style.display='block';
+      document.getElementById('sidebar').style.display='flex';
+      mostrarSeccion('mision', document.querySelector('.sidebar a'));
+    }
+
+    function mostrarSeccion(id, elemento) {
+      document.querySelectorAll('.main-content section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      elemento.classList.add('active');
+    }
+
+    function activarAlerta(selector) { document.querySelector(selector).classList.add('alert'); }
+    function desactivarAlerta(selector) { document.querySelector(selector).classList.remove('alert'); }
+  </script>
+
 </body>
 </html>
+
 
 
 
