@@ -1,305 +1,454 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SegurAI — Presentación de Negocio con IA</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --dark-blue: #010A20;
-      --sidebar-blue: #031535;
-      --accent-blue: #00bfff;
-      --highlight-blue: #00d5ff;
-      --text-color: #e6eef6;
-      --card-bg: #03183d;
-      --radius: 12px;
-      font-family: 'Inter', sans-serif;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SegurAI — Presentación de Negocio con IA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark-blue:#010A20;
+  --sidebar-blue:#031535;
+  --accent-blue:#00bfff;
+  --highlight-blue:#00d5ff;
+  --text:#e6eef6;
+  --card:#03183d;
+  --radius:12px;
+  --btn-back:#ff004c;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display:flex;overflow:hidden}
 
-    body {
-      margin: 0;
-      background-color: var(--dark-blue);
-      color: var(--text-color);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-    * { box-sizing: border-box; }
+/* HERO */
+.hero{
+  position:fixed;inset:0;
+  background:linear-gradient(135deg,#010714 0%,#031535 100%);
+  display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:1000;
+}
+.hero img.logo{width:150px;max-width:40vw}
+.hero h1{font-size:2.8rem;margin:0;color:var(--highlight-blue);font-weight:900;text-shadow:0 0 14px rgba(0,191,255,0.25)}
+.hero p{max-width:900px;margin:0;font-size:1.05rem;color:rgba(255,255,255,0.9)}
+.hero .mv{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+.mv-card{background:var(--card);padding:14px;border-radius:12px;width:260px;box-shadow:0 6px 18px rgba(0,0,0,0.35);text-align:center}
+.mv-card img{width:64px;height:64px;object-fit:cover;margin-bottom:8px;border-radius:10px}
+.mv-card h3{margin:6px 0;color:var(--highlight-blue);font-size:1.05rem;text-transform:capitalize}
+.mv-card p{font-size:0.92rem;color:rgba(255,255,255,0.86);line-height:1.3}
 
-    .sidebar {
-      width: 260px;
-      background-color: var(--sidebar-blue);
-      padding: 25px 0;
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease;
-    }
+/* Hero buttons big stylized */
+.hero-controls{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.btn{
+  border:0;padding:14px 28px;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.45);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn-explorar{background:linear-gradient(45deg,#00bfff,#00ffbf);color:#011;box-shadow:0 10px 30px rgba(0,191,255,0.18)}
+.btn-boceto{background:linear-gradient(45deg,#ff7a7a,#ffc371);color:#051}
+.btn-story{background:linear-gradient(45deg,#ff9a00,#ff0055);color:#fff}
+.hero .preview-img{margin-top:26px;max-width:420px;border-radius:12px;box-shadow:0 8px 30px rgba(0,191,255,0.18)}
 
-    .sidebar h2 {
-      color: var(--highlight-blue);
-      font-size: 1.6em;
-      margin: 0 0 25px 30px;
-      border-bottom: 2px solid rgba(0, 191, 255, 0.2);
-      padding-bottom: 10px;
-      font-weight: 800;
-    }
+/* SIDEBAR */
+.sidebar{
+  width:260px; background:var(--sidebar-blue); position:fixed; left:0; top:0; bottom:0; padding-top:28px;
+  display:flex;flex-direction:column;gap:6px;padding-left:18px;box-shadow:4px 0 18px rgba(0,0,0,0.5); z-index:900;
+}
+.sidebar h2{color:var(--highlight-blue);margin:0 0 12px 6px;font-weight:900}
+.sidebar a{color:var(--text); text-decoration:none;padding:10px 18px;border-left:5px solid transparent;display:flex;align-items:center;gap:10px;border-radius:6px;margin-right:12px}
+.sidebar a:hover{background:rgba(0,191,255,0.06);color:var(--highlight-blue)}
+.sidebar a.active{background:rgba(0,191,255,0.12);border-left-color:var(--highlight-blue);color:var(--highlight-blue)}
 
-    .sidebar a {
-      color: var(--text-color);
-      text-decoration: none;
-      padding: 12px 30px;
-      font-size: 1em;
-      transition: background-color 0.3s, color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-left: 5px solid transparent;
-    }
+/* CONTENT */
+.main{margin-left:260px;padding:32px;height:100vh;overflow:auto}
+.section{display:none;opacity:0;transform:translateY(20px);transition:all .5s ease;padding-bottom:40px;min-height:calc(100vh - 80px)}
+.section.active{display:block;opacity:1;transform:none}
+.card{background:var(--card);padding:18px;border-radius:12px;border-left:5px solid var(--accent-blue);box-shadow:0 8px 24px rgba(0,0,0,0.45);margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-    .sidebar a i { font-size: 1.1em; color: var(--accent-blue); }
+/* BACK BUTTON */
+.btn-back{
+  display:inline-flex;align-items:center;gap:10px;background:var(--btn-back);color:#fff;padding:10px 16px;border-radius:12px;border:0;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(255,0,76,0.18);
+}
+.btn-back i{transform:translateX(-2px)}
 
-    .sidebar a:hover {
-      background-color: rgba(0, 191, 255, 0.1);
-      color: var(--highlight-blue);
-    }
+/* DEMO VIDEO */
+.video-wrap{max-width:900px;margin:18px auto;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+.video-wrap video{width:100%;height:auto;display:block;background:#000}
 
-    .sidebar a.active {
-      background-color: rgba(0, 191, 255, 0.15);
-      border-left-color: var(--highlight-blue);
-      color: var(--highlight-blue);
-      font-weight: 600;
-    }
+/* MODALS (Boceto & Story) */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;padding:28px;z-index:2000;overflow:auto
+}
+.modal .box{max-width:1100px;width:100%;background:linear-gradient(180deg,rgba(2,6,23,0.95),rgba(8,12,26,0.96));padding:26px;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,0.7)}
+.modal h2{margin:0 0 12px 0;color:var(--highlight-blue)}
+.modal .close{float:right;border:0;background:transparent;color:var(--text);font-size:20px;cursor:pointer}
+.modal .content-row{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.modal img{max-width:420px;border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+.modal .mock{flex:1;min-width:260px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px}
 
-    .main-content {
-      margin-left: 260px;
-      padding: 40px;
-      width: calc(100% - 260px);
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
+/* Timeline story */
+.timeline{position:relative;margin:20px auto;max-width:760px;padding:20px 10px}
+.timeline::before{content:'';position:absolute;left:50%;top:10px;bottom:10px;width:4px;background:linear-gradient(180deg,var(--highlight-blue),#00aaff);transform:translateX(-50%)}
+.step{position:relative;width:50%;padding:18px;border-radius:10px;background:rgba(0,191,255,0.06);opacity:0;transform:translateX(-30px) scale(.95);transition:all .45s ease;margin-bottom:24px}
+.step.right{left:50%;transform:translateX(30px) scale(.95)}
+.step.left{left:0}
+.step.active{opacity:1;transform:translateX(0) scale(1);box-shadow:0 10px 30px rgba(0,191,255,0.12);border:1px solid rgba(0,213,255,0.2)}
+.step i{display:block;font-size:1.4rem;color:var(--highlight-blue);margin-bottom:8px}
+.timeline-controls{display:flex;justify-content:center;gap:10px;margin-top:10px}
+.timeline-controls button{padding:8px 14px;border-radius:10px;border:0;background:var(--highlight-blue);color:#001;font-weight:800;cursor:pointer}
 
-    section {
-      min-height: calc(100vh - 80px);
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      padding-bottom: 50px;
-    }
-
-    section.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .hero {
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #010714 0%, #031535 100%);
-      position: fixed;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      transition: opacity 0.5s ease;
-      padding: 20px;
-    }
-
-    .hero img {
-      max-width: 180px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      font-size: 3em;
-      color: var(--highlight-blue);
-      margin-bottom: 20px;
-      font-weight: 900;
-      text-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
-    }
-
-    .hero p {
-      font-size: 1.3em;
-      color: rgba(255, 255, 255, 0.85);
-      margin-bottom: 30px;
-      max-width: 800px;
-    }
-
-    .hero button {
-      border: none;
-      color: var(--dark-blue);
-      padding: 18px 35px;
-      margin: 5px;
-      border-radius: var(--radius);
-      font-size: 1.2em;
-      cursor: pointer;
-      font-weight: 700;
-      box-shadow: 0 6px 15px rgba(0, 191, 255, 0.3);
-      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    }
-
-    .btn-primary { background-color: var(--accent-blue); }
-    .btn-primary:hover { background-color: var(--highlight-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 191, 255, 0.5);}
-    .btn-secondary { background-color: #ff9900; }
-    .btn-secondary:hover { background-color: #ffb84d; transform: translateY(-2px);}
-    .btn-tertiary { background-color: #00ff99; }
-    .btn-tertiary:hover { background-color: #33ffbb; transform: translateY(-2px); }
-
-    .btn-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background-color: #ff004c;
-      color: white;
-      padding: 10px 18px;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 4px 10px rgba(255, 0, 76, 0.4);
-      margin-bottom: 20px;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-    .btn-back:hover { background-color: #ff3366; transform: translateY(-2px); }
-
-    h2 { color: var(--highlight-blue); margin-bottom: 10px; font-weight: 800; border-bottom: 1px solid rgba(0, 191, 255, 0.1); padding-bottom: 8px;}
-    h3 { color: var(--highlight-blue); margin-top: 20px;}
-
-    .card-info, .info-item {
-      background-color: var(--card-bg);
-      padding: 20px;
-      border-radius: var(--radius);
-      border-left: 5px solid var(--accent-blue);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      margin-top: 20px;
-    }
-
-    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-
-    .info-item strong { color: var(--highlight-blue); font-weight: 700; display: block; margin-bottom: 5px;}
-    .info-item ul { list-style: none; padding: 0; margin: 5px 0 0;}
-    .info-item li { margin-bottom: 8px; font-size: 0.95em; color: rgba(255, 255, 255, 0.8);}
-
-    .video-container { width: 100%; max-width: 800px; margin: 20px auto; background-color: #000; border-radius: var(--radius); box-shadow: 0 0 20px rgba(0,191,255,0.4); overflow: hidden;}
-    video { width: 100%; display: block; }
-
-    @media (max-width: 768px) {
-      .sidebar { width: 100%; height: auto; position: relative; box-shadow: none; padding: 15px 0; display: none;}
-      .main-content { margin-left: 0; padding: 20px; width: 100%;}
-      .hero h1 { font-size: 2em; }
-      .card-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+/* RESPONSIVE */
+@media (max-width:900px){
+  .grid2{grid-template-columns:1fr}
+  .step,.step.right{width:90%;left:5%;transform:none}
+  .modal .content-row{flex-direction:column}
+  .sidebar{display:none}
+  .main{margin-left:0}
+}
+</style>
 </head>
 <body>
 
   <!-- HERO -->
-  <div class="hero" id="inicio">
-    <img src="img/logo.png" alt="Logo SegurAI">
+  <div class="hero" id="hero">
+    <img class="logo" src="img/logo.png" alt="SegurAI Logo">
     <h1>SegurAI — Seguridad Preventiva con IA</h1>
-    <p>Innovación tecnológica y protección en entornos urbanos y empresariales.<br>
-    Integrando Inteligencia Artificial, reconocimiento facial y alertas en tiempo real para mayor seguridad.</p>
-    <div>
-      <button class="btn-primary" onclick="explorar()">Explorar Presentación</button>
-      <button class="btn-secondary" onclick="alert('Mostrando boceto...')">Ver Boceto</button>
-      <button class="btn-tertiary" onclick="alert('Mostrando storytheme interactivo...')">StoryTheme</button>
+    <p><strong>Innovación tecnológica y protección en entornos urbanos y empresariales.</strong><br>
+      Integrando inteligencia artificial, reconocimiento facial y alertas en tiempo real para anticipar riesgos y proteger personas y activos.</p>
+
+    <!-- Misión & Visión resumo en el hero -->
+    <div class="mv">
+      <div class="mv-card">
+        <img src="img/mision.png" alt="Misión">
+        <h3>Misión</h3>
+        <p>Proveer seguridad preventiva basada en IA que anticipe riesgos y respete la privacidad ciudadana.</p>
+      </div>
+      <div class="mv-card">
+        <img src="img/vision.png" alt="Visión">
+        <h3>Visión</h3>
+        <p>Ser referente regional en soluciones predictivas de seguridad urbana y empresarial.</p>
+      </div>
     </div>
-    <img src="img/reconocimiento_facial.png" alt="Reconocimiento Facial" style="margin-top:30px; max-width:400px; border-radius:12px; box-shadow:0 0 20px rgba(0,191,255,0.4);">
+
+    <div class="hero-controls" style="margin-top:20px">
+      <button class="btn btn-explorar" onclick="abrirHero(false)"><i class="fas fa-arrow-right"></i>&nbsp;Explorar Presentación</button>
+      <button class="btn btn-boceto" id="btnBoceto" onclick="abrirBoceto()"><i class="fas fa-pencil-ruler"></i>&nbsp;Ver Boceto</button>
+      <button class="btn btn-story" id="btnStory" onclick="abrirStory()"><i class="fas fa-book-open"></i>&nbsp;StoryTheme</button>
+    </div>
+
+    <img class="preview-img" src="img/reconocimiento_facial.png" alt="Reconocimiento facial demo">
   </div>
 
   <!-- SIDEBAR -->
-  <div class="sidebar" id="sidebar" style="display:none;">
+  <nav class="sidebar" id="sidebar" style="display:none">
     <h2>SegurAI</h2>
-    <a href="#" onclick="mostrarSeccion('mision', this)" class="active"><i class="fas fa-handshake"></i> Misión y Visión</a>
-    <a href="#" onclick="mostrarSeccion('modelo', this)"><i class="fas fa-chart-line"></i> Modelo de Negocio</a>
-    <a href="#" onclick="mostrarSeccion('equipo', this)"><i class="fas fa-users"></i> Equipo</a>
-  </div>
+    <a href="#" onclick="abrirSeccion('mision',this)" class="active"><i class="fas fa-handshake"></i>Misión y Visión</a>
+    <a href="#" onclick="abrirSeccion('modelo',this)"><i class="fas fa-chart-line"></i>Modelo de Negocio</a>
+    <a href="#" onclick="abrirSeccion('pestel',this)"><i class="fas fa-globe-americas"></i>PESTEL</a>
+    <a href="#" onclick="abrirSeccion('porter',this)"><i class="fas fa-sitemap"></i>5 Fuerzas Porter</a>
+    <a href="#" onclick="abrirSeccion('foda',this)"><i class="fas fa-balance-scale"></i>FODA</a>
+    <a href="#" onclick="abrirSeccion('demo',this)"><i class="fas fa-video"></i>Demo Funcional</a>
+    <a href="#" onclick="abrirSeccion('equipo',this)"><i class="fas fa-users"></i>Equipo</a>
+    <a href="#" onclick="abrirSeccion('plan',this)"><i class="fas fa-tasks"></i>Plan Operativo</a>
+  </nav>
 
-  <!-- CONTENIDO -->
-  <div class="main-content" id="contenido" style="display:none;">
+  <!-- MAIN -->
+  <main class="main" id="main" style="display:none">
 
-    <!-- Misión -->
-    <section id="mision" class="active">
-      <button class="btn-back" onclick="volver()"><i class="fas fa-arrow-left"></i> Volver</button>
-      <h2>MISIÓN Y VISIÓN</h2>
-      <div class="card-info">
-        <h3>MISIÓN</h3>
-        <p>Brindar soluciones de seguridad basadas en Inteligencia Artificial que protejan entornos urbanos y empresariales, combinando tecnología de punta con respeto a la privacidad.</p>
-        <h3>VISIÓN</h3>
-        <p>Ser referentes en seguridad inteligente en Latinoamérica, integrando innovación, ética y confianza para transformar la seguridad reactiva en preventiva.</p>
+    <!-- MISIÓN -->
+    <section id="mision" class="section active">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Misión y Visión</h2>
+      <div class="card">
+        <div class="grid2">
+          <div>
+            <h3>MISIÓN</h3>
+            <p>Brindar soluciones de seguridad preventiva basadas en IA que protejan personas y activos, priorizando transparencia y cumplimiento legal en el manejo de datos.</p>
+            <ul>
+              <li>Detección temprana de incidentes</li>
+              <li>Alertas en tiempo real a equipos de respuesta</li>
+              <li>Reportes analíticos para toma de decisiones</li>
+            </ul>
+          </div>
+          <div>
+            <h3>VISIÓN</h3>
+            <p>Ser líderes en Latinoamérica en tecnologías de prevención, con soluciones accesibles para municipalidades y PYMES.</p>
+            <ul>
+              <li>Expansión a ciudades piloto</li>
+              <li>Alianzas público–privadas</li>
+              <li>Énfasis en protección de datos</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Modelo -->
-    <section id="modelo">
-      <button class="btn-back" onclick="volver()"><i class="fas fa-arrow-left"></i> Volver</button>
-      <h2>MODELO DE NEGOCIO (CANVAS)</h2>
-      <div class="card-info">
-        <p>SegurAI combina hardware, software y asesoría técnica para ofrecer vigilancia inteligente con IA.</p>
+    <!-- MODELO -->
+    <section id="modelo" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Modelo de Negocio (Canvas)</h2>
+      <div class="card">
+        <p>SegurAI entrega 'seguridad inteligente como servicio' (hardware + software + legal) y modelos de suscripción para municipalidades, empresas y PYMES.</p>
+        <div class="grid2" style="margin-top:12px">
+          <div class="card"><strong>Propuesta</strong><p>Reconocimiento facial ético, alertas automáticas, dashboard de control y asesoría legal.</p></div>
+          <div class="card"><strong>Ingresos</strong><p>Venta de equipos, suscripción SaaS y servicios profesionales (capacitación y consultoría).</p></div>
+        </div>
       </div>
     </section>
 
-    <!-- Equipo -->
-    <section id="equipo">
-      <button class="btn-back" onclick="volver()"><i class="fas fa-arrow-left"></i> Volver</button>
-      <h2>RESPONSABLES PRINCIPALES</h2>
-      <div class="card-info">
+    <!-- PESTEL -->
+    <section id="pestel" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Análisis PESTEL</h2>
+      <div class="card grid2">
+        <div class="card"><strong>Político / Legal</strong><p>Regulación, licitaciones y cumplimiento de la Ley de Protección de Datos.</p></div>
+        <div class="card"><strong>Económico / Social</strong><p>Limitaciones presupuestarias en municipios y sensibilidad social a biometría.</p></div>
+      </div>
+    </section>
+
+    <!-- PORTER -->
+    <section id="porter" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>5 Fuerzas de Porter</h2>
+      <div class="card">
+        <p>Rivalidad media, clientes poderosos (municipios), dependencia moderada de proveedores de hardware y riesgo de sustitutos tradicionales.</p>
+      </div>
+    </section>
+
+    <!-- FODA -->
+    <section id="foda" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Análisis FODA</h2>
+      <div class="card grid2">
+        <div class="card"><strong>Fortalezas</strong><p>IA optimizada, equipo multidisciplinario.</p></div>
+        <div class="card"><strong>Oportunidades</strong><p>Mercado en crecimiento en LatAm.</p></div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section id="demo" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Demo Funcional</h2>
+      <div class="card">
+        <p>Video de demostración: ejemplo de flujo (detección → alerta → visualización en dashboard).</p>
+        <div class="video-wrap">
+          <!-- Ruta organizada: videos/demo.mp4 -->
+          <video controls poster="img/reconocimiento_facial.png">
+            <source src="videos/demo.mp4" type="video/mp4">
+            Tu navegador no soporta video.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section id="equipo" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Responsables principales</h2>
+      <div class="card">
         <ul>
-          <li><strong>CEO (Carlos Manuel):</strong> Coordinación general.</li>
-          <li><strong>KYM (Jesús Rodríguez):</strong> Alianzas estratégicas.</li>
-          <li><strong>CTO (José Moreno):</strong> Desarrollo técnico y validación del algoritmo.</li>
-          <li><strong>Jefa de Operaciones (Anaceli Samamé):</strong> Logística y soporte en campo.</li>
-          <li><strong>Marketing (Luis Salazar):</strong> Difusión y gestión de usuarios piloto.</li>
+          <li><strong>CEO (Carlos Manuel):</strong> coordinación general.</li>
+          <li><strong>KYM (Jesús Rodríguez):</strong> coordinación alianzas estratégicas.</li>
+          <li><strong>CTO (José Moreno):</strong> desarrollo técnico y validación del algoritmo.</li>
+          <li><strong>Jefa de operaciones (Anaceli Samamé):</strong> logística y soporte en campo.</li>
+          <li><strong>Marketing (Luis Salazar):</strong> difusión, campañas y gestión de usuarios piloto.</li>
         </ul>
       </div>
     </section>
 
+    <!-- PLAN -->
+    <section id="plan" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>Plan Operativo</h2>
+      <div class="card">
+        <p>Fases: MVP (3 meses) → Pilotos (3-6 meses) → Escala (6-18 meses). Necesidad de capital inicial y acuerdos con municipalidades para pilotos.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: BOCETO -->
+  <div id="modal-boceto" class="modal" role="dialog" aria-hidden="true">
+    <div class="box">
+      <button class="close" onclick="cerrarBoceto()"><i class="fas fa-times"></i></button>
+      <h2>Boceto / Mockup de Interfaz</h2>
+      <div class="content-row">
+        <img src="img/boceto.png" alt="Boceto SegurAI (ejemplo)">
+        <div class="mock">
+          <h3>Mockup rápido</h3>
+          <p>Ejemplo: dashboard principal que muestra cámaras en vivo, mapa con incidentes y panel de alertas.</p>
+          <ul>
+            <li><strong>Top-left:</strong> feeds de cámaras (miniaturas)</li>
+            <li><strong>Centro:</strong> mapa con pins y nivel de riesgo</li>
+            <li><strong>Panel derecho:</strong> alertas recientes y acciones sugeridas</li>
+          </ul>
+          <p style="margin-top:12px;font-weight:700;color:var(--highlight-blue)">Prueba: reemplaza img/boceto.png con tu boceto real.</p>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:14px">
+        <button class="btn-back" onclick="cerrarBoceto()"><i class="fas fa-times"></i> Cerrar boceto</button>
+      </div>
+    </div>
   </div>
 
-  <script>
-    function explorar() {
-      const hero = document.getElementById('inicio');
-      const sidebar = document.getElementById('sidebar');
-      const contenido = document.getElementById('contenido');
-      hero.style.opacity = '0';
-      setTimeout(() => {
-        hero.style.display = 'none';
-        sidebar.style.display = 'flex';
-        contenido.style.display = 'block';
-      }, 500);
-    }
+  <!-- MODAL: STORY THEME (TIMELINE INTERACTIVO) -->
+  <div id="modal-story" class="modal" role="dialog" aria-hidden="true">
+    <div class="box">
+      <button class="close" onclick="cerrarStory()"><i class="fas fa-times"></i></button>
+      <h2>StoryTheme Interactivo — Flujo de funcionamiento</h2>
 
-    function mostrarSeccion(id, clickedElement) {
-      const secciones = document.querySelectorAll('.main-content section');
-      const links = document.querySelectorAll('.sidebar a');
-      secciones.forEach(s => s.classList.remove('active'));
-      links.forEach(l => l.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      if (clickedElement) clickedElement.classList.add('active');
-      document.getElementById('contenido').scrollTop = 0;
-    }
+      <div class="content-row" style="justify-content:center">
+        <div style="flex:1;min-width:320px">
+          <div class="timeline" id="timeline">
+            <div class="step left active" data-step="0"><i class="fas fa-video"></i><strong>Captura</strong><p>Las cámaras registran video en tiempo real con procesamiento en el edge.</p></div>
+            <div class="step right" data-step="1"><i class="fas fa-brain"></i><strong>Procesamiento IA</strong><p>Modelos detectan patrones: conducta anómala, personas en lista y objetos sospechosos.</p></div>
+            <div class="step left" data-step="2"><i class="fas fa-bell"></i><strong>Alerta</strong><p>Si se detecta riesgo, se genera una alerta en la app y en la central de monitoreo.</p></div>
+            <div class="step right" data-step="3"><i class="fas fa-user-shield"></i><strong>Intervención</strong><p>Equipos en campo o autoridades reciben ubicación y evidencia para actuar.</p></div>
+            <div class="step left" data-step="4"><i class="fas fa-chart-line"></i><strong>Analítica</strong><p>El sistema genera reportes y métricas para mejorar prevención y tomar decisiones estratégicas.</p></div>
+          </div>
 
-    function volver() {
-      document.getElementById('sidebar').style.display = 'none';
-      document.getElementById('contenido').style.display = 'none';
-      const hero = document.getElementById('inicio');
-      hero.style.display = 'flex';
-      setTimeout(() => hero.style.opacity = '1', 100);
-    }
-  </script>
+          <div class="timeline-controls" style="margin-top:18px">
+            <button onclick="prevTimeline()">Anterior</button>
+            <button onclick="nextTimeline()">Siguiente</button>
+            <button id="autoplayBtn" onclick="toggleAutoplay()" style="background:#00bfff;color:#001;border:0;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer">Auto</button>
+          </div>
+        </div>
+
+        <div style="width:360px;min-width:260px">
+          <div class="mock">
+            <h3>Vista previa</h3>
+            <p id="previewText" style="color:rgba(255,255,255,0.9)">Paso 1 — Captura: cámaras y edge processing</p>
+            <div style="height:12px"></div>
+            <img id="previewImg" src="img/reconocimiento_facial.png" alt="preview" style="width:100%;border-radius:8px;object-fit:cover">
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:right;margin-top:14px">
+        <button class="btn-back" onclick="cerrarStory()"><i class="fas fa-times"></i> Cerrar Story</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* NAV / HERO */
+function abrirHero(hideHero=true){
+  // open presentation (same as explorar)
+  const hero = document.getElementById('hero');
+  const sidebar = document.getElementById('sidebar');
+  const main = document.getElementById('main');
+  hero.style.opacity='0';
+  setTimeout(()=>{ hero.style.display='none'; sidebar.style.display='flex'; main.style.display='block'; },220);
+}
+function abrirSeccion(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const sec = document.getElementById(id);
+  if(sec) sec.classList.add('active');
+  // mark active link
+  document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
+  if(el) el.classList.add('active');
+  // scroll top
+  document.querySelector('.main').scrollTop = 0;
+}
+function volverHero(){
+  document.getElementById('sidebar').style.display='none';
+  document.getElementById('main').style.display='none';
+  document.getElementById('hero').style.display='flex';
+  setTimeout(()=>document.getElementById('hero').style.opacity='1',60);
+  // stop modals if open
+  cerrarStory(); cerrarBoceto();
+}
+
+/* BOCETO modal */
+function abrirBoceto(){
+  document.getElementById('modal-boceto').style.display='flex';
+}
+function cerrarBoceto(){
+  document.getElementById('modal-boceto').style.display='none';
+}
+
+/* STORY modal with timeline */
+let currentStep = 0;
+let autoplay = false;
+let autoplayInterval = null;
+const steps = () => Array.from(document.querySelectorAll('#timeline .step'));
+const previewText = id => {
+  const texts = [
+    'Captura — Las cámaras registran video en tiempo real con procesamiento en el edge.',
+    'Procesamiento IA — Modelos detectan patrones y anomalías.',
+    'Alerta — El sistema genera alertas inmediatas a central y app.',
+    'Intervención — Equipos en campo reciben información precisa para actuar.',
+    'Analítica — Reportes y métricas para mejora continua y decisiones.'
+  ];
+  return texts[id] || '';
+};
+
+function abrirStory(){
+  document.getElementById('modal-story').style.display='flex';
+  currentStep = 0;
+  updateTimeline();
+  startAutoplayIfSet();
+}
+
+function cerrarStory(){
+  document.getElementById('modal-story').style.display='none';
+  stopAutoplay();
+}
+
+// timeline navigation
+function updateTimeline(){
+  const s = steps();
+  s.forEach((el,i)=>{
+    el.classList.remove('active');
+    if(i===currentStep) el.classList.add('active');
+  });
+  // update preview
+  const pText = previewText(currentStep);
+  document.getElementById('previewText').textContent = pText;
+  // change preview image lightly for each step (example — reuse same or add images)
+  const imgs = ['img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png'];
+  document.getElementById('previewImg').src = imgs[currentStep] || imgs[0];
+}
+
+function nextTimeline(){
+  const s = steps();
+  if(currentStep < s.length - 1) currentStep++;
+  updateTimeline();
+}
+function prevTimeline(){
+  if(currentStep > 0) currentStep--;
+  updateTimeline();
+}
+
+/* autoplay */
+function toggleAutoplay(){
+  autoplay = !autoplay;
+  const btn = document.getElementById('autoplayBtn');
+  if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); }
+  else{ btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); }
+}
+function startAutoplay(){
+  stopAutoplay();
+  autoplayInterval = setInterval(()=>{
+    if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); }
+    else { currentStep = 0; updateTimeline(); }
+  },1400);
+}
+function stopAutoplay(){ if(autoplayInterval){ clearInterval(autoplayInterval); autoplayInterval = null; } }
+
+/* ensure autoplay only if modal open */
+function startAutoplayIfSet(){ if(autoplay) startAutoplay(); }
+
+/* Accessibility: Esc key closes modals */
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){ cerrarStory(); cerrarBoceto(); }
+});
+</script>
 
 </body>
 </html>
+
 
 
 
