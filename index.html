@@ -46,6 +46,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .btn-explorar{background:linear-gradient(45deg,#00bfff,#00ffbf);color:#011;box-shadow:0 10px 30px rgba(0,191,255,0.18)}
 .btn-boceto{background:linear-gradient(45deg,#ff7a7a,#ffc371);color:#051}
 .btn-story{background:linear-gradient(45deg,#ff9a00,#ff0055);color:#fff}
+.btn-proto{background:linear-gradient(45deg,#6a9bff,#9bf0ff);color:#011}
 .hero .preview-img{margin-top:26px;max-width:420px;border-radius:12px;box-shadow:0 8px 30px rgba(0,191,255,0.18)}
 
 /* SIDEBAR */
@@ -75,7 +76,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .video-wrap{max-width:900px;margin:18px auto;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
 .video-wrap video{width:100%;height:auto;display:block;background:#000}
 
-/* MODALS (Boceto & Story) */
+/* MODALS (Boceto, Story, Prototipo) */
 .modal{
   position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;padding:28px;z-index:2000;overflow:auto
 }
@@ -97,6 +98,15 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .timeline-controls{display:flex;justify-content:center;gap:10px;margin-top:10px}
 .timeline-controls button{padding:8px 14px;border-radius:10px;border:0;background:var(--highlight-blue);color:#001;font-weight:800;cursor:pointer}
 
+/* SEQUENCE / CAROUSEL (Prototype) */
+.proto-viewer{display:flex;flex-direction:column;align-items:center;gap:12px}
+.proto-img{max-width:640px;width:100%;border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,0.6);background:#000}
+.proto-controls{display:flex;gap:10px;align-items:center}
+.proto-controls button{padding:8px 12px;border-radius:8px;border:0;background:var(--highlight-blue);color:#001;font-weight:800;cursor:pointer}
+
+/* small helper text */
+.helper { font-size:0.95rem;color:rgba(255,255,255,0.8);margin-top:8px; }
+
 /* RESPONSIVE */
 @media (max-width:900px){
   .grid2{grid-template-columns:1fr}
@@ -104,6 +114,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
   .modal .content-row{flex-direction:column}
   .sidebar{display:none}
   .main{margin-left:0}
+  .proto-img{max-width:90%}
 }
 </style>
 </head>
@@ -134,6 +145,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
       <button class="btn btn-explorar" onclick="abrirHero(false)"><i class="fas fa-arrow-right"></i>&nbsp;Explorar Presentación</button>
       <button class="btn btn-boceto" id="btnBoceto" onclick="abrirBoceto()"><i class="fas fa-pencil-ruler"></i>&nbsp;Ver Boceto</button>
       <button class="btn btn-story" id="btnStory" onclick="abrirStory()"><i class="fas fa-book-open"></i>&nbsp;StoryTheme</button>
+      <button class="btn btn-proto" id="btnProto" onclick="abrirProto()"><i class="fas fa-stream"></i>&nbsp;Ver Protótipo (secuencia)</button>
     </div>
 
     <img class="preview-img" src="img/reconocimiento_facial.png" alt="Reconocimiento facial demo">
@@ -331,10 +343,61 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     </div>
   </div>
 
+  <!-- MODAL: PROTOTIPO SECUENCIAL (GIFs / IMÁGENES) -->
+  <div id="modal-proto" class="modal" role="dialog" aria-hidden="true">
+    <div class="box">
+      <button class="close" onclick="cerrarProto()"><i class="fas fa-times"></i></button>
+      <h2>Protótipo secuencial — Cómo funciona SegurAI (GIF / imágenes)</h2>
+
+      <div class="content-row">
+        <div class="proto-viewer">
+          <!-- imagen principal (GIF o PNG) -->
+          <div class="proto-img" id="protoImgWrapper">
+            <img id="protoImg" src="img/proto1.gif" alt="Paso 1" style="width:100%;border-radius:8px;display:block">
+          </div>
+
+          <!-- controles -->
+          <div class="proto-controls">
+            <button onclick="prevProto()"><i class="fas fa-chevron-left"></i> Anterior</button>
+            <button onclick="nextProto()">Siguiente <i class="fas fa-chevron-right"></i></button>
+            <button id="protoAutoBtn" onclick="toggleProtoAuto()" style="background:#00bfff;color:#001;border:0;padding:8px 10px;border-radius:8px;font-weight:700;cursor:pointer">Auto</button>
+          </div>
+
+          <div class="helper" id="protoCaption">Paso 1 — Captura: cámara, preprocesamiento en edge.</div>
+        </div>
+
+        <div style="min-width:260px;max-width:340px">
+          <div class="mock">
+            <h3>Sugerencias de contenido visual</h3>
+            <p class="helper">Para la secuencia puedes usar:</p>
+            <ul>
+              <li><strong>GIFs cortos</strong> (2–5s) mostrando detección en acción — quedan fluidos y explicativos.</li>
+              <li><strong>Screencasts / screen recordings</strong> (MP4 o GIF) del dashboard con alertas reales.</li>
+              <li><strong>PNG/JPEG anotados</strong> (flechas y etiquetas) — útiles para resaltar pasos.</li>
+              <li><strong>SVGs animados</strong> (si quieres vectores limpios y escalables).</li>
+            </ul>
+            <p class="helper" style="margin-top:8px"><strong>Ejemplo de secuencia recomendada:</strong></p>
+            <ol>
+              <li>Captura (cámara → edge)</li>
+              <li>Procesamiento IA (detección)</li>
+              <li>Generación de alerta</li>
+              <li>Envío a central / intervención</li>
+              <li>Reporte y analítica</li>
+            </ol>
+            <p class="helper" style="margin-top:8px;color:var(--highlight-blue)">Reemplaza <code>img/proto1.gif</code> ... <code>img/proto5.gif</code> por tus archivos reales.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:right;margin-top:14px">
+        <button class="btn-back" onclick="cerrarProto()"><i class="fas fa-times"></i> Cerrar prototipo</button>
+      </div>
+    </div>
+  </div>
+
 <script>
 /* NAV / HERO */
 function abrirHero(hideHero=true){
-  // open presentation (same as explorar)
   const hero = document.getElementById('hero');
   const sidebar = document.getElementById('sidebar');
   const main = document.getElementById('main');
@@ -345,10 +408,8 @@ function abrirSeccion(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   const sec = document.getElementById(id);
   if(sec) sec.classList.add('active');
-  // mark active link
   document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
   if(el) el.classList.add('active');
-  // scroll top
   document.querySelector('.main').scrollTop = 0;
 }
 function volverHero(){
@@ -357,18 +418,14 @@ function volverHero(){
   document.getElementById('hero').style.display='flex';
   setTimeout(()=>document.getElementById('hero').style.opacity='1',60);
   // stop modals if open
-  cerrarStory(); cerrarBoceto();
+  cerrarStory(); cerrarBoceto(); cerrarProto();
 }
 
 /* BOCETO modal */
-function abrirBoceto(){
-  document.getElementById('modal-boceto').style.display='flex';
-}
-function cerrarBoceto(){
-  document.getElementById('modal-boceto').style.display='none';
-}
+function abrirBoceto(){ document.getElementById('modal-boceto').style.display='flex'; }
+function cerrarBoceto(){ document.getElementById('modal-boceto').style.display='none'; }
 
-/* STORY modal with timeline */
+/* STORY modal with timeline (kept as before) */
 let currentStep = 0;
 let autoplay = false;
 let autoplayInterval = null;
@@ -390,64 +447,78 @@ function abrirStory(){
   updateTimeline();
   startAutoplayIfSet();
 }
-
-function cerrarStory(){
-  document.getElementById('modal-story').style.display='none';
-  stopAutoplay();
-}
-
-// timeline navigation
+function cerrarStory(){ document.getElementById('modal-story').style.display='none'; stopAutoplay(); }
 function updateTimeline(){
   const s = steps();
-  s.forEach((el,i)=>{
-    el.classList.remove('active');
-    if(i===currentStep) el.classList.add('active');
-  });
-  // update preview
+  s.forEach((el,i)=>{ el.classList.remove('active'); if(i===currentStep) el.classList.add('active'); });
   const pText = previewText(currentStep);
-  document.getElementById('previewText').textContent = pText;
-  // change preview image lightly for each step (example — reuse same or add images)
+  const preview = document.getElementById('previewText');
+  if(preview) preview.textContent = pText;
   const imgs = ['img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png'];
-  document.getElementById('previewImg').src = imgs[currentStep] || imgs[0];
+  const previewImg = document.getElementById('previewImg');
+  if(previewImg) previewImg.src = imgs[currentStep] || imgs[0];
 }
-
-function nextTimeline(){
-  const s = steps();
-  if(currentStep < s.length - 1) currentStep++;
-  updateTimeline();
-}
-function prevTimeline(){
-  if(currentStep > 0) currentStep--;
-  updateTimeline();
-}
-
-/* autoplay */
-function toggleAutoplay(){
-  autoplay = !autoplay;
-  const btn = document.getElementById('autoplayBtn');
-  if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); }
-  else{ btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); }
-}
-function startAutoplay(){
-  stopAutoplay();
-  autoplayInterval = setInterval(()=>{
-    if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); }
-    else { currentStep = 0; updateTimeline(); }
-  },1400);
-}
+function nextTimeline(){ const s = steps(); if(currentStep < s.length - 1) currentStep++; updateTimeline(); }
+function prevTimeline(){ if(currentStep > 0) currentStep--; updateTimeline(); }
+function toggleAutoplay(){ autoplay = !autoplay; const btn = document.getElementById('autoplayBtn'); if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); } else { btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); } }
+function startAutoplay(){ stopAutoplay(); autoplayInterval = setInterval(()=>{ if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); } else { currentStep = 0; updateTimeline(); } },1400); }
 function stopAutoplay(){ if(autoplayInterval){ clearInterval(autoplayInterval); autoplayInterval = null; } }
-
-/* ensure autoplay only if modal open */
 function startAutoplayIfSet(){ if(autoplay) startAutoplay(); }
 
-/* Accessibility: Esc key closes modals */
+/* PROTOTYPE modal: carousel of GIFs/images */
+const protoImages = [
+  { src: 'img/proto1.gif', caption: 'Paso 1 — Captura: cámara y preprocesamiento en edge.' },
+  { src: 'img/proto2.gif', caption: 'Paso 2 — Procesamiento IA: detección y clasificación.' },
+  { src: 'img/proto3.gif', caption: 'Paso 3 — Generación de alerta y envío a central.' },
+  { src: 'img/proto4.gif', caption: 'Paso 4 — Visualización en dashboard y notificación a equipo.' },
+  { src: 'img/proto5.gif', caption: 'Paso 5 — Analítica: reportes y métricas.' }
+];
+let protoIndex = 0;
+let protoAuto = false;
+let protoInterval = null;
+
+function abrirProto(){
+  document.getElementById('modal-proto').style.display='flex';
+  protoIndex = 0;
+  showProto(protoIndex);
+  startProtoAutoplayIfSet();
+}
+function cerrarProto(){
+  document.getElementById('modal-proto').style.display='none';
+  stopProtoAutoplay();
+}
+function showProto(i){
+  const el = document.getElementById('protoImg');
+  const caption = document.getElementById('protoCaption');
+  const safe = protoImages[i] || protoImages[0];
+  el.src = safe.src;
+  caption.textContent = safe.caption;
+}
+function nextProto(){ protoIndex = (protoIndex + 1) % protoImages.length; showProto(protoIndex); }
+function prevProto(){ protoIndex = (protoIndex - 1 + protoImages.length) % protoImages.length; showProto(protoIndex); }
+
+function toggleProtoAuto(){
+  protoAuto = !protoAuto;
+  const btn = document.getElementById('protoAutoBtn');
+  if(protoAuto){ btn.textContent = 'Auto: ON'; btn.style.background = '#00ffb3'; startProtoAutoplay(); }
+  else { btn.textContent = 'Auto'; btn.style.background = ''; stopProtoAutoplay(); }
+}
+function startProtoAutoplay(){
+  stopProtoAutoplay();
+  protoInterval = setInterval(()=>{ nextProto(); }, 1600);
+}
+function stopProtoAutoplay(){ if(protoInterval){ clearInterval(protoInterval); protoInterval = null; } }
+function startProtoAutoplayIfSet(){ if(protoAuto) startProtoAutoplay(); }
+
+/* keyboard: Esc -> close modals */
 document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape'){ cerrarStory(); cerrarBoceto(); }
+  if(e.key === 'Escape'){ cerrarStory(); cerrarBoceto(); cerrarProto(); }
 });
 </script>
 
 </body>
 </html>
+
 
 
 
