@@ -74,7 +74,6 @@
       padding-left: 10px;
       font-size: 1.6em;
     }
-    h3 { color: #222; }
 
     ul { margin-left: 20px; }
 
@@ -102,6 +101,49 @@
       border-radius: 5px;
       margin: 10px 0;
     }
+
+    /* --- EQUIPO FUNDADOR --- */
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 30px;
+    }
+    .member {
+      background: #f9fbff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 220px;
+      padding: 15px;
+      transition: 0.3s;
+    }
+    .member:hover { transform: translateY(-5px); }
+    .member img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #0056b3;
+    }
+    .member h4 { margin: 10px 0 5px; color: #002855; }
+    .member p { font-size: 0.9em; color: #444; margin: 0; }
+
+    /* --- VIDEO DEMO --- */
+    .video-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    iframe {
+      width: 100%;
+      max-width: 720px;
+      height: 405px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 
@@ -116,10 +158,11 @@
   <a href="#canvas">Modelo de Negocio</a>
   <a href="#pestel">PESTEL</a>
   <a href="#porter">5 Fuerzas</a>
-  <a href="#smart">Objetivos SMART</a>
+  <a href="#smart">SMART</a>
   <a href="#foda">FODA</a>
   <a href="#competencia">Competencia</a>
   <a href="#prototipo">Prototipo</a>
+  <a href="#equipo">Equipo</a>
   <a href="#plan">Plan Operativo</a>
 </nav>
 
@@ -133,23 +176,13 @@
       <li>Vigilancia inteligente con IA en tiempo real.</li>
       <li>Alertas inmediatas vía app móvil y plataforma web.</li>
       <li>Prevención activa de delitos.</li>
-      <li>Costos más bajos frente a seguridad tradicional.</li>
-      <li>Asesoría legal y capacitación sobre protección de datos.</li>
+      <li>Asesoría legal y capacitación en protección de datos.</li>
     </ul>
   </details>
   <details><summary>2. Segmentos de Clientes</summary>
     <ul>
-      <li>Municipalidades, empresas, PYMES y vecindarios organizados.</li>
+      <li>Municipalidades, empresas privadas, PYMES y vecindarios organizados.</li>
     </ul>
-  </details>
-  <details><summary>3. Canales</summary>
-    <ul><li>Web, app móvil, ventas directas y alianzas estratégicas.</li></ul>
-  </details>
-  <details><summary>4. Relación con Clientes</summary>
-    <ul><li>Soporte, mantenimiento, capacitación y atención personalizada.</li></ul>
-  </details>
-  <details><summary>5. Fuentes de Ingresos</summary>
-    <ul><li>Venta de equipos, suscripción SaaS y servicios legales adicionales.</li></ul>
   </details>
 </section>
 
@@ -160,8 +193,8 @@
     <li><b>Económico:</b> Alta demanda, pero inflación puede afectar hardware.</li>
     <li><b>Social:</b> Ciudadanos buscan soluciones; riesgo de desconfianza biométrica.</li>
     <li><b>Tecnológico:</b> IA accesible y precisa; riesgo de obsolescencia.</li>
-    <li><b>Ecológico:</b> Equipos de bajo consumo y retos de residuos electrónicos.</li>
-    <li><b>Legal:</b> Cumplimiento estricto de la Ley N° 29733 de datos personales.</li>
+    <li><b>Ecológico:</b> Potencial en equipos eficientes y sostenibles.</li>
+    <li><b>Legal:</b> Cumplimiento de la Ley N° 29733 de datos personales.</li>
   </ul>
 </section>
 
@@ -170,9 +203,9 @@
   <ul>
     <li><b>Rivalidad:</b> Competencia alta entre proveedores IA y CCTV.</li>
     <li><b>Nuevos Entrantes:</b> Barreras moderadas por inversión y confianza legal.</li>
-    <li><b>Proveedores:</b> Poder medio; depender de importaciones incrementa riesgos.</li>
-    <li><b>Clientes:</b> Municipios con alto poder negociador; PYMES diversifican ingreso.</li>
-    <li><b>Sustitutos:</b> Serenazgo, alarmas y sistemas tradicionales.</li>
+    <li><b>Proveedores:</b> Poder medio; dependencia de importaciones.</li>
+    <li><b>Clientes:</b> Municipios con alto poder; PYMES diversifican ingreso.</li>
+    <li><b>Sustitutos:</b> Serenazgo, alarmas y CCTV tradicional.</li>
   </ul>
 </section>
 
@@ -180,9 +213,9 @@
   <h2>Objetivos SMART</h2>
   <ul>
     <li><b>Específico:</b> Crear un sistema de reconocimiento facial en tiempo real.</li>
-    <li><b>Medible:</b> Precisión ≥ 90%, tres pruebas piloto y encuestas de percepción.</li>
-    <li><b>Alcanzable:</b> Con equipo técnico, IA moderna y servidores escalables.</li>
-    <li><b>Relevante:</b> Aporta a la reducción de la inseguridad urbana.</li>
+    <li><b>Medible:</b> Precisión ≥ 90%, tres pilotos y encuestas de percepción.</li>
+    <li><b>Alcanzable:</b> Equipo técnico y recursos tecnológicos disponibles.</li>
+    <li><b>Relevante:</b> Aporta a la reducción de inseguridad urbana.</li>
     <li><b>Temporal:</b> 6 meses desarrollo, 2 meses piloto, 6 meses evaluación.</li>
   </ul>
 </section>
@@ -190,32 +223,63 @@
 <section id="foda">
   <h2>Análisis FODA</h2>
   <ul>
-    <li><b>Fortalezas:</b> IA innovadora, asesoría legal y enfoque social.</li>
+    <li><b>Fortalezas:</b> IA innovadora, asesoría legal, enfoque social.</li>
     <li><b>Debilidades:</b> Dependencia tecnológica y costos iniciales.</li>
-    <li><b>Oportunidades:</b> Demanda creciente, alianzas público-privadas.</li>
-    <li><b>Amenazas:</b> Regulaciones, competencia, resistencia social.</li>
+    <li><b>Oportunidades:</b> Creciente demanda y alianzas públicas.</li>
+    <li><b>Amenazas:</b> Regulaciones y percepción negativa del reconocimiento facial.</li>
   </ul>
 </section>
 
 <section id="competencia">
-  <h2>Análisis de la Competencia</h2>
+  <h2>Competencia y Posicionamiento</h2>
   <div class="highlight">
-    SegurAI se diferencia por integrar IA, cumplimiento legal y educación comunitaria, apuntando a un mercado en crecimiento.
+    SegurAI se diferencia por integrar IA, cumplimiento legal y educación comunitaria, apuntando a un mercado en expansión.
   </div>
   <ul>
-    <li><b>Directos:</b> Startups y empresas de videovigilancia inteligente.</li>
-    <li><b>Indirectos:</b> Seguridad privada y CCTV tradicional.</li>
-    <li><b>Estrategia:</b> Valor agregado en asesoría y confianza social.</li>
+    <li><b>Directos:</b> Startups de videovigilancia inteligente.</li>
+    <li><b>Indirectos:</b> Empresas de seguridad tradicional.</li>
+    <li><b>Ventaja:</b> Valor agregado en asesoría legal y confianza ciudadana.</li>
   </ul>
 </section>
 
 <section id="prototipo">
-  <h2>Prototipo o PMV</h2>
-  <p>El prototipo de SegurAI incluye mockups de interfaz móvil y panel web, simulando conexión entre cámaras, servidor y app.</p>
-  <ul>
-    <li><b>Objetivos:</b> Validar viabilidad técnica y percepción de usuarios.</li>
-    <li><b>Recomendación:</b> Incluir figuras del flujo del sistema y bocetos en <b>/images/</b>.</li>
-  </ul>
+  <h2>Prototipo / Producto Mínimo Viable (PMV)</h2>
+  <p>El prototipo de SegurAI incluye interfaces móviles y un flujo técnico entre cámaras, servidor y app. Su objetivo fue validar la viabilidad tecnológica y la confianza de los usuarios.</p>
+
+  <div class="video-container">
+    <!-- Sustituye el enlace de YouTube con tu propio video -->
+    <iframe src="https://www.youtube.com/embed/TU_VIDEO_ID"
+      title="Demostración del prototipo SegurAI" allowfullscreen></iframe>
+  </div>
+
+  <p><i>Figura 1. Boceto de la app móvil SegurAI</i><br>
+     <i>Figura 2. Flujo de funcionamiento del sistema SegurAI (Fuente: elaboración propia, 2025)</i></p>
+</section>
+
+<section id="equipo">
+  <h2>Equipo Fundador</h2>
+  <div class="team">
+    <div class="member">
+      <img src="images/equipo_ceo.jpg" alt="CEO" />
+      <h4>Carlos Manuel</h4>
+      <p>CEO – Dirección general y alianzas institucionales.</p>
+    </div>
+    <div class="member">
+      <img src="images/equipo_cto.jpg" alt="CTO" />
+      <h4>José Moreno</h4>
+      <p>CTO – Desarrollo técnico e innovación en IA.</p>
+    </div>
+    <div class="member">
+      <img src="images/equipo_ops.jpg" alt="Operaciones" />
+      <h4>Anaceli Samamé</h4>
+      <p>Operaciones – Logística y soporte en campo.</p>
+    </div>
+    <div class="member">
+      <img src="images/equipo_marketing.jpg" alt="Marketing" />
+      <h4>Luis Salazar</h4>
+      <p>Marketing – Comunicación, difusión y branding.</p>
+    </div>
+  </div>
 </section>
 
 <section id="plan">
@@ -223,12 +287,12 @@
   <ul>
     <li><b>Ubicación:</b> Lima Metropolitana (coworking o espacio compartido).</li>
     <li><b>Inversión inicial:</b> S/ 7,000 – 8,000.</li>
-    <li><b>Etapas:</b> investigación, prototipo, validación, escalamiento.</li>
+    <li><b>Etapas:</b> Investigación, prototipo, validación, escalamiento.</li>
     <li><b>Indicadores:</b> Precisión ≥ 85%, satisfacción ≥ 80%, retención ≥ 70%.</li>
     <li><b>Rentabilidad esperada:</b> 25–30% en segundo año.</li>
   </ul>
   <div class="highlight">
-    Con un enfoque sostenible, SegurAI busca combinar impacto social con innovación tecnológica local.
+    SegurAI busca combinar impacto social, innovación tecnológica y sostenibilidad económica.
   </div>
 </section>
 
@@ -238,6 +302,7 @@
 
 </body>
 </html>
+
 
 
 
