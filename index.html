@@ -3,106 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SegurAI – Seguridad Inteligente con IA</title>
-  <link rel="icon" href="images/reconocimiento_facial.png" />
+  <title>SegurAI — Seguridad Inteligente con IA</title>
+  <link rel="icon" href="images/logo.png" />
   <style>
     * { box-sizing: border-box; scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(180deg, #0e1a40, #f4f7fb);
-      color: #222;
+      background: linear-gradient(180deg, #001b44, #002855);
+      color: #f4f4f4;
     }
 
     header {
-      background: linear-gradient(90deg, #002855, #0056b3);
-      color: white;
       text-align: center;
-      padding: 60px 20px;
+      padding: 80px 20px;
+      background: linear-gradient(90deg, #001b44, #004aad);
     }
     header h1 {
+      font-size: 2.8em;
+      color: #00bfff;
       margin: 0;
-      font-size: 2.6em;
-      letter-spacing: 1px;
     }
     header p {
-      font-size: 1.1em;
+      font-size: 1.2em;
       opacity: 0.9;
     }
 
     nav {
-      position: sticky;
-      top: 0;
-      background: #ffffffee;
-      backdrop-filter: blur(6px);
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 10px;
-      border-bottom: 2px solid #0056b3;
-      z-index: 1000;
+      background: #021d47;
+      border-bottom: 2px solid #00bfff;
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
     nav a {
-      color: #0056b3;
+      color: #00bfff;
       text-decoration: none;
-      margin: 6px 15px;
+      margin: 8px 14px;
       font-weight: 600;
       transition: 0.3s;
     }
-    nav a:hover {
-      color: #002855;
-      text-decoration: underline;
-    }
+    nav a:hover { color: #ffffff; text-decoration: underline; }
 
     section {
       max-width: 1000px;
-      margin: 40px auto;
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      margin: 50px auto;
       padding: 40px;
-      animation: fadeIn 0.7s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      background: #05235f;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
     h2 {
-      color: #0056b3;
-      border-left: 6px solid #0056b3;
+      color: #00bfff;
+      font-size: 1.8em;
+      border-left: 6px solid #00bfff;
       padding-left: 10px;
-      font-size: 1.6em;
     }
 
-    ul { margin-left: 20px; }
+    ul { margin-left: 20px; line-height: 1.6; }
+
+    .highlight {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid #00bfff;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
 
     details summary {
       cursor: pointer;
+      color: #00bfff;
       font-weight: bold;
-      color: #0056b3;
-      margin-top: 12px;
+      margin-top: 10px;
     }
     details summary:hover { text-decoration: underline; }
 
-    footer {
-      text-align: center;
-      background: #002855;
-      color: white;
-      padding: 25px;
-      margin-top: 60px;
-      font-size: 0.9em;
+    video {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 12px;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
-    .highlight {
-      background: #eaf3ff;
-      padding: 10px;
-      border-left: 4px solid #0056b3;
-      border-radius: 5px;
-      margin: 10px 0;
-    }
-
-    /* --- EQUIPO FUNDADOR --- */
     .team {
       display: flex;
       flex-wrap: wrap;
@@ -111,9 +100,9 @@
       margin-top: 30px;
     }
     .member {
-      background: #f9fbff;
+      background: #0a2e6f;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       text-align: center;
       width: 220px;
       padding: 15px;
@@ -125,24 +114,40 @@
       height: 100px;
       object-fit: cover;
       border-radius: 50%;
-      border: 3px solid #0056b3;
+      border: 3px solid #00bfff;
     }
-    .member h4 { margin: 10px 0 5px; color: #002855; }
-    .member p { font-size: 0.9em; color: #444; margin: 0; }
+    .member h4 { margin: 10px 0 5px; color: #00bfff; }
+    .member p { font-size: 0.9em; color: #ddd; margin: 0; }
 
-    /* --- VIDEO DEMO --- */
-    .video-container {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
+    footer {
+      text-align: center;
+      background: #001b44;
+      color: #bbb;
+      padding: 30px 10px;
+      margin-top: 60px;
+      font-size: 0.9em;
     }
-    iframe {
-      width: 100%;
-      max-width: 720px;
-      height: 405px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+    .button {
+      display: inline-block;
+      background: #00bfff;
+      color: #001b44;
+      padding: 12px 20px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+    .button:hover {
+      background: #0099cc;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      section { padding: 25px; }
+      .team { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -150,38 +155,35 @@
 <body>
 
 <header>
-  <h1>SegurAI – Seguridad Inteligente con IA</h1>
+  <h1>SegurAI — Seguridad Inteligente con IA</h1>
   <p>Innovación peruana que combina tecnología, prevención y confianza ciudadana</p>
+  <a href="#prototipo" class="button">Ver demostración</a>
 </header>
 
 <nav>
-  <a href="#canvas">Modelo de Negocio</a>
+  <a href="#canvas">Modelo</a>
   <a href="#pestel">PESTEL</a>
-  <a href="#porter">5 Fuerzas</a>
+  <a href="#porter">Porter</a>
   <a href="#smart">SMART</a>
   <a href="#foda">FODA</a>
   <a href="#competencia">Competencia</a>
   <a href="#prototipo">Prototipo</a>
   <a href="#equipo">Equipo</a>
-  <a href="#plan">Plan Operativo</a>
+  <a href="#plan">Plan</a>
 </nav>
 
 <section id="canvas">
-  <h2>Modelo de Negocio (Business Model Canvas)</h2>
+  <h2>Modelo de Negocio</h2>
   <div class="highlight">
-    SegurAI ofrece seguridad inteligente como servicio, integrando hardware, software y asesoría legal. Su propuesta equilibra innovación tecnológica, cumplimiento normativo y confianza social.
+    SegurAI ofrece seguridad inteligente como servicio (hardware + software + asesoría legal), equilibrando innovación tecnológica, confianza social y cumplimiento normativo.
   </div>
-  <details open><summary>1. Propuesta de Valor</summary>
+  <details open><summary>Propuesta de Valor</summary>
     <ul>
-      <li>Vigilancia inteligente con IA en tiempo real.</li>
+      <li>Vigilancia inteligente con reconocimiento facial en tiempo real.</li>
       <li>Alertas inmediatas vía app móvil y plataforma web.</li>
       <li>Prevención activa de delitos.</li>
-      <li>Asesoría legal y capacitación en protección de datos.</li>
-    </ul>
-  </details>
-  <details><summary>2. Segmentos de Clientes</summary>
-    <ul>
-      <li>Municipalidades, empresas privadas, PYMES y vecindarios organizados.</li>
+      <li>Costos más bajos frente a seguridad tradicional.</li>
+      <li>Asesoría legal y capacitación sobre protección de datos.</li>
     </ul>
   </details>
 </section>
@@ -189,34 +191,34 @@
 <section id="pestel">
   <h2>Análisis PESTEL</h2>
   <ul>
-    <li><b>Político:</b> Apoyo estatal a seguridad ciudadana; riesgo de inestabilidad.</li>
-    <li><b>Económico:</b> Alta demanda, pero inflación puede afectar hardware.</li>
-    <li><b>Social:</b> Ciudadanos buscan soluciones; riesgo de desconfianza biométrica.</li>
-    <li><b>Tecnológico:</b> IA accesible y precisa; riesgo de obsolescencia.</li>
-    <li><b>Ecológico:</b> Potencial en equipos eficientes y sostenibles.</li>
-    <li><b>Legal:</b> Cumplimiento de la Ley N° 29733 de datos personales.</li>
+    <li><b>Político:</b> Impulso estatal a la seguridad ciudadana; riesgo de inestabilidad local.</li>
+    <li><b>Económico:</b> Creciente inversión pública y privada; riesgo por inflación y costos de hardware.</li>
+    <li><b>Social:</b> Alta percepción de inseguridad; posible desconfianza frente al uso de datos biométricos.</li>
+    <li><b>Tecnológico:</b> Avances en IA; necesidad constante de actualización.</li>
+    <li><b>Ecológico:</b> Posibilidad de equipos eficientes; riesgos en desecho electrónico.</li>
+    <li><b>Legal:</b> Cumplimiento de la Ley N.° 29733 de Protección de Datos Personales.</li>
   </ul>
 </section>
 
 <section id="porter">
   <h2>5 Fuerzas de Porter</h2>
   <ul>
-    <li><b>Rivalidad:</b> Competencia alta entre proveedores IA y CCTV.</li>
-    <li><b>Nuevos Entrantes:</b> Barreras moderadas por inversión y confianza legal.</li>
-    <li><b>Proveedores:</b> Poder medio; dependencia de importaciones.</li>
-    <li><b>Clientes:</b> Municipios con alto poder; PYMES diversifican ingreso.</li>
-    <li><b>Sustitutos:</b> Serenazgo, alarmas y CCTV tradicional.</li>
+    <li><b>Rivalidad:</b> Alta, con empresas de seguridad física y startups IA.</li>
+    <li><b>Nuevos Entrantes:</b> Barreras moderadas por inversión y certificaciones.</li>
+    <li><b>Proveedores:</b> Dependencia media de hardware importado.</li>
+    <li><b>Clientes:</b> Municipios con alto poder de negociación; PYMES con demanda creciente.</li>
+    <li><b>Sustitutos:</b> Serenazgo, CCTV tradicional y alarmas comunitarias.</li>
   </ul>
 </section>
 
 <section id="smart">
   <h2>Objetivos SMART</h2>
   <ul>
-    <li><b>Específico:</b> Crear un sistema de reconocimiento facial en tiempo real.</li>
-    <li><b>Medible:</b> Precisión ≥ 90%, tres pilotos y encuestas de percepción.</li>
-    <li><b>Alcanzable:</b> Equipo técnico y recursos tecnológicos disponibles.</li>
-    <li><b>Relevante:</b> Aporta a la reducción de inseguridad urbana.</li>
-    <li><b>Temporal:</b> 6 meses desarrollo, 2 meses piloto, 6 meses evaluación.</li>
+    <li><b>Específico:</b> Desarrollar un sistema de reconocimiento facial en tiempo real.</li>
+    <li><b>Medible:</b> Precisión ≥ 90%, tres pilotos, y evaluación del impacto social.</li>
+    <li><b>Alcanzable:</b> Uso de Python, OpenCV y servidores en la nube.</li>
+    <li><b>Relevante:</b> Aporta a la reducción de la inseguridad urbana.</li>
+    <li><b>Temporal:</b> 6 meses desarrollo, 2 de pruebas, 6 de evaluación.</li>
   </ul>
 </section>
 
@@ -224,60 +226,55 @@
   <h2>Análisis FODA</h2>
   <ul>
     <li><b>Fortalezas:</b> IA innovadora, asesoría legal, enfoque social.</li>
-    <li><b>Debilidades:</b> Dependencia tecnológica y costos iniciales.</li>
-    <li><b>Oportunidades:</b> Creciente demanda y alianzas públicas.</li>
-    <li><b>Amenazas:</b> Regulaciones y percepción negativa del reconocimiento facial.</li>
+    <li><b>Debilidades:</b> Dependencia tecnológica, costos iniciales altos.</li>
+    <li><b>Oportunidades:</b> Demanda de seguridad inteligente y alianzas públicas.</li>
+    <li><b>Amenazas:</b> Competencia creciente, regulaciones de datos personales.</li>
   </ul>
 </section>
 
 <section id="competencia">
-  <h2>Competencia y Posicionamiento</h2>
+  <h2>Competencia</h2>
   <div class="highlight">
-    SegurAI se diferencia por integrar IA, cumplimiento legal y educación comunitaria, apuntando a un mercado en expansión.
+    SegurAI se posiciona como la única propuesta integral IA + legal + social en el mercado peruano.
   </div>
-  <ul>
-    <li><b>Directos:</b> Startups de videovigilancia inteligente.</li>
-    <li><b>Indirectos:</b> Empresas de seguridad tradicional.</li>
-    <li><b>Ventaja:</b> Valor agregado en asesoría legal y confianza ciudadana.</li>
-  </ul>
 </section>
 
 <section id="prototipo">
-  <h2>Prototipo / Producto Mínimo Viable (PMV)</h2>
-  <p>El prototipo de SegurAI incluye interfaces móviles y un flujo técnico entre cámaras, servidor y app. Su objetivo fue validar la viabilidad tecnológica y la confianza de los usuarios.</p>
+  <h2>Prototipo / Demo Funcional</h2>
+  <p>El prototipo integra reconocimiento facial en tiempo real, alertas automáticas y panel web de monitoreo.</p>
 
-  <div class="video-container">
-    <!-- Sustituye el enlace de YouTube con tu propio video -->
-    <iframe src="https://www.youtube.com/embed/TU_VIDEO_ID"
-      title="Demostración del prototipo SegurAI" allowfullscreen></iframe>
-  </div>
+  <video controls>
+    <source src="videos/demo.mp4" type="video/mp4">
+    Tu navegador no soporta reproducción de video.
+  </video>
 
-  <p><i>Figura 1. Boceto de la app móvil SegurAI</i><br>
-     <i>Figura 2. Flujo de funcionamiento del sistema SegurAI (Fuente: elaboración propia, 2025)</i></p>
+  <p style="text-align:center;">
+    <a href="videos/demo.mp4" class="button" target="_blank">Ver demostración completa</a>
+  </p>
 </section>
 
 <section id="equipo">
   <h2>Equipo Fundador</h2>
   <div class="team">
     <div class="member">
-      <img src="images/equipo_ceo.jpg" alt="CEO" />
+      <img src="images/equipo_ceo.jpg" alt="CEO">
       <h4>Carlos Manuel</h4>
-      <p>CEO – Dirección general y alianzas institucionales.</p>
+      <p>CEO — Dirección general y alianzas institucionales.</p>
     </div>
     <div class="member">
-      <img src="images/equipo_cto.jpg" alt="CTO" />
+      <img src="images/equipo_cto.jpg" alt="CTO">
       <h4>José Moreno</h4>
-      <p>CTO – Desarrollo técnico e innovación en IA.</p>
+      <p>CTO — Desarrollo técnico e innovación en IA.</p>
     </div>
     <div class="member">
-      <img src="images/equipo_ops.jpg" alt="Operaciones" />
+      <img src="images/equipo_ops.jpg" alt="Operaciones">
       <h4>Anaceli Samamé</h4>
-      <p>Operaciones – Logística y soporte en campo.</p>
+      <p>Operaciones — Logística y soporte en campo.</p>
     </div>
     <div class="member">
-      <img src="images/equipo_marketing.jpg" alt="Marketing" />
+      <img src="images/equipo_marketing.jpg" alt="Marketing">
       <h4>Luis Salazar</h4>
-      <p>Marketing – Comunicación, difusión y branding.</p>
+      <p>Marketing — Comunicación, difusión y branding.</p>
     </div>
   </div>
 </section>
@@ -285,23 +282,21 @@
 <section id="plan">
   <h2>Plan Operativo y Financiero</h2>
   <ul>
-    <li><b>Ubicación:</b> Lima Metropolitana (coworking o espacio compartido).</li>
+    <li><b>Ubicación:</b> Lima Metropolitana (coworking / espacio compartido).</li>
     <li><b>Inversión inicial:</b> S/ 7,000 – 8,000.</li>
-    <li><b>Etapas:</b> Investigación, prototipo, validación, escalamiento.</li>
+    <li><b>Etapas:</b> Investigación → prototipo → piloto → escalamiento.</li>
     <li><b>Indicadores:</b> Precisión ≥ 85%, satisfacción ≥ 80%, retención ≥ 70%.</li>
-    <li><b>Rentabilidad esperada:</b> 25–30% en segundo año.</li>
+    <li><b>Rentabilidad esperada:</b> 25–30% al segundo año.</li>
   </ul>
-  <div class="highlight">
-    SegurAI busca combinar impacto social, innovación tecnológica y sostenibilidad económica.
-  </div>
 </section>
 
 <footer>
-  © 2025 SegurAI – Proyecto de Seguridad Inteligente con IA | Elaboración propia
+  © 2025 SegurAI — Proyecto de Seguridad Inteligente con IA | Elaboración propia
 </footer>
 
 </body>
 </html>
+
 
 
 
