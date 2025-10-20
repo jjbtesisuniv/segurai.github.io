@@ -8,309 +8,170 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --dark-blue: #010A20; /* Fondo principal muy oscuro */
-      --sidebar-blue: #031535; /* Color de sidebar */
-      --accent-blue: #00bfff; /* Color de acento (Celeste vibrante) */
-      --highlight-blue: #00d5ff; /* Color de acento más claro */
+      --dark-blue: #010A20;
+      --sidebar-blue: #031535;
+      --accent-blue: #00bfff;
+      --highlight-blue: #00d5ff;
       --text-color: #e6eef6;
       --card-bg: #03183d;
       --radius: 12px;
       font-family: 'Inter', sans-serif;
     }
 
-    body {
-      margin: 0;
-      background-color: var(--dark-blue);
-      color: var(--text-color);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-    * { box-sizing: border-box; }
+    body { margin:0; background-color: var(--dark-blue); color: var(--text-color); display:flex; height:100vh; overflow:hidden; }
+    * { box-sizing:border-box; }
 
     /* Sidebar */
     .sidebar {
-      width: 260px;
+      width:260px;
       background-color: var(--sidebar-blue);
-      padding: 25px 0;
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
+      padding:25px 0;
+      position:fixed;
+      left:0; top:0; bottom:0;
+      display:flex;
+      flex-direction:column;
+      box-shadow:4px 0 15px rgba(0,0,0,0.4);
       transition: transform 0.3s ease;
     }
-
     .sidebar h2 {
       color: var(--highlight-blue);
-      font-size: 1.6em;
-      margin: 0 0 25px 30px;
-      border-bottom: 2px solid rgba(0, 191, 255, 0.2);
-      padding-bottom: 10px;
-      font-weight: 800;
+      font-size:1.6em;
+      margin:0 0 25px 30px;
+      border-bottom:2px solid rgba(0,191,255,0.2);
+      padding-bottom:10px;
+      font-weight:800;
     }
-
     .sidebar a {
       color: var(--text-color);
-      text-decoration: none;
-      padding: 12px 30px;
-      font-size: 1em;
+      text-decoration:none;
+      padding:12px 30px;
+      font-size:1em;
       transition: background-color 0.3s, color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-left: 5px solid transparent;
+      display:flex;
+      align-items:center;
+      gap:15px;
+      border-left:5px solid transparent;
     }
-    .sidebar a i { font-size: 1.1em; color: var(--accent-blue); }
-
-    .sidebar a:hover {
-      background-color: rgba(0, 191, 255, 0.1);
-      color: var(--highlight-blue);
-    }
-
-    .sidebar a.active {
-      background-color: rgba(0, 191, 255, 0.15);
-      border-left-color: var(--highlight-blue);
-      color: var(--highlight-blue);
-      font-weight: 600;
-    }
+    .sidebar a i { font-size:1.1em; color: var(--accent-blue); }
+    .sidebar a:hover { background-color: rgba(0,191,255,0.1); color: var(--highlight-blue); }
+    .sidebar a.active { background-color: rgba(0,191,255,0.15); border-left-color: var(--highlight-blue); color: var(--highlight-blue); font-weight:600; }
 
     /* Main content */
     .main-content {
-      margin-left: 260px;
-      padding: 40px;
-      width: calc(100% - 260px);
-      overflow-y: auto;
+      margin-left:260px;
+      padding:40px;
+      width:calc(100% - 260px);
+      overflow-y:auto;
       scroll-behavior: smooth;
     }
+    section { min-height:calc(100vh - 80px); display:none; opacity:0; transform:translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; padding-bottom:50px; }
+    section.active { display:block; opacity:1; transform:translateY(0); }
 
-    section {
-      min-height: calc(100vh - 80px);
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      padding-bottom: 50px;
-    }
-
-    section.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Portada */
+    /* Hero */
     .hero {
-      width: 100vw;
-      height: 100vh;
+      width:100vw;
+      height:100vh;
       background: linear-gradient(135deg, #010714 0%, #031535 100%);
       position: fixed;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      z-index:1000;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
       transition: opacity 0.5s ease;
+      padding:20px;
     }
-
-    .hero h1 {
-      font-size: 3.2em;
-      color: var(--highlight-blue);
-      margin-bottom: 20px;
-      font-weight: 900;
-      text-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
-    }
-
-    .hero p {
-      font-size: 1.2em;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 30px;
-    }
-
+    .hero img { margin-bottom:20px; width:150px; }
+    .hero h1 { font-size:3.2em; color: var(--highlight-blue); margin-bottom:20px; font-weight:900; text-shadow: 0 0 15px rgba(0,191,255,0.4); }
+    .hero p { font-size:1.2em; color: rgba(255,255,255,0.8); margin-bottom:30px; }
     .hero button {
       background-color: var(--accent-blue);
-      border: none;
+      border:none;
       color: var(--dark-blue);
-      padding: 15px 30px;
+      padding:15px 30px;
       border-radius: var(--radius);
-      font-size: 1.1em;
-      cursor: pointer;
-      font-weight: 700;
-      box-shadow: 0 6px 15px rgba(0, 191, 255, 0.3);
+      font-size:1.1em;
+      cursor:pointer;
+      font-weight:700;
+      box-shadow:0 6px 15px rgba(0,191,255,0.3);
       transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     }
-
     .hero button:hover {
       background-color: var(--highlight-blue);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 191, 255, 0.5);
+      box-shadow:0 8px 20px rgba(0,191,255,0.5);
     }
 
-    h2 {
-      color: var(--highlight-blue);
-      margin-bottom: 10px;
-      font-weight: 800;
-      border-bottom: 1px solid rgba(0, 191, 255, 0.1);
-      padding-bottom: 8px;
-    }
-    h3 { color: var(--highlight-blue); margin-top: 20px;}
+    h2 { color: var(--highlight-blue); margin-bottom:10px; font-weight:800; border-bottom:1px solid rgba(0,191,255,0.1); padding-bottom:8px; }
+    h3 { color: var(--highlight-blue); margin-top:20px;}
 
-    /* Demo Section */
-    .video-container {
-      width: 100%;
-      max-width: 800px;
-      margin: 20px auto;
-      background-color: #000;
-      border-radius: var(--radius);
-      box-shadow: 0 0 20px rgba(0,191,255,0.4);
-      overflow: hidden;
-    }
-    video {
-      width: 100%;
-      display: block;
-    }
+    .video-container { width:100%; max-width:800px; margin:20px auto; background-color:#000; border-radius:var(--radius); box-shadow:0 0 20px rgba(0,191,255,0.4); overflow:hidden; }
+    video { width:100%; display:block; }
 
-    /* Team Section */
-    .team {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 25px;
-      margin-top: 30px;
-    }
+    .team { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:25px; margin-top:30px; }
+    .member { text-align:center; background-color: var(--card-bg); padding:20px; border-radius: var(--radius); border:1px solid rgba(0,191,255,0.2); box-shadow:0 4px 10px rgba(0,0,0,0.3); transition: transform 0.3s; }
+    .member:hover { transform:translateY(-5px); border-color: var(--highlight-blue); }
+    .member .image-placeholder { width:120px; height:120px; border-radius:50%; margin:0 auto 15px; background-color:#032a5a; border:3px solid var(--accent-blue); display:flex; align-items:center; justify-content:center; font-weight:700; color: var(--highlight-blue); font-size:0.9em; overflow:hidden; }
+    .member h3 { color: var(--highlight-blue); margin:5px 0; font-size:1.2em; }
+    .member p { font-size:0.9em; color: rgba(255,255,255,0.7); margin:0; }
 
-    .member {
-      text-align: center;
-      background-color: var(--card-bg);
-      padding: 20px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(0, 191, 255, 0.2);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s;
-    }
-    .member:hover {
-      transform: translateY(-5px);
-      border-color: var(--highlight-blue);
+    .card-info { background-color: var(--card-bg); padding:20px; border-radius:var(--radius); margin-top:20px; border-left:5px solid var(--accent-blue); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+    .card-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; }
+    .info-item { background-color:#031535; padding:15px; border-radius:var(--radius); border-top:3px solid var(--highlight-blue); }
+    .info-item strong { color: var(--highlight-blue); font-weight:700; display:block; margin-bottom:5px;}
+    .info-item ul { list-style:none; padding:0; margin:5px 0 0; }
+    .info-item li { margin-bottom:8px; font-size:0.95em; color: rgba(255,255,255,0.8); }
+
+    /* PESTEL / Porter */
+    .table-container { margin-top:20px; display:grid; grid-template-columns:1fr; gap:15px; }
+    .pestel-item, .porter-item { background-color: var(--card-bg); padding:15px; border-radius:var(--radius); border-left:5px solid var(--accent-blue); }
+    .pestel-item h4, .porter-title { margin:0 0 5px 0; color: var(--highlight-blue); font-weight:700; font-size:1.1em; }
+    .porter-text { font-size:0.9em; color: rgba(255,255,255,0.7); margin-top:5px; }
+
+    @media (max-width:768px) {
+      .sidebar { width:100%; height:auto; position:relative; box-shadow:none; padding:15px 0; display:none; }
+      .main-content { margin-left:0; padding:20px; width:100%; }
+      .hero h1 { font-size:2.2em; }
+      .card-grid { grid-template-columns:1fr; }
     }
 
-    .member .image-placeholder {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 15px;
-      background-color: #032a5a;
-      border: 3px solid var(--accent-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: var(--highlight-blue);
-      font-size: 0.9em;
-      overflow: hidden;
+    /* Modal / sección temporal para Boceto o Story */
+    .modal-section {
+      display:none;
+      background-color: rgba(0,0,0,0.95);
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      z-index:2000;
+      overflow:auto;
+      padding:50px 20px;
+      text-align:center;
     }
-
-    .member h3 {
-      color: var(--highlight-blue);
-      margin: 5px 0;
-      font-size: 1.2em;
-    }
-
-    .member p {
-      font-size: 0.9em;
-      color: rgba(255, 255, 255, 0.7);
-      margin: 0;
-    }
-
-    .card-info {
-      background-color: var(--card-bg);
-      padding: 20px;
-      border-radius: var(--radius);
-      margin-top: 20px;
-      border-left: 5px solid var(--accent-blue);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .info-item {
-      background-color: #031535;
-      padding: 15px;
-      border-radius: var(--radius);
-      border-top: 3px solid var(--highlight-blue);
-    }
-    .info-item strong { color: var(--highlight-blue); font-weight: 700; display: block; margin-bottom: 5px;}
-    .info-item ul { list-style: none; padding: 0; margin: 5px 0 0;}
-    .info-item li { margin-bottom: 8px; font-size: 0.95em; color: rgba(255, 255, 255, 0.8);}
-
-    /* New PESTEL/Porter styles */
-    .table-container { 
-        margin-top: 20px; 
-        display: grid; 
-        grid-template-columns: 1fr; 
-        gap: 15px;
-    }
-    .pestel-item, .porter-item {
-        background-color: var(--card-bg);
-        padding: 15px;
-        border-radius: var(--radius);
-        border-left: 5px solid var(--accent-blue);
-    }
-    .pestel-item h4 {
-        margin: 0 0 5px 0;
-        color: var(--highlight-blue);
-        font-weight: 700;
-        font-size: 1.1em;
-    }
-    .porter-title {
-        background-color: #031535;
-        color: var(--highlight-blue);
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        font-weight: 700;
-        text-align: center;
-        border: 1px solid rgba(0, 191, 255, 0.2);
-    }
-    .porter-text {
-        font-size: 0.9em;
-        color: rgba(255, 255, 255, 0.7);
-        margin-top: 5px;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        box-shadow: none;
-        padding: 15px 0;
-        display: none;
-      }
-      .main-content {
-        margin-left: 0;
-        padding: 20px;
-        width: 100%;
-      }
-      .hero h1 { font-size: 2.2em; }
-      .card-grid { grid-template-columns: 1fr; }
+    .modal-section img, .modal-section .story-content { max-width:90%; margin:0 auto; border-radius:12px; }
+    .modal-section button.close-btn {
+      margin-top:20px;
+      background-color: var(--highlight-blue);
+      color: var(--dark-blue);
+      border:none;
+      padding:10px 20px;
+      border-radius:var(--radius);
+      cursor:pointer;
+      font-weight:700;
     }
   </style>
 </head>
 <body>
 
-  <!-- Portada -->
+  <!-- Hero -->
   <div class="hero" id="inicio">
-    <img src="logo.png" alt="Logo SegurAI" style="width:150px; margin-bottom:20px;">
+    <img src="logo.png" alt="Logo SegurAI">
     <h1>SegurAI — Seguridad Preventiva con IA</h1>
     <p>Innovación tecnológica y protección en entornos urbanos y empresariales.</p>
-    <button onclick="explorar()">Explorar Presentación</button>
+    <div style="display:flex; gap:15px; flex-wrap: wrap; justify-content:center; margin-top:20px;">
+      <button onclick="explorar()">Explorar Presentación</button>
+      <button onclick="mostrarBoceto()">Ver Boceto</button>
+      <button onclick="mostrarStory()">StoryTheme</button>
+    </div>
   </div>
 
   <!-- Sidebar -->
@@ -324,208 +185,151 @@
     <a href="#" onclick="mostrarSeccion('competencia', this)"><i class="fas fa-shield-alt"></i> Competencia</a>
     <a href="#" onclick="mostrarSeccion('demo', this)"><i class="fas fa-video"></i> Demo Funcional</a>
     <a href="#" onclick="mostrarSeccion('equipo', this)"><i class="fas fa-users"></i> Equipo</a>
-    <a href="#" onclick="mostrarSeccion('plan', this)"><i class="fas fa-tasks"></i> Plan Operativo</a>
   </div>
 
-  <!-- Main -->
+  <!-- Main content -->
   <div class="main-content" id="contenido" style="display:none;">
-    
-    <!-- SECCIÓN 3: MISIÓN Y VISIÓN -->
+    <!-- Misión y Visión -->
     <section id="mision" class="active">
-      <h2>Misión y Visión <i class="fas fa-handshake"></i></h2>
+      <h2>Misión y Visión</h2>
+      <div class="card-info">
+        <p>SegurAI busca innovar en la seguridad preventiva mediante algoritmos de IA que detectan riesgos y comportamientos sospechosos en entornos urbanos y empresariales, ofreciendo alertas en tiempo real y reduciendo incidentes.</p>
+      </div>
+    </section>
+
+    <!-- Modelo de Negocio -->
+    <section id="modelo">
+      <h2>Modelo de Negocio</h2>
+      <div class="card-info">
+        <p>El modelo de negocio de SegurAI combina tecnología, analítica avanzada y servicios de seguridad preventiva, ofreciendo soluciones SaaS a empresas e instituciones urbanas.</p>
+      </div>
+    </section>
+
+    <!-- Análisis PESTEL -->
+    <section id="pestel">
+      <h2>Análisis PESTEL</h2>
+      <div class="table-container">
+        <div class="pestel-item"><h4>Político:</h4><p>Regulaciones de seguridad y privacidad de datos en entornos urbanos.</p></div>
+        <div class="pestel-item"><h4>Económico:</h4><p>Demanda creciente de soluciones de seguridad tecnológica.</p></div>
+        <div class="pestel-item"><h4>Social:</h4><p>Conciencia creciente sobre seguridad personal y empresarial.</p></div>
+        <div class="pestel-item"><h4>Tecnológico:</h4><p>Avances en IA, visión computacional y análisis predictivo.</p></div>
+        <div class="pestel-item"><h4>Ambiental:</h4><p>Integración con infraestructura urbana sostenible.</p></div>
+        <div class="pestel-item"><h4>Legal:</h4><p>Cumplimiento de leyes de privacidad y protección de datos personales.</p></div>
+      </div>
+    </section>
+
+    <!-- 5 Fuerzas de Porter -->
+    <section id="porter">
+      <h2>5 Fuerzas de Porter</h2>
+      <div class="table-container">
+        <div class="porter-item"><h4 class="porter-title">Rivalidad entre Competidores:</h4><p class="porter-text">Alta competencia en seguridad urbana tecnológica, necesidad de diferenciación.</p></div>
+        <div class="porter-item"><h4 class="porter-title">Amenaza de Nuevos Entrantes:</h4><p class="porter-text">Moderada, debido a barreras tecnológicas y know-how.</p></div>
+        <div class="porter-item"><h4 class="porter-title">Poder de Proveedores:</h4><p class="porter-text">Moderado, tecnología de IA y hardware especializado limitan proveedores.</p></div>
+        <div class="porter-item"><h4 class="porter-title">Poder de Clientes:</h4><p class="porter-text">Alto, empresas buscan soluciones efectivas y costo-beneficio.</p></div>
+        <div class="porter-item"><h4 class="porter-title">Amenaza de Productos Sustitutos:</h4><p class="porter-text">Moderada, vigilancia tradicional aún presente pero menos eficiente.</p></div>
+      </div>
+    </section>
+
+    <!-- FODA -->
+    <section id="foda">
+      <h2>Análisis FODA</h2>
       <div class="card-grid">
         <div class="info-item">
-          <h3>Nuestra Misión</h3>
-          <p>Brindar soluciones de seguridad basadas en <strong>Inteligencia Artificial</strong> que protejan entornos urbanos y empresariales con eficiencia, transparencia y respeto a la privacidad.</p>
+          <strong>Fortalezas:</strong>
+          <ul>
+            <li>Algoritmos de IA avanzados.</li>
+            <li>Monitoreo en tiempo real.</li>
+            <li>Plataforma SaaS flexible.</li>
+          </ul>
         </div>
         <div class="info-item">
-          <h3>Nuestra Visión</h3>
-          <p>Convertirnos en el referente peruano en seguridad inteligente, integrando tecnología, legalidad y confianza social, redefiniendo la seguridad de reactiva a <strong>predictiva</strong>.</p>
+          <strong>Oportunidades:</strong>
+          <ul>
+            <li>Creciente demanda de seguridad tecnológica.</li>
+            <li>Posible expansión internacional.</li>
+            <li>Alianzas estratégicas con empresas de seguridad.</li>
+          </ul>
+        </div>
+        <div class="info-item">
+          <strong>Debilidades:</strong>
+          <ul>
+            <li>Infraestructura inicial limitada.</li>
+            <li>Dependencia de datos de calidad.</li>
+          </ul>
+        </div>
+        <div class="info-item">
+          <strong>Amenazas:</strong>
+          <ul>
+            <li>Competencia tecnológica en crecimiento.</li>
+            <li>Regulaciones de privacidad estrictas.</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- SECCIÓN 4: MODELO DE NEGOCIO -->
-    <section id="modelo">
-      <h2>Modelo de Negocio (Canvas) <i class="fas fa-chart-line"></i></h2>
-      <div class="card-info">
-        <p>SegurAI se centra en ofrecer <strong>seguridad inteligente como servicio</strong>, combinando <strong>hardware + software + asesoría legal</strong>. </p>
-        <img src="reconocimiento_facial.png" alt="Reconocimiento Facial" style="width:100%; max-width:600px; border-radius:12px; margin-top:15px; margin-bottom:15px;">
-        
-        <div class="card-grid">
-          <div class="info-item">
-            <strong>Propuesta de Valor Única</strong>
-            <ul>
-              <li>Vigilancia inteligente con reconocimiento facial en tiempo real.</li>
-              <li>Alertas inmediatas vía app móvil y plataforma web.</li>
-              <li>Prevención activa de delitos.</li>
-            </ul>
-          </div>
-          <div class="info-item">
-            <strong>Segmentación de Clientes</strong>
-            <ul>
-              <li>Municipalidades (Seguridad Ciudadana en zonas vulnerables).</li>
-              <li>Empresas privadas (Retail, Centros Comerciales, Fábricas).</li>
-              <li>Pequeños y medianos negocios (Tiendas, restaurantes).</li>
-            </ul>
-          </div>
-          <div class="info-item">
-            <strong>Flujo de Ingresos</strong>
-            <ul>
-              <li>Venta inicial de equipos (Hardware + Software).</li>
-              <li>Suscripción mensual/anual (Uso de plataforma).</li>
-              <li>Servicios adicionales (Asesoría legal, capacitación).</li>
-            </ul>
-          </div>
-          <div class="info-item">
-            <strong>Socios Clave</strong>
-            <ul>
-              <li>Proveedores de hardware (cámaras, servidores).</li>
-              <li>Municipalidades y autoridades de seguridad.</li>
-              <li>Expertos legales en protección de datos.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 5: ANÁLISIS PESTEL -->
-    <section id="pestel">
-      <h2>Análisis PESTEL <i class="fas fa-globe-americas"></i></h2>
-      <div class="table-container card-info">
-        <p>El modelo considera factores del entorno que impactan la implementación de seguridad con IA en Perú.</p>
-        <div class="card-grid" style="gap: 15px;">
-          <div class="pestel-item">
-            <h4>POLÍTICO</h4>
-            <p class="porter-text">Impulso de programas de seguridad ciudadana y posible resistencia de autoridades locales por desconocimiento.</p>
-          </div>
-          <div class="pestel-item">
-            <h4>ECONÓMICO</h4>
-            <p class="porter-text">Creciente inversión en seguridad privada y pública. Limitaciones presupuestarias en municipalidades vulnerables.</p>
-          </div>
-          <div class="pestel-item">
-            <h4>SOCIAL</h4>
-            <p class="porter-text">Alta percepción de inseguridad (70%+). Desconfianza ciudadana frente al uso de datos biométricos.</p>
-          </div>
-          <div class="pestel-item">
-            <h4>TECNOLÓGICO</h4>
-            <p class="porter-text">Avances en IA y Machine Learning para reconocimiento facial. Costos de hardware reducidos.</p>
-          </div>
-          <div class="pestel-item">
-            <h4>ECOLÓGICO</h4>
-            <p class="porter-text">Posibilidad de diseñar equipos de bajo consumo y reducir patrullajes constantes (menor huella de carbono).</p>
-          </div>
-          <div class="pestel-item">
-            <h4>LEGAL</h4>
-            <p class="porter-text">Cumplimiento de la Ley N.º 29733 (Protección de Datos). Riesgo de sanciones si no se cumple la normativa de privacidad.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 6: 5 FUERZAS DE PORTER -->
-    <section id="porter">
-      <h2>5 Fuerzas de Porter <i class="fas fa-sitemap"></i></h2>
-      <div class="card-info">
-        <div class="porter-title">Amenaza de nuevos competidores</div>
-        <p class="porter-text">Alta barrera inicial por inversión en hardware y algoritmos de IA; sin embargo, el mercado está atrayendo startups.</p>
-        <div class="porter-title">Poder de negociación de los proveedores</div>
-        <p class="porter-text">Medio, depende de proveedores de cámaras y servidores especializados. La diversificación de proveedores reduce riesgos.</p>
-        <div class="porter-title">Poder de negociación de los clientes</div>
-        <p class="porter-text">Alto, las municipalidades y empresas pueden comparar distintas soluciones de seguridad privada.</p>
-        <div class="porter-title">Amenaza de productos sustitutos</div>
-        <p class="porter-text">Media, seguridad convencional (vigilancia humana) sigue siendo alternativa.</p>
-        <div class="porter-title">Rivalidad entre competidores existentes</div>
-        <p class="porter-text">Media-alta, con empresas privadas de seguridad y startups tecnológicas emergentes.</p>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 7: ANÁLISIS FODA -->
-    <section id="foda">
-      <h2>Análisis FODA <i class="fas fa-balance-scale"></i></h2>
-      <div class="card-info">
-        <div class="card-grid">
-          <div class="info-item">
-            <strong>Fortalezas</strong>
-            <ul>
-              <li>Innovación tecnológica con IA en tiempo real.</li>
-              <li>Equipo multidisciplinario.</li>
-              <li>Servicios complementarios (legal y asesoría).</li>
-            </ul>
-          </div>
-          <div class="info-item">
-            <strong>Oportunidades</strong>
-            <ul>
-              <li>Crecimiento de inversión pública en seguridad.</li>
-              <li>Mayor conciencia de prevención del delito.</li>
-              <li>Reducción de costos de hardware y software.</li>
-            </ul>
-          </div>
-          <div class="info-item">
-            <strong>Debilidades</strong>
-            <ul>
-              <li>Costos iniciales para clientes pequeños.</li>
-              <li>Necesidad de capacitación en uso de plataforma.</li>
-              <li>Dependencia tecnológica de proveedores externos.</li>
-            </ul>
-          </div>
-          <div class="info-item">
-            <strong>Amenazas</strong>
-            <ul>
-              <li>Competencia emergente con algoritmos similares.</li>
-              <li>Resistencia social por privacidad de datos.</li>
-              <li>Inestabilidad política afectando contratos públicos.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 8: COMPETENCIA -->
+    <!-- Competencia -->
     <section id="competencia">
-      <h2>Competencia <i class="fas fa-shield-alt"></i></h2>
+      <h2>Competencia</h2>
       <div class="card-info">
-        <ul>
-          <li>Empresas de seguridad privada tradicionales (vigilantes humanos).</li>
-          <li>Startups de vigilancia inteligente con IA.</li>
-          <li>Servicios de monitoreo CCTV y alarmas centralizadas.</li>
-        </ul>
+        <p>El mercado cuenta con empresas de vigilancia tradicional y algunas startups tecnológicas de seguridad. SegurAI se diferencia por su integración de IA preventiva y alertas predictivas.</p>
       </div>
     </section>
 
-    <!-- SECCIÓN 9: DEMO FUNCIONAL -->
+    <!-- Demo funcional -->
     <section id="demo">
-      <h2>Demo Funcional <i class="fas fa-video"></i></h2>
+      <h2>Demo Funcional</h2>
       <div class="video-container">
-        <video controls>
-          <source src="demo.mp4" type="video/mp4">
-          Tu navegador no soporta reproducción de video.
-        </video>
+        <img src="reconocimiento_facial.png" alt="Reconocimiento Facial Activo" style="width:100%; border-radius: var(--radius);">
       </div>
     </section>
 
-    <!-- SECCIÓN 10: EQUIPO -->
+    <!-- Equipo -->
     <section id="equipo">
-      <h2>Responsables Principales <i class="fas fa-users"></i></h2>
-      <div class="card-info">
-        <ul>
-          <li><strong>CEO (Carlos Manuel):</strong> coordinación general.</li>
-          <li><strong>KYM (Jesús Rodríguez):</strong> coordinación alianzas estratégicas.</li>
-          <li><strong>CTO (José Moreno):</strong> desarrollo técnico y validación del algoritmo.</li>
-          <li><strong>Jefa de operaciones (Anaceli Samamé):</strong> logística y soporte en campo.</li>
-          <li><strong>Marketing (Luis Salazar):</strong> difusión, campañas y gestión de usuarios piloto.</li>
-        </ul>
+      <h2>Equipo</h2>
+      <div class="team">
+        <div class="member">
+          <div class="image-placeholder">CEO</div>
+          <h3>Carlos Manuel</h3>
+          <p>Coordinación general</p>
+        </div>
+        <div class="member">
+          <div class="image-placeholder">KYM</div>
+          <h3>Jesús Rodríguez</h3>
+          <p>Coordinación alianzas estratégicas</p>
+        </div>
+        <div class="member">
+          <div class="image-placeholder">CTO</div>
+          <h3>José Moreno</h3>
+          <p>Desarrollo técnico y validación del algoritmo</p>
+        </div>
+        <div class="member">
+          <div class="image-placeholder">Jefa Ops</div>
+          <h3>Anaceli Samamé</h3>
+          <p>Logística y soporte en campo</p>
+        </div>
+        <div class="member">
+          <div class="image-placeholder">Marketing</div>
+          <h3>Luis Salazar</h3>
+          <p>Difusión, campañas y gestión de usuarios piloto</p>
+        </div>
       </div>
     </section>
+  </div>
 
-    <!-- SECCIÓN 11: PLAN OPERATIVO -->
-    <section id="plan">
-      <h2>Plan Operativo <i class="fas fa-tasks"></i></h2>
-      <div class="card-info">
-        <p>Se define un plan con etapas piloto y escalamiento, considerando infraestructura disponible, personal capacitado y recursos tecnológicos.</p>
-      </div>
-    </section>
+  <!-- Modal Secciones Boceto / Story -->
+  <div id="boceto-modal" class="modal-section">
+    <h2>Boceto SegurAI</h2>
+    <img src="boceto.png" alt="Boceto SegurAI">
+    <br>
+    <button class="close-btn" onclick="cerrarModal('boceto-modal')">Cerrar</button>
+  </div>
 
+  <div id="story-modal" class="modal-section">
+    <h2>StoryTheme Interactivo</h2>
+    <div class="story-content">
+      <p>SegurAI analiza video en tiempo real → Detecta patrones de riesgo → Envía alertas preventivas a la central → Minimiza incidentes en entornos urbanos y empresariales.</p>
+    </div>
+    <button class="close-btn" onclick="cerrarModal('story-modal')">Cerrar</button>
   </div>
 
   <script>
@@ -537,17 +341,31 @@
     }
 
     function mostrarSeccion(id, link) {
-      const sections = document.querySelectorAll('section');
-      sections.forEach(sec => sec.classList.remove('active'));
+      // Secciones
+      document.querySelectorAll('.main-content section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
 
-      const links = document.querySelectorAll('.sidebar a');
-      links.forEach(a => a.classList.remove('active'));
-      if(link) link.classList.add('active');
+      // Sidebar
+      if(link){
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
+
+    function mostrarBoceto() {
+      document.getElementById('boceto-modal').style.display = 'block';
+    }
+    function mostrarStory() {
+      document.getElementById('story-modal').style.display = 'block';
+    }
+    function cerrarModal(id) {
+      document.getElementById(id).style.display = 'none';
     }
   </script>
+
 </body>
 </html>
+
 
 
 
