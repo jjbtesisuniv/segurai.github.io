@@ -30,11 +30,6 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .hero img.logo{width:150px;max-width:40vw}
 .hero h1{font-size:2.8rem;margin:0;color:var(--highlight-blue);font-weight:900;text-shadow:0 0 14px rgba(0,191,255,0.25)}
 .hero p{max-width:900px;margin:0;font-size:1.05rem;color:rgba(255,255,255,0.9)}
-.hero .mv{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap;justify-content:center}
-.mv-card{background:var(--card);padding:14px;border-radius:12px;width:260px;box-shadow:0 6px 18px rgba(0,0,0,0.35);text-align:center}
-.mv-card img{width:64px;height:64px;object-fit:cover;margin-bottom:8px;border-radius:10px}
-.mv-card h3{margin:6px 0;color:var(--highlight-blue);font-size:1.05rem;text-transform:capitalize}
-.mv-card p{font-size:0.92rem;color:rgba(255,255,255,0.86);line-height:1.3}
 
 /* Hero buttons big stylized */
 .hero-controls{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:16px}
@@ -125,21 +120,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     <img class="logo" src="img/logo.png" alt="SegurAI Logo">
     <h1>SegurAI — Seguridad Preventiva con IA</h1>
     <p><strong>Innovación tecnológica y protección en entornos urbanos y empresariales.</strong><br>
-      Integrando inteligencia artificial, reconocimiento facial y alertas en tiempo real para anticipar riesgos y proteger personas y activos.</p>
-
-    <!-- Misión & Visión resumo en el hero -->
-    <div class="mv">
-      <div class="mv-card">
-        <img src="img/mision.png" alt="Misión">
-        <h3>Misión</h3>
-        <p>Proveer seguridad preventiva basada en IA que anticipe riesgos y respete la privacidad ciudadana.</p>
-      </div>
-      <div class="mv-card">
-        <img src="img/vision.png" alt="Visión">
-        <h3>Visión</h3>
-        <p>Ser referente regional en soluciones predictivas de seguridad urbana y empresarial.</p>
-      </div>
-    </div>
+      Integramos inteligencia artificial, reconocimiento facial y alertas en tiempo real para anticipar riesgos y proteger personas y activos.</p>
 
     <div class="hero-controls" style="margin-top:20px">
       <button class="btn btn-explorar" onclick="abrirHero(false)"><i class="fas fa-arrow-right"></i>&nbsp;Explorar Presentación</button>
@@ -167,7 +148,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
   <!-- MAIN -->
   <main class="main" id="main" style="display:none">
 
-    <!-- MISIÓN -->
+    <!-- MISIÓN (ahora dentro de Explorar Presentación) -->
     <section id="mision" class="section active">
       <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
       <h2>Misión y Visión</h2>
@@ -408,8 +389,10 @@ function abrirSeccion(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   const sec = document.getElementById(id);
   if(sec) sec.classList.add('active');
+  // mark active link
   document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
   if(el) el.classList.add('active');
+  // scroll top
   document.querySelector('.main').scrollTop = 0;
 }
 function volverHero(){
@@ -425,7 +408,7 @@ function volverHero(){
 function abrirBoceto(){ document.getElementById('modal-boceto').style.display='flex'; }
 function cerrarBoceto(){ document.getElementById('modal-boceto').style.display='none'; }
 
-/* STORY modal with timeline (kept as before) */
+/* STORY modal with timeline */
 let currentStep = 0;
 let autoplay = false;
 let autoplayInterval = null;
@@ -447,23 +430,52 @@ function abrirStory(){
   updateTimeline();
   startAutoplayIfSet();
 }
-function cerrarStory(){ document.getElementById('modal-story').style.display='none'; stopAutoplay(); }
+
+function cerrarStory(){
+  document.getElementById('modal-story').style.display='none';
+  stopAutoplay();
+}
+
+// timeline navigation
 function updateTimeline(){
   const s = steps();
-  s.forEach((el,i)=>{ el.classList.remove('active'); if(i===currentStep) el.classList.add('active'); });
+  s.forEach((el,i)=>{
+    el.classList.remove('active');
+    if(i===currentStep) el.classList.add('active');
+  });
+  // update preview
   const pText = previewText(currentStep);
-  const preview = document.getElementById('previewText');
-  if(preview) preview.textContent = pText;
+  document.getElementById('previewText').textContent = pText;
+  // change preview image lightly for each step (example — reuse same or add images)
   const imgs = ['img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png'];
-  const previewImg = document.getElementById('previewImg');
-  if(previewImg) previewImg.src = imgs[currentStep] || imgs[0];
+  document.getElementById('previewImg').src = imgs[currentStep] || imgs[0];
 }
-function nextTimeline(){ const s = steps(); if(currentStep < s.length - 1) currentStep++; updateTimeline(); }
-function prevTimeline(){ if(currentStep > 0) currentStep--; updateTimeline(); }
-function toggleAutoplay(){ autoplay = !autoplay; const btn = document.getElementById('autoplayBtn'); if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); } else { btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); } }
-function startAutoplay(){ stopAutoplay(); autoplayInterval = setInterval(()=>{ if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); } else { currentStep = 0; updateTimeline(); } },1400); }
+
+function nextTimeline(){
+  const s = steps();
+  if(currentStep < s.length - 1) currentStep++;
+  updateTimeline();
+}
+function prevTimeline(){
+  if(currentStep > 0) currentStep--;
+  updateTimeline();
+}
+
+/* autoplay */
+function toggleAutoplay(){
+  autoplay = !autoplay;
+  const btn = document.getElementById('autoplayBtn');
+  if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); }
+  else{ btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); }
+}
+function startAutoplay(){
+  stopAutoplay();
+  autoplayInterval = setInterval(()=>{
+    if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); }
+    else { currentStep = 0; updateTimeline(); }
+  },1400);
+}
 function stopAutoplay(){ if(autoplayInterval){ clearInterval(autoplayInterval); autoplayInterval = null; } }
-function startAutoplayIfSet(){ if(autoplay) startAutoplay(); }
 
 /* PROTOTYPE modal: carousel of GIFs/images */
 const protoImages = [
@@ -518,6 +530,7 @@ document.addEventListener('keydown', e=>{
 
 </body>
 </html>
+
 
 
 
