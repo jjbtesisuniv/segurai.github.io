@@ -31,7 +31,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .hero h1{font-size:2.8rem;margin:0;color:var(--highlight-blue);font-weight:900;text-shadow:0 0 14px rgba(0,191,255,0.25)}
 .hero p{max-width:900px;margin:0;font-size:1.05rem;color:rgba(255,255,255,0.9)}
 
-/* Hero buttons big stylized */
+/* Hero cards (misión/visión resumen) */
 .hero-controls{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:16px}
 .btn{
   border:0;padding:14px 28px;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.45);
@@ -43,6 +43,12 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .btn-story{background:linear-gradient(45deg,#ff9a00,#ff0055);color:#fff}
 .btn-proto{background:linear-gradient(45deg,#6a9bff,#9bf0ff);color:#011}
 .hero .preview-img{margin-top:26px;max-width:420px;border-radius:12px;box-shadow:0 8px 30px rgba(0,191,255,0.18)}
+
+.mv{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+.mv-card{background:var(--card);padding:14px;border-radius:12px;width:240px;box-shadow:0 6px 18px rgba(0,0,0,0.35);text-align:center}
+.mv-card img{width:64px;height:64px;object-fit:cover;margin-bottom:8px;border-radius:10px}
+.mv-card h3{margin:6px 0;color:var(--highlight-blue);font-size:1.05rem;text-transform:capitalize}
+.mv-card p{font-size:0.92rem;color:rgba(255,255,255,0.86);line-height:1.3}
 
 /* SIDEBAR */
 .sidebar{
@@ -123,9 +129,23 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     <p><strong>Innovación tecnológica y protección en entornos urbanos y empresariales.</strong><br>
       Integrando inteligencia artificial, reconocimiento facial y alertas en tiempo real para anticipar riesgos y proteger personas y activos.</p>
 
+    <div class="mv">
+      <div class="mv-card">
+        <img src="img/mision.png" alt="Misión">
+        <h3>Misión</h3>
+        <p>Proveer seguridad preventiva basada en IA que anticipe riesgos y respete la privacidad ciudadana.</p>
+      </div>
+      <div class="mv-card">
+        <img src="img/vision.png" alt="Visión">
+        <h3>Visión</h3>
+        <p>Ser referente regional en soluciones predictivas de seguridad urbana y empresarial.</p>
+      </div>
+    </div>
+
     <div class="hero-controls" style="margin-top:20px">
       <button class="btn btn-explorar" onclick="abrirHero(false)"><i class="fas fa-arrow-right"></i>&nbsp;Explorar Presentación</button>
-      <button class="btn btn-boceto" id="btnBoceto" onclick="abrirBoceto()"><i class="fas fa-pencil-ruler"></i>&nbsp;Ver Boceto</button>
+      <!-- Cambiado según tu petición -->
+      <button class="btn btn-boceto" id="btnBoceto" onclick="abrirBoceto()"><i class="fas fa-file-alt"></i>&nbsp;Demo: Reporte de Alertas</button>
       <button class="btn btn-story" id="btnStory" onclick="abrirStory()"><i class="fas fa-book-open"></i>&nbsp;StoryTheme</button>
       <button class="btn btn-proto" id="btnProto" onclick="abrirProto()"><i class="fas fa-stream"></i>&nbsp;Ver Protótipo (secuencia)</button>
     </div>
@@ -143,6 +163,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     <a href="#" onclick="abrirSeccion('foda',this)"><i class="fas fa-balance-scale"></i>FODA</a>
     <a href="#" onclick="abrirSeccion('demo',this)"><i class="fas fa-video"></i>Demo Funcional</a>
     <a href="#" onclick="abrirSeccion('equipo',this)"><i class="fas fa-users"></i>Equipo</a>
+    <a href="#" onclick="abrirSeccion('objetivos',this)"><i class="fas fa-bullseye"></i>Objetivos SMART</a>
     <a href="#" onclick="abrirSeccion('plan',this)"><i class="fas fa-tasks"></i>Plan Operativo</a>
   </nav>
 
@@ -278,10 +299,49 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
       <div class="card">
         <ul>
           <li><strong>CEO (Carlos Manuel):</strong> coordinación general.</li>
-          <li><strong>KYM (Jesús Rodríguez):</strong> coordinación alianzas estratégicas.</li>
+          <li><strong>KAM (Jesús Rodríguez):</strong> coordinación alianzas estratégicas.</li>
           <li><strong>CTO (José Moreno):</strong> desarrollo técnico y validación del algoritmo.</li>
           <li><strong>Jefa de operaciones (Anaceli Samamé):</strong> logística y soporte en campo.</li>
           <li><strong>Marketing (Luis Salazar):</strong> difusión, campañas y gestión de usuarios piloto.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- OBJETIVOS SMART (NUEVO) -->
+    <section id="objetivos" class="section">
+      <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
+      <h2>OBJETIVOS SMART</h2>
+      <div class="card">
+        <p>El proyecto SegurAI tiene como meta establecer una solución de seguridad avanzada mediante inteligencia artificial, delineada según los parámetros SMART (Específico, Medible, Alcanzable, Relevante, Temporal):</p>
+
+        <h3>● S · Específico (Specific)</h3>
+        <p>Crear un sistema de identificación facial que opere en tiempo real. Este sistema será capaz de identificar individuos con características sospechosas y enviar alertas inmediatas a los usuarios y a las autoridades pertinentes.</p>
+
+        <h3>● M · Medible (Measurable)</h3>
+        <ul class="info-list">
+          <li>Alcanzar un mínimo de <strong>90% de precisión</strong> en el reconocimiento facial en condiciones reales de operación.</li>
+          <li>Realizar <strong>tres pruebas piloto</strong> en áreas urbanas con alto riesgo para validar la eficacia del sistema en diferentes entornos.</li>
+          <li>Evaluar el impacto social y la disminución de la percepción de inseguridad en las áreas de prueba.</li>
+        </ul>
+
+        <h3>● A · Alcanzable (Achievable)</h3>
+        <p>Este objetivo es factible porque:</p>
+        <ul class="info-list">
+          <li>Tenemos un equipo técnico competente y una infraestructura tecnológica robusta.</li>
+          <li>La ejecución se basa en tecnologías contemporáneas y eficientes como Python y bibliotecas especializadas en inteligencia artificial.</li>
+          <li>Se incorporan cámaras HD conectadas a servidores locales y a la nube, optimizadas para procesamiento en tiempo real.</li>
+          <li>La modularidad del sistema permite escalar y adaptar componentes según el entorno.</li>
+        </ul>
+
+        <h3>● R · Relevante (Relevant)</h3>
+        <p>El proyecto aborda una necesidad crítica: la inseguridad en áreas urbanas. SegurAI pretende disminuir la percepción de inseguridad y elevar la calidad de vida en las comunidades mediante tecnología innovadora.</p>
+
+        <h3>● T · Temporal (Time-bound)</h3>
+        <p>Cronograma definido en tres etapas:</p>
+        <ul class="info-list">
+          <li><strong>Desarrollo del sistema:</strong> completar en 6 meses.</li>
+          <li><strong>Pruebas piloto:</strong> ejecutar en 2 meses adicionales después del desarrollo.</li>
+          <li><strong>Evaluación del impacto social:</strong> realizar en un plazo de 6 meses tras la implementación de las pruebas piloto.</li>
         </ul>
       </div>
     </section>
@@ -297,26 +357,26 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 
   </main>
 
-  <!-- MODAL: BOCETO -->
+  <!-- MODAL: BOCETO (Demo: Reporte de Alertas) -->
   <div id="modal-boceto" class="modal" role="dialog" aria-hidden="true">
     <div class="box">
       <button class="close" onclick="cerrarBoceto()"><i class="fas fa-times"></i></button>
-      <h2>Boceto / Mockup de Interfaz</h2>
+      <h2>Reporte de Alertas — Boceto / Mockup</h2>
       <div class="content-row">
         <img src="img/boceto.png" alt="Boceto SegurAI (ejemplo)">
         <div class="mock">
-          <h3>Mockup rápido</h3>
-          <p>Ejemplo: dashboard principal que muestra cámaras en vivo, mapa con incidentes y panel de alertas.</p>
+          <h3>Mockup rápido: Reporte de Alertas</h3>
+          <p>Ejemplo: pantalla de reporte donde se listan alertas recientes, su gravedad, estado y acciones recomendadas.</p>
           <ul>
-            <li><strong>Top-left:</strong> feeds de cámaras (miniaturas)</li>
-            <li><strong>Centro:</strong> mapa con pins y nivel de riesgo</li>
-            <li><strong>Panel derecho:</strong> alertas recientes y acciones sugeridas</li>
+            <li><strong>Arriba:</strong> filtros por fecha, zona y gravedad</li>
+            <li><strong>Lista central:</strong> alertas con miniatura de cámara, etiqueta de prioridad y hora</li>
+            <li><strong>Panel derecho:</strong> mapa con la ubicación exacta y acciones (notificar policía, enviar equipo)</li>
           </ul>
-          <p style="margin-top:12px;font-weight:700;color:var(--highlight-blue)">Prueba: reemplaza img/boceto.png con tu boceto real.</p>
+          <p style="margin-top:12px;font-weight:700;color:var(--highlight-blue)">Prueba: reemplaza img/boceto.png con tu boceto real (o captura del reporte).</p>
         </div>
       </div>
       <div style="text-align:right;margin-top:14px">
-        <button class="btn-back" onclick="cerrarBoceto()"><i class="fas fa-times"></i> Cerrar boceto</button>
+        <button class="btn-back" onclick="cerrarBoceto()"><i class="fas fa-times"></i> Cerrar</button>
       </div>
     </div>
   </div>
@@ -700,6 +760,13 @@ function simularIntruso(){ simularDeteccion(false); }
 document.addEventListener('keydown', e=>{
   if(e.key === 'Escape') {
     if(document.getElementById('simModal').style.display === 'flex') cerrarSimulador();
+  }
+});
+</script>
+
+</body>
+</html>
+
   }
 });
 </script>
