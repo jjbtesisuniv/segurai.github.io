@@ -60,6 +60,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 .section.active{display:block;opacity:1;transform:none}
 .card{background:var(--card);padding:18px;border-radius:12px;border-left:5px solid var(--accent-blue);box-shadow:0 8px 24px rgba(0,0,0,0.45);margin-bottom:18px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.info-list { margin: 8px 0 0 0; padding-left: 18px; color: rgba(255,255,255,0.9); }
 
 /* BACK BUTTON */
 .btn-back{
@@ -189,13 +190,49 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
       </div>
     </section>
 
-    <!-- PESTEL -->
+    <!-- PESTEL (ACTUALIZADO CON TU TEXTO) -->
     <section id="pestel" class="section">
       <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
       <h2>Análisis PESTEL</h2>
-      <div class="card grid2">
-        <div class="card"><strong>Político / Legal</strong><p>Regulación, licitaciones y cumplimiento de la Ley de Protección de Datos.</p></div>
-        <div class="card"><strong>Económico / Social</strong><p>Limitaciones presupuestarias en municipios y sensibilidad social a biometría.</p></div>
+      <div class="card">
+        <p>ANÁLISIS PESTEL – SegurAI</p>
+
+        <h3>1. Político</h3>
+        <ul class="info-list">
+          <li><strong>Positivos:</strong> El gobierno peruano impulsa programas de seguridad ciudadana y busca modernizar la vigilancia en ciudades. Posibles convenios con municipalidades y ministerios del Interior para integrar la tecnología en planes de seguridad.</li>
+          <li><strong>Negativos / Riesgos:</strong> Cambios políticos frecuentes y falta de continuidad en proyectos públicos. Posible resistencia de autoridades locales por desconocimiento de la tecnología.</li>
+        </ul>
+
+        <h3>2. Económico</h3>
+        <ul class="info-list">
+          <li><strong>Positivos:</strong> Creciente inversión en seguridad privada y pública por el aumento de la delincuencia. Municipios y empresas destinan más presupuesto a protección.</li>
+          <li><strong>Negativos / Riesgos:</strong> Inflación y alza del dólar → encarecen hardware importado (cámaras, servidores). Limitaciones presupuestarias en municipalidades de zonas vulnerables.</li>
+        </ul>
+
+        <h3>3. Social</h3>
+        <ul class="info-list">
+          <li><strong>Positivos:</strong> Alta percepción de inseguridad (más del 70% según INEI 2024) → la gente busca soluciones nuevas. Mayor apertura de ciudadanos y empresas a invertir en seguridad tecnológica.</li>
+          <li><strong>Negativos / Riesgos:</strong> Desconfianza de parte de la población frente al uso de datos biométricos (temor a la “vigilancia masiva”). Necesidad de campañas de educación y sensibilización para evitar rechazo social.</li>
+        </ul>
+
+        <h3>4. Tecnológico</h3>
+        <ul class="info-list">
+          <li><strong>Positivos:</strong> Avances en IA y machine learning → mayor precisión del reconocimiento facial. Costos de servidores en la nube y cámaras HD se han reducido en los últimos años.</li>
+          <li><strong>Negativos / Riesgos:</strong> Obsolescencia rápida: la tecnología de hoy puede quedar desfasada en 2–3 años. Necesidad constante de actualizaciones de software y ciberseguridad.</li>
+        </ul>
+
+        <h3>5. Ecológico</h3>
+        <ul class="info-list">
+          <li><strong>Positivos:</strong> Posibilidad de diseñar equipos de bajo consumo energético (valor agregado). Uso de tecnología que evite patrullajes constantes en vehículos (reducción de huella de carbono).</li>
+          <li><strong>Negativos / Riesgos:</strong> Regulaciones ambientales futuras sobre desecho de hardware electrónico (RAEE). Consumo eléctrico adicional en servidores y cámaras de alta resolución.</li>
+        </ul>
+
+        <h3>6. Legal</h3>
+        <ul class="info-list">
+          <li><strong>Positivos:</strong> Marco legal en Perú que promueve la innovación tecnológica y la seguridad digital. Puede posicionarse como un servicio que cumple normas de protección de datos (Ley N.° 29733).</li>
+          <li><strong>Negativos / Riesgos:</strong> Riesgo de sanciones si no se cumplen las normas de privacidad y consentimiento en el uso de datos biométricos. Necesidad de protocolos estrictos para manejar bases de datos sensibles.</li>
+        </ul>
+
       </div>
     </section>
 
@@ -669,6 +706,7 @@ document.addEventListener('keydown', e=>{
 
 </body>
 </html>
+
 
 
 
