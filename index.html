@@ -74,7 +74,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 }
 .btn-back i{transform:translateX(-2px)}
 
-/* DEMO VIDEO */
+/* DEMO Video wrapper fallback (no usado si simulador activo) */
 .video-wrap{max-width:900px;margin:18px auto;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
 .video-wrap video{width:100%;height:auto;display:block;background:#000}
 
@@ -118,6 +118,36 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
   .main{margin-left:0}
   .proto-img{max-width:90%}
 }
+
+/* ==============================
+   Simulador CSS (encapsulado)
+   ============================== */
+.simulator-app { display:block; }
+.simulator-app .sidebar{ width:250px; background:#0e111a; padding:18px; border-radius:8px; box-shadow:none; height:auto; }
+.simulator-app .sidebar .stat-card{ background:#161b22; padding:12px; border-radius:8px; margin-bottom:12px; border-left:4px solid var(--accent-blue); }
+.simulator-app .main-content{ padding:12px; background:transparent; }
+.simulator-app .header-bar{ border-bottom:1px solid rgba(255,255,255,0.03); margin-bottom:12px; padding-bottom:10px; display:flex; justify-content:space-between; align-items:center }
+.simulator-app .alerts-list{ display:grid; gap:12px; margin-top:6px; }
+.simulator-app .alert-item{ background:#0f1720; border-radius:8px; padding:12px; display:flex; gap:12px; align-items:center; border-left:5px solid #ffb700; }
+.simulator-app .alert-item.critical{ border-left-color: #e53e3e; }
+.simulator-app .alert-item.resolved{ border-left-color: #38a169; opacity:0.75; }
+.simulator-app .alert-icon{ width:44px; height:44px; display:flex;align-items:center;justify-content:center;border-radius:50%; color:#0b0f12; }
+.simulator-app .alert-item.critical .alert-icon{ background:#e53e3e; }
+.simulator-app .alert-item.pending .alert-icon{ background:#ffb700; }
+.simulator-app .alert-item.resolved .alert-icon{ background:#38a169; }
+.simulator-app .alert-details strong{ color:#fff; display:block; margin-bottom:4px; }
+.simulator-app .alert-meta{ color:#8b949e; font-size:0.85rem; }
+.simulator-app .alert-actions button{ padding:8px 10px; border-radius:6px; border:0; cursor:pointer; font-weight:700; margin-left:6px; }
+.simulator-app .btn-resolve{ background:#38a169; color:#fff; }
+.simulator-app .btn-report{ background:#30363d; color:var(--text); }
+.simulator-app .sim-sidebar{ display:flex; flex-direction:column; gap:8px; }
+
+/* make sure within main page overflow doesn't break layout */
+.simulator-app .container { display:flex; gap:12px; align-items:flex-start; }
+@media (max-width:900px) {
+  .simulator-app .container { flex-direction:column; }
+  .simulator-app .sidebar { width:100%; display:flex; flex-wrap:wrap; }
+}
 </style>
 </head>
 <body>
@@ -144,7 +174,6 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 
     <div class="hero-controls" style="margin-top:20px">
       <button class="btn btn-explorar" onclick="abrirHero(false)"><i class="fas fa-arrow-right"></i>&nbsp;Explorar Presentación</button>
-      <!-- Cambiado según tu petición -->
       <button class="btn btn-boceto" id="btnBoceto" onclick="abrirBoceto()"><i class="fas fa-file-alt"></i>&nbsp;Demo: Reporte de Alertas</button>
       <button class="btn btn-story" id="btnStory" onclick="abrirStory()"><i class="fas fa-book-open"></i>&nbsp;StoryTheme</button>
       <button class="btn btn-proto" id="btnProto" onclick="abrirProto()"><i class="fas fa-stream"></i>&nbsp;Ver Protótipo (secuencia)</button>
@@ -211,7 +240,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
       </div>
     </section>
 
-    <!-- PESTEL (ACTUALIZADO CON TU TEXTO) -->
+    <!-- PESTEL (ACTUALIZADO) -->
     <section id="pestel" class="section">
       <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
       <h2>Análisis PESTEL</h2>
@@ -276,20 +305,76 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
       </div>
     </section>
 
-    <!-- DEMO -->
+    <!-- DEMO: aquí hemos insertado el Simulador Panel de Gestión de Alertas -->
     <section id="demo" class="section">
       <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
-      <h2>Demo Funcional</h2>
-      <div class="card">
-        <p>Video de demostración: ejemplo de flujo (detección → alerta → visualización en dashboard).</p>
-        <div class="video-wrap">
-          <!-- Ruta organizada: videos/demo.mp4 -->
-          <video controls poster="img/reconocimiento_facial.png">
-            <source src="videos/demo.mp4" type="video/mp4">
-            Tu navegador no soporta video.
-          </video>
+      <h2>Demo: Reporte de Alertas — Simulador</h2>
+
+      <div class="card simulator-app">
+        <!-- Container encapsulado para evitar colisiones -->
+        <div class="container">
+          <!-- Sidebar / KPIs -->
+          <div class="sidebar sim-sidebar" style="width:260px;min-width:220px;">
+            <h2 style="color:var(--accent-blue);margin:0 0 10px 0">SegurAI <i class="fas fa-lock-open"></i></h2>
+
+            <div class="stat-card">
+                <strong id="totalAlerts">5</strong>
+                <small>Alertas Abiertas (Total)</small>
+            </div>
+
+            <div class="stat-card" id="criticalCard" style="border-left-color:#e53e3e">
+                <strong id="criticalAlerts">2</strong>
+                <small>Alertas Críticas (IA)</small>
+            </div>
+
+            <div class="stat-card" id="iaScoreCard" style="border-left-color:var(--accent-blue)">
+                <strong id="iaScoreText">97.2%</strong>
+                <small>Precisión IA Promedio (Eficiencia)</small>
+            </div>
+
+            <div class="stat-card">
+                <strong id="activeClients">12</strong>
+                <small>Clientes Piloto Activos</small>
+            </div>
+
+            <div class="stat-card">
+                <strong id="riskLevelText">NORMAL</strong>
+                <small>Nivel de Riesgo Operacional</small>
+            </div>
+
+            <div class="stat-card">
+                <strong id="camerasOnline">8</strong>
+                <small>Cámaras Online</small>
+            </div>
+
+            <div style="margin-top:6px">
+              <div class="nav-item active" onclick="setActiveNav(this)"><i class="fas fa-desktop"></i> Dashboard</div>
+              <div class="nav-item" onclick="setActiveNav(this)"><i class="fas fa-cogs"></i> Configuración de Cámaras</div>
+              <div class="nav-item" onclick="setActiveNav(this)"><i class="fas fa-user-shield"></i> Gestión de Usuarios</div>
+              <div class="nav-item" onclick="setActiveNav(this)"><i class="fas fa-chart-line"></i> Reportes y Métricas</div>
+            </div>
+          </div>
+
+          <!-- Main content (alerts list) -->
+          <div style="flex:1; min-width:320px;">
+            <div class="main-content">
+              <div class="header-bar">
+                <h1 style="margin:0">Gestión de Alertas en Tiempo Real</h1>
+                <div>
+                  <button class="alert-actions btn-report" onclick="simulateNewAlert()">
+                      <i class="fas fa-bell"></i> Generar Nueva Alerta IA
+                  </button>
+                </div>
+              </div>
+
+              <div class="alerts-list" id="alertsList">
+                <!-- aquí se inyectan alertas -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
     </section>
 
     <!-- EQUIPO -->
@@ -307,7 +392,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
       </div>
     </section>
 
-    <!-- OBJETIVOS SMART (NUEVO) -->
+    <!-- OBJETIVOS SMART -->
     <section id="objetivos" class="section">
       <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
       <h2>OBJETIVOS SMART</h2>
@@ -357,7 +442,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 
   </main>
 
-  <!-- MODAL: BOCETO (Demo: Reporte de Alertas) -->
+  <!-- MODAL: BOCETO -->
   <div id="modal-boceto" class="modal" role="dialog" aria-hidden="true">
     <div class="box">
       <button class="close" onclick="cerrarBoceto()"><i class="fas fa-times"></i></button>
@@ -381,7 +466,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     </div>
   </div>
 
-  <!-- MODAL: STORY THEME (TIMELINE INTERACTIVO) -->
+  <!-- MODAL: STORY THEME -->
   <div id="modal-story" class="modal" role="dialog" aria-hidden="true">
     <div class="box">
       <button class="close" onclick="cerrarStory()"><i class="fas fa-times"></i></button>
@@ -421,7 +506,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     </div>
   </div>
 
-  <!-- MODAL: PROTOTIPO SECUENCIAL (GIFs / IMÁGENES) -->
+  <!-- MODAL: PROTOTIPO -->
   <div id="modal-proto" class="modal" role="dialog" aria-hidden="true">
     <div class="box">
       <button class="close" onclick="cerrarProto()"><i class="fas fa-times"></i></button>
@@ -429,12 +514,10 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
 
       <div class="content-row">
         <div class="proto-viewer">
-          <!-- imagen principal (GIF o PNG) -->
           <div class="proto-img" id="protoImgWrapper">
             <img id="protoImg" src="img/proto1.gif" alt="Paso 1" style="width:100%;border-radius:8px;display:block">
           </div>
 
-          <!-- controles -->
           <div class="proto-controls">
             <button onclick="prevProto()"><i class="fas fa-chevron-left"></i> Anterior</button>
             <button onclick="nextProto()">Siguiente <i class="fas fa-chevron-right"></i></button>
@@ -447,14 +530,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
         <div style="min-width:260px;max-width:340px">
           <div class="mock">
             <h3>Sugerencias de contenido visual</h3>
-            <p class="helper">Para la secuencia puedes usar:</p>
-            <ul>
-              <li><strong>GIFs cortos</strong> (2–5s) mostrando detección en acción — quedan fluidos y explicativos.</li>
-              <li><strong>Screencasts / screen recordings</strong> (MP4 o GIF) del dashboard con alertas reales.</li>
-              <li><strong>PNG/JPEG anotados</strong> (flechas y etiquetas) — útiles para resaltar pasos.</li>
-              <li><strong>SVGs animados</strong> (si quieres vectores limpios y escalables).</li>
-            </ul>
-            <p class="helper" style="margin-top:8px"><strong>Ejemplo de secuencia recomendada:</strong></p>
+            <p class="helper">Para la secuencia puedes usar GIFs, screencasts, PNG anotados o SVGs animados.</p>
             <ol>
               <li>Captura (cámara → edge)</li>
               <li>Procesamiento IA (detección)</li>
@@ -462,9 +538,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
               <li>Envío a central / intervención</li>
               <li>Reporte y analítica</li>
             </ol>
-            <p class="helper" style="margin-top:8px;color:var(--highlight-blue)">Reemplaza <code>img/proto1.gif</code> ... <code>img/proto5.gif</code> por tus archivos reales.</p>
 
-            <!-- BOTÓN AGREGADO PARA ABRIR EL SIMULADOR BIOMÉTRICO -->
             <div style="margin-top:12px;text-align:center;">
               <button class="btn btn-boceto" onclick="abrirSimulador()"><i class="fas fa-fingerprint"></i> Probar Simulador Biométrico</button>
             </div>
@@ -567,30 +641,12 @@ function abrirProto(){
   showProto(protoIndex);
   startProtoAutoplayIfSet();
 }
-function cerrarProto(){
-  document.getElementById('modal-proto').style.display='none';
-  stopProtoAutoplay();
-}
-function showProto(i){
-  const el = document.getElementById('protoImg');
-  const caption = document.getElementById('protoCaption');
-  const safe = protoImages[i] || protoImages[0];
-  el.src = safe.src;
-  caption.textContent = safe.caption;
-}
+function cerrarProto(){ document.getElementById('modal-proto').style.display='none'; stopProtoAutoplay(); }
+function showProto(i){ const el = document.getElementById('protoImg'); const caption = document.getElementById('protoCaption'); const safe = protoImages[i] || protoImages[0]; el.src = safe.src; caption.textContent = safe.caption; }
 function nextProto(){ protoIndex = (protoIndex + 1) % protoImages.length; showProto(protoIndex); }
 function prevProto(){ protoIndex = (protoIndex - 1 + protoImages.length) % protoImages.length; showProto(protoIndex); }
-
-function toggleProtoAuto(){
-  protoAuto = !protoAuto;
-  const btn = document.getElementById('protoAutoBtn');
-  if(protoAuto){ btn.textContent = 'Auto: ON'; btn.style.background = '#00ffb3'; startProtoAutoplay(); }
-  else { btn.textContent = 'Auto'; btn.style.background = ''; stopProtoAutoplay(); }
-}
-function startProtoAutoplay(){
-  stopProtoAutoplay();
-  protoInterval = setInterval(()=>{ nextProto(); }, 1600);
-}
+function toggleProtoAuto(){ protoAuto = !protoAuto; const btn = document.getElementById('protoAutoBtn'); if(protoAuto){ btn.textContent = 'Auto: ON'; btn.style.background = '#00ffb3'; startProtoAutoplay(); } else { btn.textContent = 'Auto'; btn.style.background = ''; stopProtoAutoplay(); } }
+function startProtoAutoplay(){ stopProtoAutoplay(); protoInterval = setInterval(()=>{ nextProto(); }, 1600); }
 function stopProtoAutoplay(){ if(protoInterval){ clearInterval(protoInterval); protoInterval = null; } }
 function startProtoAutoplayIfSet(){ if(protoAuto) startProtoAutoplay(); }
 
@@ -598,181 +654,166 @@ function startProtoAutoplayIfSet(){ if(protoAuto) startProtoAutoplay(); }
 document.addEventListener('keydown', e=>{
   if(e.key === 'Escape'){ cerrarStory(); cerrarBoceto(); cerrarProto(); }
 });
-</script>
 
-<!-- =========================
-     MODAL: SIMULADOR BIOMETRICO
-     Inserción directa en el index.html
-     ========================= -->
-<style>
-  /* estilos del modal (auto contenido) */
-  .sim-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:3000}
-  .sim-box{width:100%;max-width:620px;border-radius:14px;padding:18px;background:linear-gradient(180deg,#07101a,#09121a);box-shadow:0 30px 80px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03)}
-  .sim-close{float:right;background:transparent;border:0;color:#cfeffd;font-size:18px;cursor:pointer}
-  /* reutiliza variables si existen, si no, defino fallback */
-  :root{--sim-dark:#0d1117;--sim-card:#0f1720;--sim-accent:#00bcd4;--sim-success:#38a169;--sim-failure:#e53e3e;--sim-text:#cdd9e6}
-  .sim-h1{color:var(--sim-accent);font-weight:700;text-align:center;margin:0 0 10px}
-  .sim-camera{width:100%;height:260px;background:#020407;border-radius:10px;border:2px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .sim-overlay{position:absolute;width:78%;height:72%;border-radius:8px;border:3px dashed var(--sim-accent);transition:border-color .35s,box-shadow .35s}
-  .sim-face{width:110px;height:110px;border-radius:50%;background:#202428;border:4px solid var(--sim-accent);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.9;display:flex;align-items:center;justify-content:center;color:var(--sim-text);font-weight:700;font-size:12px}
-  .sim-status{margin-top:14px;padding:12px;border-radius:8px;background:#0f1620;color:var(--sim-text);text-align:center;font-weight:700;min-height:56px}
-  .sim-controls{display:flex;gap:12px;margin-top:14px}
-  .sim-btn{flex:1;padding:12px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
-  .sim-auth{background:linear-gradient(90deg,var(--sim-accent),#7ef2e6);color:#021018}
-  .sim-intr{background:var(--sim-failure);color:#fff}
-  .sim-log{margin-top:12px;background:#05070a;padding:10px;border-radius:8px;height:90px;overflow:auto;border:1px solid rgba(255,255,255,0.02);font-size:13px}
-  .sim-log .time{color:var(--sim-accent);margin-right:6px;font-weight:700}
-  /* small responsive */
-  @media (max-width:520px){ .sim-box{padding:12px} .sim-camera{height:200px} .sim-face{width:92px;height:92px} }
-</style>
+/* =========================
+   Simulador Panel de Gestión de Alertas
+   Insertado en la sección DEMO
+   ========================= */
 
-<div id="simModal" class="sim-modal" aria-hidden="true" role="dialog">
-  <div class="sim-box" role="document" aria-label="Simulador biométrico SegurAI">
-    <button class="sim-close" aria-label="Cerrar simulador" onclick="cerrarSimulador()"><i class="fas fa-times"></i></button>
-    <h2 class="sim-h1">Simulador SegurAI — Detección Biométrica</h2>
+const alertsList = (typeof document !== 'undefined') ? document.getElementById('alertsList') : null;
+const totalAlertsElement = (typeof document !== 'undefined') ? document.getElementById('totalAlerts') : null;
+const criticalAlertsElement = (typeof document !== 'undefined') ? document.getElementById('criticalAlerts') : null;
+const camerasOnlineElement = (typeof document !== 'undefined') ? document.getElementById('camerasOnline') : null;
+const riskLevelText = (typeof document !== 'undefined') ? document.getElementById('riskLevelText') : null;
+const iaScoreText = (typeof document !== 'undefined') ? document.getElementById('iaScoreText') : null;
 
-    <div class="sim-camera" id="simCamera">
-      <div class="sim-overlay" id="simOverlay"></div>
-      <div class="sim-face" id="simFace">Rostro</div>
-    </div>
+let alertCounter = 105; // id inicial para nuevas alertas
+let currentIaScore = 97.2;
 
-    <div class="sim-status" id="simStatus">Esperando detección...</div>
+const initialAlerts = [
+    {
+        id: 101,
+        type: 'critical',
+        message: 'COINCIDENCIA LISTA NEGRA: ID B-103 (Confianza 98%)',
+        camera: 'CÁM A-01 | Entrada Principal',
+        time: '09:45:12',
+        resolved: false
+    },
+    {
+        id: 102,
+        type: 'pending',
+        message: 'ANOMALÍA: Individuo merodeando la Zona B > 3 min',
+        camera: 'CÁM B-03 | Pasillo de Almacén',
+        time: '09:48:30',
+        resolved: false
+    },
+    {
+        id: 103,
+        type: 'critical',
+        message: 'ACCESO DENEGADO: Rostro no registrado (Confianza 95%)',
+        camera: 'CÁM C-02 | Puerta de Servicio',
+        time: '09:50:01',
+        resolved: false
+    },
+    {
+        id: 104,
+        type: 'pending',
+        message: 'RIESGO DE CÓDIGO ROJO: Objeto abandonado (15 min) en Parqueo Sur',
+        camera: 'CÁM D-04 | Estacionamiento',
+        time: '09:30:00',
+        resolved: true
+    }
+];
 
-    <div class="sim-controls">
-      <button class="sim-btn sim-auth" onclick="simularAutorizado()"><i class="fas fa-check-circle"></i> Simular Usuario Autorizado</button>
-      <button class="sim-btn sim-intr" onclick="simularIntruso()"><i class="fas fa-exclamation-triangle"></i> Simular Intruso (Alerta)</button>
-    </div>
-
-    <div class="sim-log" id="simLog">
-      <div><span class="time">[00:00:00]</span> Simulador listo.</div>
-    </div>
-
-    <div style="text-align:right;margin-top:10px">
-      <button class="sim-btn" style="width:auto;background:transparent;color:var(--sim-accent);border:1px solid rgba(255,255,255,0.04)" onclick="cerrarSimulador()">Cerrar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/* -------- funciones de apertura/cierre (usar desde otros botones con abrirSimulador()) -------- */
-function abrirSimulador(){
-  document.getElementById('simModal').style.display='flex';
-  document.getElementById('simModal').setAttribute('aria-hidden','false');
-}
-function cerrarSimulador(){
-  document.getElementById('simModal').style.display='none';
-  document.getElementById('simModal').setAttribute('aria-hidden','true');
-  // limpiar animaciones si las hubiera
-  clearInterval(window.__simScanInterval);
-  window.__simScanInterval = null;
-  resetSimuladorVisuales();
-}
-
-/* ------ Simulador (misma lógica que tu código original, nombres con prefijo sim-) ------ */
-const simOverlay = document.getElementById('simOverlay');
-const simFace = document.getElementById('simFace');
-const simStatus = document.getElementById('simStatus');
-const simLog = document.getElementById('simLog');
-
-function simLogMsg(text, color){
-  const now = new Date();
-  const time = now.toTimeString().split(' ')[0];
-  const div = document.createElement('div');
-  div.innerHTML = `<span class="time">[${time}]</span> ${text}`;
-  if(color) div.style.color = color;
-  simLog.prepend(div);
-  // mantener corto
-  while(simLog.children.length > 10) simLog.removeChild(simLog.lastChild);
+function renderAlerts(alerts){
+  if(!alertsList) return;
+  alertsList.innerHTML = '';
+  alerts.sort((a,b)=> a.resolved - b.resolved || b.id - a.id);
+  alerts.forEach(alert=>{
+    const statusClass = alert.resolved ? 'resolved' : (alert.type === 'critical' ? 'critical' : 'pending');
+    const icon = alert.type === 'critical' ? 'fa-user-secret' : 'fa-triangle-exclamation';
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert-item ${statusClass}`;
+    alertDiv.id = `alert-${alert.id}`;
+    alertDiv.innerHTML = `
+      <div class="alert-icon"><i class="fa-solid ${icon}"></i></div>
+      <div class="alert-details">
+        <strong>${alert.message}</strong>
+        <div class="alert-meta">ID: ${alert.id} | Cámara: ${alert.camera} | Hora: ${alert.time}</div>
+      </div>
+      <div class="alert-actions">
+        ${!alert.resolved ? `
+          <button class="btn-resolve" onclick="resolveAlert(${alert.id})"><i class="fas fa-check"></i> Resolver</button>
+          <button class="btn-report" onclick="viewDetails(${alert.id})"><i class="fas fa-magnifying-glass"></i> Detalle</button>
+        ` : `<span style="color:#38a169;font-weight:700">Resuelto</span>`}
+      </div>
+    `;
+    alertsList.appendChild(alertDiv);
+  });
+  updateStats();
 }
 
-function resetSimuladorVisuales(){
-  simFace.style.borderColor = 'var(--sim-accent)';
-  simFace.style.opacity = '.9';
-  simFace.style.transform = 'translate(-50%,-50%)';
-  simOverlay.style.borderColor = 'var(--sim-accent)';
-  simStatus.textContent = 'Esperando detección...';
-  simStatus.style.background = '';
-  simStatus.style.color = '';
+function resolveAlert(id){
+  const idx = initialAlerts.findIndex(a=>a.id===id);
+  if(idx !== -1){ initialAlerts[idx].resolved = true; renderAlerts(initialAlerts); }
 }
 
-/* animación simple: pulso (usamos setInterval para no depender de keyframes) */
-function startScanPulse(){
-  if(window.__simScanInterval) clearInterval(window.__simScanInterval);
-  let growing = true, a = 0;
-  window.__simScanInterval = setInterval(()=>{
-    a = growing ? a + 0.08 : a - 0.08;
-    if(a > 1.2) growing = false;
-    if(a < 0.95) growing = true;
-    simOverlay.style.boxShadow = `0 0 ${8*a}px rgba(0,188,212,${0.25*a})`;
-    simOverlay.style.transform = `scale(${1 + (a-1) * 0.05})`;
-  },90);
-}
-
-function stopScanPulse(){
-  if(window.__simScanInterval) { clearInterval(window.__simScanInterval); window.__simScanInterval = null; }
-  simOverlay.style.boxShadow = '';
-  simOverlay.style.transform = '';
-}
-
-/* lógica principal: simulación de detección */
-function simularDeteccion(esAutorizado){
-  resetSimuladorVisuales();
-  simLogMsg('Iniciando escaneo biométrico...', 'var(--sim-accent)');
-  startScanPulse();
-
-  // simulamos tiempo de escaneo
-  setTimeout(()=>{
-    stopScanPulse();
-    simLogMsg('Análisis del vector facial completado (T < 2.5s).', 'var(--sim-accent)');
-
-    // micro-movimiento
-    simFace.style.transform = 'translate(-55%,-45%)';
-
-    setTimeout(()=>{
-      if(esAutorizado){
-        simStatus.textContent = 'ACCESO CONCEDIDO: Usuario Autorizado.';
-        simStatus.style.background = 'linear-gradient(90deg,var(--sim-success),#7ef2b6)';
-        simStatus.style.color = '#021018';
-        simFace.style.borderColor = 'var(--sim-success)';
-        simOverlay.style.borderColor = 'var(--sim-success)';
-        simFace.style.opacity = '1';
-        simLogMsg('Coincidencia de la base de datos: Éxito.', 'var(--sim-success)');
-      } else {
-        simStatus.textContent = 'ALERTA ROJA: Rostro No Registrado/Intruso.';
-        simStatus.style.background = 'linear-gradient(90deg,var(--sim-failure),#ff8a8a)';
-        simStatus.style.color = '#fff';
-        simFace.style.borderColor = 'var(--sim-failure)';
-        simOverlay.style.borderColor = 'var(--sim-failure)';
-        simFace.style.opacity = '1';
-        simLogMsg('No Coincidencia. Alerta enviada al Panel de Monitoreo.', 'var(--sim-failure)');
-      }
-      // reset final
-      setTimeout(resetSimuladorVisuales, 3600);
-    }, 1100);
-
-  }, 2100);
-}
-
-function simularAutorizado(){ simularDeteccion(true); }
-function simularIntruso(){ simularDeteccion(false); }
-
-/* cerrar con ESC */
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape') {
-    if(document.getElementById('simModal').style.display === 'flex') cerrarSimulador();
+function viewDetails(id){
+  const alert = initialAlerts.find(a=>a.id===id);
+  if(alert){
+    const detailMessage = document.createElement('div');
+    detailMessage.textContent = `Detalle de Alerta ID ${id}: ${alert.message}`;
+    detailMessage.style.cssText = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #38a169; color: white; padding: 10px 20px; border-radius: 8px; z-index: 10000; box-shadow: 0 4px 10px rgba(0,0,0,0.5);";
+    document.body.appendChild(detailMessage);
+    setTimeout(()=> detailMessage.remove(), 3000);
   }
+}
+
+function simulateNewAlert(){
+  alertCounter++;
+  const newTime = new Date().toTimeString().split(' ')[0];
+  const isCritical = Math.random() < 0.6;
+  const criticalMessages = [
+    'COINCIDENCIA LISTA NEGRA: ID P-210 (Confianza 99%)',
+    'ACCESO DENEGADO: Rostro no registrado (Confianza 90%)',
+    'COMPORTAMIENTO HOSTIL: Individuo con historial de vandalismo detectado'
+  ];
+  const pendingMessages = [
+    'ANOMALÍA: Movimiento brusco detectado en zona restringida',
+    'RIESGO DE CÓDIGO ROJO: Objeto abandonado (5 min) cerca de acceso',
+    'DETECCIÓN DE USO INDEBIDO: Mascarilla/rostro cubierto'
+  ];
+  const cameras = [
+    'CÁM Z-05 | Área de Contención',
+    'CÁM F-12 | Entrada Norte',
+    'CÁM G-07 | Cajero Automático'
+  ];
+  const message = isCritical ? criticalMessages[Math.floor(Math.random()*criticalMessages.length)] : pendingMessages[Math.floor(Math.random()*pendingMessages.length)];
+  const camera = cameras[Math.floor(Math.random()*cameras.length)];
+  const newAlert = { id: alertCounter, type: isCritical ? 'critical' : 'pending', message, camera, time: newTime, resolved: false };
+  initialAlerts.push(newAlert);
+  currentIaScore = (Math.min(99.9, Math.max(90.0, currentIaScore + (Math.random()*0.4 - 0.2)))).toFixed(1);
+  renderAlerts(initialAlerts);
+}
+
+function updateStats(){
+  if(!totalAlertsElement) return;
+  const openAlerts = initialAlerts.filter(a=>!a.resolved);
+  const openCritical = openAlerts.filter(a=>a.type==='critical');
+  totalAlertsElement.textContent = openAlerts.length;
+  criticalAlertsElement.textContent = openCritical.length;
+  camerasOnlineElement.textContent = 8 + Math.floor(Math.random()*3 - 1);
+  iaScoreText.textContent = currentIaScore + '%';
+
+  const criticalCount = openCritical.length;
+  const RISK_THRESHOLD_HIGH = 5;
+  const RISK_THRESHOLD_MODERATE = 3;
+  if(riskLevelText){
+    if(criticalCount >= RISK_THRESHOLD_HIGH){ riskLevelText.textContent = 'ALTO'; }
+    else if(criticalCount >= RISK_THRESHOLD_MODERATE){ riskLevelText.textContent = 'MODERADO'; }
+    else { riskLevelText.textContent = 'NORMAL'; }
+  }
+}
+
+function setActiveNav(element){
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  element.classList.add('active');
+}
+
+/* Initialize simulator when DOM ready */
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderAlerts(initialAlerts);
+  setInterval(updateStats, 15000);
 });
+
+/* Keep window.alert harmless (we used console/modal feedback above) */
+window.alert = function(msg){ console.log("ALERT MODAL (sim):", msg); };
+
 </script>
 
 </body>
 </html>
 
-  }
-});
-</script>
-
-</body>
-</html>
 
 
 
