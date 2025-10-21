@@ -120,7 +120,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
     <img class="logo" src="img/logo.png" alt="SegurAI Logo">
     <h1>SegurAI — Seguridad Preventiva con IA</h1>
     <p><strong>Innovación tecnológica y protección en entornos urbanos y empresariales.</strong><br>
-      Integramos inteligencia artificial, reconocimiento facial y alertas en tiempo real para anticipar riesgos y proteger personas y activos.</p>
+      Integrando inteligencia artificial, reconocimiento facial y alertas en tiempo real para anticipar riesgos y proteger personas y activos.</p>
 
     <div class="hero-controls" style="margin-top:20px">
       <button class="btn btn-explorar" onclick="abrirHero(false)"><i class="fas fa-arrow-right"></i>&nbsp;Explorar Presentación</button>
@@ -148,7 +148,7 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
   <!-- MAIN -->
   <main class="main" id="main" style="display:none">
 
-    <!-- MISIÓN (ahora dentro de Explorar Presentación) -->
+    <!-- MISIÓN -->
     <section id="mision" class="section active">
       <button class="btn-back" onclick="volverHero()"><i class="fas fa-arrow-left"></i> Volver</button>
       <h2>Misión y Visión</h2>
@@ -366,6 +366,12 @@ body{margin:0;background:var(--dark-blue);color:var(--text);height:100vh;display
               <li>Reporte y analítica</li>
             </ol>
             <p class="helper" style="margin-top:8px;color:var(--highlight-blue)">Reemplaza <code>img/proto1.gif</code> ... <code>img/proto5.gif</code> por tus archivos reales.</p>
+
+            <!-- BOTÓN AGREGADO PARA ABRIR EL SIMULADOR BIOMÉTRICO -->
+            <div style="margin-top:12px;text-align:center;">
+              <button class="btn btn-boceto" onclick="abrirSimulador()"><i class="fas fa-fingerprint"></i> Probar Simulador Biométrico</button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -389,10 +395,8 @@ function abrirSeccion(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   const sec = document.getElementById(id);
   if(sec) sec.classList.add('active');
-  // mark active link
   document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
   if(el) el.classList.add('active');
-  // scroll top
   document.querySelector('.main').scrollTop = 0;
 }
 function volverHero(){
@@ -408,7 +412,7 @@ function volverHero(){
 function abrirBoceto(){ document.getElementById('modal-boceto').style.display='flex'; }
 function cerrarBoceto(){ document.getElementById('modal-boceto').style.display='none'; }
 
-/* STORY modal with timeline */
+/* STORY modal with timeline (kept as before) */
 let currentStep = 0;
 let autoplay = false;
 let autoplayInterval = null;
@@ -430,52 +434,23 @@ function abrirStory(){
   updateTimeline();
   startAutoplayIfSet();
 }
-
-function cerrarStory(){
-  document.getElementById('modal-story').style.display='none';
-  stopAutoplay();
-}
-
-// timeline navigation
+function cerrarStory(){ document.getElementById('modal-story').style.display='none'; stopAutoplay(); }
 function updateTimeline(){
   const s = steps();
-  s.forEach((el,i)=>{
-    el.classList.remove('active');
-    if(i===currentStep) el.classList.add('active');
-  });
-  // update preview
+  s.forEach((el,i)=>{ el.classList.remove('active'); if(i===currentStep) el.classList.add('active'); });
   const pText = previewText(currentStep);
-  document.getElementById('previewText').textContent = pText;
-  // change preview image lightly for each step (example — reuse same or add images)
+  const preview = document.getElementById('previewText');
+  if(preview) preview.textContent = pText;
   const imgs = ['img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png','img/reconocimiento_facial.png'];
-  document.getElementById('previewImg').src = imgs[currentStep] || imgs[0];
+  const previewImg = document.getElementById('previewImg');
+  if(previewImg) previewImg.src = imgs[currentStep] || imgs[0];
 }
-
-function nextTimeline(){
-  const s = steps();
-  if(currentStep < s.length - 1) currentStep++;
-  updateTimeline();
-}
-function prevTimeline(){
-  if(currentStep > 0) currentStep--;
-  updateTimeline();
-}
-
-/* autoplay */
-function toggleAutoplay(){
-  autoplay = !autoplay;
-  const btn = document.getElementById('autoplayBtn');
-  if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); }
-  else{ btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); }
-}
-function startAutoplay(){
-  stopAutoplay();
-  autoplayInterval = setInterval(()=>{
-    if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); }
-    else { currentStep = 0; updateTimeline(); }
-  },1400);
-}
+function nextTimeline(){ const s = steps(); if(currentStep < s.length - 1) currentStep++; updateTimeline(); }
+function prevTimeline(){ if(currentStep > 0) currentStep--; updateTimeline(); }
+function toggleAutoplay(){ autoplay = !autoplay; const btn = document.getElementById('autoplayBtn'); if(autoplay){ btn.textContent='Auto: ON'; btn.style.background='#00ffb3'; startAutoplay(); } else { btn.textContent='Auto: OFF'; btn.style.background=''; stopAutoplay(); } }
+function startAutoplay(){ stopAutoplay(); autoplayInterval = setInterval(()=>{ if(currentStep < steps().length - 1){ currentStep++; updateTimeline(); } else { currentStep = 0; updateTimeline(); } },1400); }
 function stopAutoplay(){ if(autoplayInterval){ clearInterval(autoplayInterval); autoplayInterval = null; } }
+function startAutoplayIfSet(){ if(autoplay) startAutoplay(); }
 
 /* PROTOTYPE modal: carousel of GIFs/images */
 const protoImages = [
@@ -528,8 +503,173 @@ document.addEventListener('keydown', e=>{
 });
 </script>
 
+<!-- =========================
+     MODAL: SIMULADOR BIOMETRICO
+     Inserción directa en el index.html
+     ========================= -->
+<style>
+  /* estilos del modal (auto contenido) */
+  .sim-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:3000}
+  .sim-box{width:100%;max-width:620px;border-radius:14px;padding:18px;background:linear-gradient(180deg,#07101a,#09121a);box-shadow:0 30px 80px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03)}
+  .sim-close{float:right;background:transparent;border:0;color:#cfeffd;font-size:18px;cursor:pointer}
+  /* reutiliza variables si existen, si no, defino fallback */
+  :root{--sim-dark:#0d1117;--sim-card:#0f1720;--sim-accent:#00bcd4;--sim-success:#38a169;--sim-failure:#e53e3e;--sim-text:#cdd9e6}
+  .sim-h1{color:var(--sim-accent);font-weight:700;text-align:center;margin:0 0 10px}
+  .sim-camera{width:100%;height:260px;background:#020407;border-radius:10px;border:2px solid rgba(255,255,255,0.04);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .sim-overlay{position:absolute;width:78%;height:72%;border-radius:8px;border:3px dashed var(--sim-accent);transition:border-color .35s,box-shadow .35s}
+  .sim-face{width:110px;height:110px;border-radius:50%;background:#202428;border:4px solid var(--sim-accent);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.9;display:flex;align-items:center;justify-content:center;color:var(--sim-text);font-weight:700;font-size:12px}
+  .sim-status{margin-top:14px;padding:12px;border-radius:8px;background:#0f1620;color:var(--sim-text);text-align:center;font-weight:700;min-height:56px}
+  .sim-controls{display:flex;gap:12px;margin-top:14px}
+  .sim-btn{flex:1;padding:12px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
+  .sim-auth{background:linear-gradient(90deg,var(--sim-accent),#7ef2e6);color:#021018}
+  .sim-intr{background:var(--sim-failure);color:#fff}
+  .sim-log{margin-top:12px;background:#05070a;padding:10px;border-radius:8px;height:90px;overflow:auto;border:1px solid rgba(255,255,255,0.02);font-size:13px}
+  .sim-log .time{color:var(--sim-accent);margin-right:6px;font-weight:700}
+  /* small responsive */
+  @media (max-width:520px){ .sim-box{padding:12px} .sim-camera{height:200px} .sim-face{width:92px;height:92px} }
+</style>
+
+<div id="simModal" class="sim-modal" aria-hidden="true" role="dialog">
+  <div class="sim-box" role="document" aria-label="Simulador biométrico SegurAI">
+    <button class="sim-close" aria-label="Cerrar simulador" onclick="cerrarSimulador()"><i class="fas fa-times"></i></button>
+    <h2 class="sim-h1">Simulador SegurAI — Detección Biométrica</h2>
+
+    <div class="sim-camera" id="simCamera">
+      <div class="sim-overlay" id="simOverlay"></div>
+      <div class="sim-face" id="simFace">Rostro</div>
+    </div>
+
+    <div class="sim-status" id="simStatus">Esperando detección...</div>
+
+    <div class="sim-controls">
+      <button class="sim-btn sim-auth" onclick="simularAutorizado()"><i class="fas fa-check-circle"></i> Simular Usuario Autorizado</button>
+      <button class="sim-btn sim-intr" onclick="simularIntruso()"><i class="fas fa-exclamation-triangle"></i> Simular Intruso (Alerta)</button>
+    </div>
+
+    <div class="sim-log" id="simLog">
+      <div><span class="time">[00:00:00]</span> Simulador listo.</div>
+    </div>
+
+    <div style="text-align:right;margin-top:10px">
+      <button class="sim-btn" style="width:auto;background:transparent;color:var(--sim-accent);border:1px solid rgba(255,255,255,0.04)" onclick="cerrarSimulador()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* -------- funciones de apertura/cierre (usar desde otros botones con abrirSimulador()) -------- */
+function abrirSimulador(){
+  document.getElementById('simModal').style.display='flex';
+  document.getElementById('simModal').setAttribute('aria-hidden','false');
+}
+function cerrarSimulador(){
+  document.getElementById('simModal').style.display='none';
+  document.getElementById('simModal').setAttribute('aria-hidden','true');
+  // limpiar animaciones si las hubiera
+  clearInterval(window.__simScanInterval);
+  window.__simScanInterval = null;
+  resetSimuladorVisuales();
+}
+
+/* ------ Simulador (misma lógica que tu código original, nombres con prefijo sim-) ------ */
+const simOverlay = document.getElementById('simOverlay');
+const simFace = document.getElementById('simFace');
+const simStatus = document.getElementById('simStatus');
+const simLog = document.getElementById('simLog');
+
+function simLogMsg(text, color){
+  const now = new Date();
+  const time = now.toTimeString().split(' ')[0];
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="time">[${time}]</span> ${text}`;
+  if(color) div.style.color = color;
+  simLog.prepend(div);
+  // mantener corto
+  while(simLog.children.length > 10) simLog.removeChild(simLog.lastChild);
+}
+
+function resetSimuladorVisuales(){
+  simFace.style.borderColor = 'var(--sim-accent)';
+  simFace.style.opacity = '.9';
+  simFace.style.transform = 'translate(-50%,-50%)';
+  simOverlay.style.borderColor = 'var(--sim-accent)';
+  simStatus.textContent = 'Esperando detección...';
+  simStatus.style.background = '';
+  simStatus.style.color = '';
+}
+
+/* animación simple: pulso (usamos setInterval para no depender de keyframes) */
+function startScanPulse(){
+  if(window.__simScanInterval) clearInterval(window.__simScanInterval);
+  let growing = true, a = 0;
+  window.__simScanInterval = setInterval(()=>{
+    a = growing ? a + 0.08 : a - 0.08;
+    if(a > 1.2) growing = false;
+    if(a < 0.95) growing = true;
+    simOverlay.style.boxShadow = `0 0 ${8*a}px rgba(0,188,212,${0.25*a})`;
+    simOverlay.style.transform = `scale(${1 + (a-1) * 0.05})`;
+  },90);
+}
+
+function stopScanPulse(){
+  if(window.__simScanInterval) { clearInterval(window.__simScanInterval); window.__simScanInterval = null; }
+  simOverlay.style.boxShadow = '';
+  simOverlay.style.transform = '';
+}
+
+/* lógica principal: simulación de detección */
+function simularDeteccion(esAutorizado){
+  resetSimuladorVisuales();
+  simLogMsg('Iniciando escaneo biométrico...', 'var(--sim-accent)');
+  startScanPulse();
+
+  // simulamos tiempo de escaneo
+  setTimeout(()=>{
+    stopScanPulse();
+    simLogMsg('Análisis del vector facial completado (T < 2.5s).', 'var(--sim-accent)');
+
+    // micro-movimiento
+    simFace.style.transform = 'translate(-55%,-45%)';
+
+    setTimeout(()=>{
+      if(esAutorizado){
+        simStatus.textContent = 'ACCESO CONCEDIDO: Usuario Autorizado.';
+        simStatus.style.background = 'linear-gradient(90deg,var(--sim-success),#7ef2b6)';
+        simStatus.style.color = '#021018';
+        simFace.style.borderColor = 'var(--sim-success)';
+        simOverlay.style.borderColor = 'var(--sim-success)';
+        simFace.style.opacity = '1';
+        simLogMsg('Coincidencia de la base de datos: Éxito.', 'var(--sim-success)');
+      } else {
+        simStatus.textContent = 'ALERTA ROJA: Rostro No Registrado/Intruso.';
+        simStatus.style.background = 'linear-gradient(90deg,var(--sim-failure),#ff8a8a)';
+        simStatus.style.color = '#fff';
+        simFace.style.borderColor = 'var(--sim-failure)';
+        simOverlay.style.borderColor = 'var(--sim-failure)';
+        simFace.style.opacity = '1';
+        simLogMsg('No Coincidencia. Alerta enviada al Panel de Monitoreo.', 'var(--sim-failure)');
+      }
+      // reset final
+      setTimeout(resetSimuladorVisuales, 3600);
+    }, 1100);
+
+  }, 2100);
+}
+
+function simularAutorizado(){ simularDeteccion(true); }
+function simularIntruso(){ simularDeteccion(false); }
+
+/* cerrar con ESC */
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape') {
+    if(document.getElementById('simModal').style.display === 'flex') cerrarSimulador();
+  }
+});
+</script>
+
 </body>
 </html>
+
 
 
 
